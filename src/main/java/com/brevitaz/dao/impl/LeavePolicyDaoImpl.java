@@ -1,9 +1,9 @@
 package com.brevitaz.dao.impl;
 
-import com.brevitaz.config.Config;
 import com.brevitaz.dao.LeavePolicyDao;
 import com.brevitaz.model.LeavePolicy;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.elasticsearch.action.delete.DeleteRequest;
 import org.elasticsearch.action.delete.DeleteResponse;
 import org.elasticsearch.action.get.GetRequest;
@@ -14,6 +14,7 @@ import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.update.UpdateRequest;
 import org.elasticsearch.action.update.UpdateResponse;
+import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.common.xcontent.XContentType;
 import org.elasticsearch.rest.RestStatus;
 import org.elasticsearch.search.SearchHit;
@@ -33,13 +34,20 @@ public class LeavePolicyDaoImpl implements LeavePolicyDao
 
     private final String TYPE_NAME = "doc";
 
-    @Autowired
+    /*@Autowired
     private Config config;
+*/
+    @Autowired
+    private RestHighLevelClient client;
+
+    @Autowired
+    private ObjectMapper objectMapper;
+
 
 
     @Override
     public boolean create(LeavePolicy leavePolicy)  {
-        config.getObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
 
         IndexRequest request = new IndexRequest(
                 indexName,
@@ -47,11 +55,11 @@ public class LeavePolicyDaoImpl implements LeavePolicyDao
         );
 
         try {
-            String json = config.getObjectMapper().writeValueAsString(leavePolicy);
+            String json = objectMapper.writeValueAsString(leavePolicy);
 
             request.source(json, XContentType.JSON);
 
-            IndexResponse indexResponse = config.getClient().index(request);
+            IndexResponse indexResponse = client.index(request);
             System.out.println(indexResponse);
             if (indexResponse.status() == RestStatus.CREATED) {
                 return true;
@@ -70,15 +78,15 @@ public class LeavePolicyDaoImpl implements LeavePolicyDao
 
     @Override
     public boolean update(LeavePolicy leavePolicy,String id) {
-        config.getObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
 
         try {
             UpdateRequest updateRequest = new UpdateRequest(
                     indexName,TYPE_NAME,
-                    id).doc(config.getObjectMapper().writeValueAsString(leavePolicy), XContentType.JSON);
+                    id).doc(objectMapper.writeValueAsString(leavePolicy), XContentType.JSON);
 
 
-            UpdateResponse updateResponse = config.getClient().update(updateRequest);
+            UpdateResponse updateResponse = client.update(updateRequest);
             System.out.println(updateResponse);
 
             if(updateResponse.status() == RestStatus.OK)
@@ -105,7 +113,7 @@ public class LeavePolicyDaoImpl implements LeavePolicyDao
                 TYPE_NAME,
                 id);
         try {
-            DeleteResponse response = config.getClient().delete(request);
+            DeleteResponse response = client.delete(request);
             System.out.println(response);
             if(response.status() == RestStatus.OK)
             {
@@ -129,8 +137,8 @@ public class LeavePolicyDaoImpl implements LeavePolicyDao
                 TYPE_NAME,
                 id);
         try {
-            GetResponse getResponse= config.getClient().get(getRequest);
-            LeavePolicy leavePolicy  = config.getObjectMapper().readValue(getResponse.getSourceAsString(),LeavePolicy.class);
+            GetResponse getResponse= client.get(getRequest);
+            LeavePolicy leavePolicy  = objectMapper.readValue(getResponse.getSourceAsString(),LeavePolicy.class);
 
             if(getResponse.isExists())
             {
@@ -154,14 +162,14 @@ public class LeavePolicyDaoImpl implements LeavePolicyDao
         SearchRequest request = new SearchRequest(indexName);
         request.types(TYPE_NAME);
         try {
-            SearchResponse response = config.getClient().search(request);
+            SearchResponse response = client.search(request);
 
             SearchHit[] hits = response.getHits().getHits();
 
 
             LeavePolicy leavePolicy;
             for (SearchHit hit : hits) {
-                leavePolicy = config.getObjectMapper().readValue(hit.getSourceAsString(), LeavePolicy.class);
+                leavePolicy = objectMapper.readValue(hit.getSourceAsString(), LeavePolicy.class);
                 leavePolicies.add(leavePolicy);
             }
                 if(response.status() == RestStatus.OK)

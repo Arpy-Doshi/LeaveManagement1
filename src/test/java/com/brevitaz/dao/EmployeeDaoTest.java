@@ -2,7 +2,6 @@ package com.brevitaz.dao;
 
 import com.brevitaz.model.Employee;
 import com.carrotsearch.randomizedtesting.RandomizedRunner;
-import com.carrotsearch.randomizedtesting.annotations.ThreadLeakAction;
 import com.carrotsearch.randomizedtesting.annotations.ThreadLeakScope;
 import org.junit.Assert;
 import org.junit.ClassRule;
