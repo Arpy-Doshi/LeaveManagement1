@@ -15,7 +15,7 @@ public class LeaveApplicationController {
     @Autowired
     private LeaveApplicationDao leaveApplicationDao;
 
-    @RequestMapping(method = RequestMethod.POST)//do count type of leave in service
+    @RequestMapping(method = RequestMethod.POST)//do count type of leave in ser\221 1`vice
     public boolean request(@RequestBody LeaveApplication leaveApplication)  {
         return leaveApplicationDao.request(leaveApplication);
     }
@@ -30,16 +30,16 @@ public class LeaveApplicationController {
         return leaveApplicationDao.updateRequest(leaveApplication,id);
     }
 
-    @RequestMapping(value = "/remaining-leaves/{employeeId}" , method = RequestMethod.GET)//remaining
+    /*@RequestMapping(value = "/employee/{employeeId}/balance" , method = RequestMethod.GET)//remaining
     public double checkBalance(@PathVariable String employeeId)
     {
         return 0;
-    }// TODO: it should be in employee controller
+    }// TODO: it should be in leave controller
 
-    @RequestMapping(value = "/get-by-employeeId/{employeeId}" , method = RequestMethod.GET) // personal record.
+    @RequestMapping(value = "/employee/{employeeId}" , method = RequestMethod.GET) // personal record.
     public List<LeaveApplication> getByEmployeeId( @PathVariable String employeeId)  {
         return leaveApplicationDao.getByEmployeeId(employeeId);// TODO:should be in employee controller
-    }
+    }*/
 
     @RequestMapping(value = "/{id}" , method = RequestMethod.GET) // for single leave.
     public LeaveApplication getById(@PathVariable String id)  {
@@ -56,7 +56,7 @@ public class LeaveApplicationController {
         return leaveApplicationDao.approveRequest(id);
     }
 
-    @RequestMapping(value = "/{id}/decline" , method = RequestMethod.DELETE)//status changes in service
+    @RequestMapping(value = "/{id}/decline" , method = RequestMethod.PUT)//status changes in service
     public boolean declineRequest(@PathVariable String id) {
         return leaveApplicationDao.declineRequest(id);
     }
