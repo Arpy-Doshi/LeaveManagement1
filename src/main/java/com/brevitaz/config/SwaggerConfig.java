@@ -1,5 +1,6 @@
 package com.brevitaz.config;
 
+/*
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -33,4 +34,4 @@ public class SwaggerConfig {
                 .version( "1.0.0" )
                 .build();
     }
-}
+}*/

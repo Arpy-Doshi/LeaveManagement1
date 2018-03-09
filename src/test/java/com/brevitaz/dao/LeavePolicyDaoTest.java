@@ -134,14 +134,15 @@ public class LeavePolicyDaoTest {
         leavePolicyRules.add(leavePolicyRule);
 
         LeavePolicy leavePolicy = new LeavePolicy();
-        leavePolicy.setId("1");
+        leavePolicy.setId("11");
+        leavePolicy.setName("gvhjnj");
         leavePolicy.setLeavePolicyRules(leavePolicyRules);
 
         leavePolicyDao.create(leavePolicy);
 
-        leavePolicyDao.delete("1");
+        leavePolicyDao.delete("11");
 
-        LeavePolicy leavePolicy1 = leavePolicyDao.getById("1");
+        LeavePolicy leavePolicy1 = leavePolicyDao.getById("11");
 
         Assert.assertNull(leavePolicy1);
 
