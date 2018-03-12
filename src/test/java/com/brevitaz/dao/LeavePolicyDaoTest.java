@@ -141,7 +141,11 @@ public class LeavePolicyDaoTest {
 
         leavePolicyDao.delete("1");
 
+        System.out.println("deleted");
+
         LeavePolicy leavePolicy1 = leavePolicyDao.getById("1");
+
+
 
         Assert.assertNull(leavePolicy1);
 
