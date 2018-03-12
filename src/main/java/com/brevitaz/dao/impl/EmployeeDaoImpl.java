@@ -66,7 +66,7 @@ public class EmployeeDaoImpl implements EmployeeDao
             {
                 return new ResponseEntity<>("Not Created", HttpStatus.BAD_REQUEST);
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return new ResponseEntity<>("Not Created", HttpStatus.BAD_REQUEST);
@@ -98,14 +98,14 @@ public class EmployeeDaoImpl implements EmployeeDao
             {
                 return null;
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
 
     @Override
-    public boolean update(Employee employee,String id){
+    public ResponseEntity<String> update(Employee employee,String id){
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         try {
             UpdateRequest updateRequest = new UpdateRequest(
@@ -115,20 +115,22 @@ public class EmployeeDaoImpl implements EmployeeDao
             System.out.println("Update: "+updateResponse);
             if(updateResponse.status() == RestStatus.OK)
             {
-                return true;
+                return new ResponseEntity<>("Updated", HttpStatus.OK);
             }
             else
             {
-                return false;
+                return new ResponseEntity<>("Not Updated", HttpStatus.BAD_REQUEST);
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        return false;
+        return new ResponseEntity<>("Not Updated", HttpStatus.BAD_REQUEST);
     }
 
     @Override
-    public boolean delete(String id) {
+    public ResponseEntity<String> delete(String id) {
+        System.out.println("dao is called.");
+
         DeleteRequest request = new DeleteRequest(
                 indexName,
                 TYPE_NAME,
@@ -138,16 +140,16 @@ public class EmployeeDaoImpl implements EmployeeDao
             DeleteResponse response = client.delete(request);
             if(response.status() == RestStatus.OK)
             {
-                return true;
+                return new ResponseEntity<>("Deleted", HttpStatus.OK);
             }
             else
             {
-                return false;
+                return new ResponseEntity<>("Not Deleted", HttpStatus.BAD_REQUEST);
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        return false;
+        return new ResponseEntity<>("Not Deleted", HttpStatus.BAD_REQUEST);
     }
 
     @Override
