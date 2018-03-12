@@ -1,4 +1,8 @@
 package com.brevitaz.service.impl;
 
-public class LeaveApplicationServiceImpl {
+import com.brevitaz.service.LeaveApplicationService;
+
+public class LeaveApplicationServiceImpl implements LeaveApplicationService
+{
+
 }

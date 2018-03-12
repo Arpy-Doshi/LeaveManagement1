@@ -21,6 +21,8 @@ import org.elasticsearch.rest.RestStatus;
 import org.elasticsearch.search.SearchHit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
@@ -43,7 +45,7 @@ public class EmployeeDaoImpl implements EmployeeDao
     private ObjectMapper objectMapper;
 
     @Override
-    public boolean create(Employee employee) {
+    public ResponseEntity<String> create(Employee employee) {
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
 
         IndexRequest request = new IndexRequest(
@@ -58,16 +60,16 @@ public class EmployeeDaoImpl implements EmployeeDao
             System.out.println(indexResponse);
             if(indexResponse.status() == RestStatus.CREATED)
             {
-                return true;
+                return new ResponseEntity<>("Created", HttpStatus.CREATED);
             }
             else
             {
-                return false;
+                return new ResponseEntity<>("Not Created", HttpStatus.BAD_REQUEST);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return false;
+        return new ResponseEntity<>("Not Created", HttpStatus.BAD_REQUEST);
     }
 
     @Override
