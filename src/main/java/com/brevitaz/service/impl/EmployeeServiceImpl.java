@@ -48,9 +48,6 @@ public class EmployeeServiceImpl implements EmployeeService
     {
         System.out.println("service is called.");
 
-        /*if (id == null)
-            return new ResponseEntity<>("Bad request", HttpStatus.BAD_REQUEST);
-*/
         if (id.trim().length() <= 0)
             return new ResponseEntity<>("Bad request", HttpStatus.BAD_REQUEST);
 
