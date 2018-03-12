@@ -193,6 +193,16 @@ public class LeaveApplicationDaoTest {
     @Test
     public void getByDateTest()// TODO: Remaining
     {
+        LeaveApplication leaveApplication = new LeaveApplication();
+        leaveApplication.setId("11");
+        leaveApplication.setEmployeeId("AA");
+        leaveApplication.setReason("xyz");
+        leaveApplicationDao.request(leaveApplication);
+
+        LeaveApplication leaveApplication1 = leaveApplicationDao.getById("11");
+        Assert.assertEquals(leaveApplication1.getEmployeeId(),leaveApplication.getEmployeeId());
+
+        leaveApplicationDao.cancelRequest("11");
 
     }
     @Test

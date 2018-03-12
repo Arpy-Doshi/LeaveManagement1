@@ -13,10 +13,9 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Configuration
 @EnableSwagger2
-*/
 public class SwaggerConfig {
 
-    /*private String DEFAULT_INCLUDE_PATTERN = "/api/.*";
+    private String DEFAULT_INCLUDE_PATTERN = "/api/.*";
 
 
     @Bean
@@ -34,5 +33,5 @@ public class SwaggerConfig {
                 .description( "Rest services")
                 .version( "1.0.0" )
                 .build();
-    }*/
-}
+    }
+}*/

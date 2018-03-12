@@ -1,5 +1,6 @@
 package com.brevitaz.model;
 
+import java.util.Date;
 import java.util.List;
 
 public class LeavePolicy
@@ -7,6 +8,10 @@ public class LeavePolicy
     private String id;
     private String name;
     private List<LeavePolicyRule> leavePolicyRules;
+    private Date createdDate;
+    private String createdBy;
+    private Date updatedDate;
+    private String updatedBy;
 
     public String getId() {
         return id;
@@ -32,14 +37,48 @@ public class LeavePolicy
         this.leavePolicyRules = leavePolicyRules;
     }
 
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public Date getUpdatedDate() {
+        return updatedDate;
+    }
+
+    public void setUpdatedDate(Date updatedDate) {
+        this.updatedDate = updatedDate;
+    }
+
+    public String getUpdatedBy() {
+        return updatedBy;
+    }
+
+    public void setUpdatedBy(String updatedBy) {
+        this.updatedBy = updatedBy;
+    }
+
     @Override
     public String toString() {
         return "LeavePolicy{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", leavePolicyRules=" + leavePolicyRules +
+                ", createdDate=" + createdDate +
+                ", createdBy='" + createdBy + '\'' +
+                ", updatedDate=" + updatedDate +
+                ", updatedBy='" + updatedBy + '\'' +
                 '}';
     }
-
-
 }

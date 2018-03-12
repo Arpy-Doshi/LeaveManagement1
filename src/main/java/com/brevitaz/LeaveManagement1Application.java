@@ -7,10 +7,10 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @ComponentScan("com.brevitaz")
-public class LeaveManagementApplication{
+public class LeaveManagement1Application {
 
     public static void main(String[] args) {
-        SpringApplication.run(LeaveManagementApplication.class, args);
+        SpringApplication.run(LeaveManagement1Application.class, args);
     }
 }
 

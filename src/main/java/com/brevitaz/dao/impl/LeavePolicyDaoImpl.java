@@ -1,6 +1,7 @@
 package com.brevitaz.dao.impl;
 
 import com.brevitaz.dao.LeavePolicyDao;
+import com.brevitaz.model.Employee;
 import com.brevitaz.model.LeavePolicy;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -68,7 +69,7 @@ public class LeavePolicyDaoImpl implements LeavePolicyDao
                 return false;
             }
         }
-        catch (IOException e) {
+        catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -107,14 +108,14 @@ public class LeavePolicyDaoImpl implements LeavePolicyDao
     }
 
     @Override
-    public boolean delete(String id)  {
+    public boolean delete(String id) {
         DeleteRequest request = new DeleteRequest(
                 indexName,
                 TYPE_NAME,
                 id);
+
         try {
             DeleteResponse response = client.delete(request);
-            System.out.println(response);
             if(response.status() == RestStatus.OK)
             {
                 return true;
@@ -126,33 +127,31 @@ public class LeavePolicyDaoImpl implements LeavePolicyDao
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return false;
     }
 
     @Override
-    public LeavePolicy getById(String id) {
+    public LeavePolicy getById(String id)  {
         GetRequest getRequest = new GetRequest(
                 indexName,
                 TYPE_NAME,
                 id);
-        try {
-            GetResponse getResponse= client.get(getRequest);
-            LeavePolicy leavePolicy  = objectMapper.readValue(getResponse.getSourceAsString(),LeavePolicy.class);
 
-            if(getResponse.isExists())
-            {
+
+        try {
+
+            GetResponse response = client.get(getRequest);
+            LeavePolicy leavePolicy = objectMapper.readValue(response.getSourceAsString(), LeavePolicy.class);
+            if (response.isExists()) {
                 return leavePolicy;
-            }
-            else
-            {
+            } else {
                 return null;
             }
-
-        } catch (IOException e) {
+        }
+        catch (Exception e)
+        {
             e.printStackTrace();
         }
-
         return null;
     }
 
@@ -182,7 +181,7 @@ public class LeavePolicyDaoImpl implements LeavePolicyDao
                 }
 
          }
-         catch (IOException e) {
+         catch (Exception e) {
             e.printStackTrace();
         }
         return null;
