@@ -8,8 +8,8 @@ import java.util.List;
 public interface EmployeeService
 {
     public ResponseEntity<String> create (Employee employee);
-    public boolean delete (String id);
-    public boolean update(Employee employee,String id);
+    public ResponseEntity<String> delete (String id);
+    public ResponseEntity<String> update(Employee employee,String id);
     public Employee getById (String id);
     public List<Employee> getAll();
 }

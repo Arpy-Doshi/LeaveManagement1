@@ -28,13 +28,14 @@ public class EmployeeController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public boolean update(@RequestBody Employee employee, @PathVariable String id){
+    public ResponseEntity<String> update(@RequestBody Employee employee, @PathVariable String id){
         return employeeService.update(employee,id);
 
     }
 
     @RequestMapping(value = "/{id}", method = {RequestMethod.DELETE})
-    public boolean delete(@PathVariable String id){
+    public ResponseEntity<String> delete(@PathVariable String id){
+        System.out.println("controller is called.");
         return employeeService.delete(id);
 
     }
