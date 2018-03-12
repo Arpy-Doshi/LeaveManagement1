@@ -24,11 +24,9 @@ public class EmployeeServiceImpl implements EmployeeService
             return new ResponseEntity<>("Bad request", HttpStatus.BAD_REQUEST);
 
         //Employee employee = employeeService.getByUsernameAndPassword(username,password);
-
-        if(employee!=null)
-            return employeeDao.create(employee);
         else
-            return new ResponseEntity<>("Unauthorized", HttpStatus.UNAUTHORIZED);
+            return employeeDao.create(employee);
+           // return new ResponseEntity<>("Unauthorized", HttpStatus.UNAUTHORIZED);
 
     }
 
@@ -39,6 +37,15 @@ public class EmployeeServiceImpl implements EmployeeService
 
     @Override
     public boolean update(Employee employee, String id) {
+        if(employee.getId().isEmpty())
+        {
+            System.out.println("there is no employee with id "+id);
+        }
+        else
+        {
+            System.out.println("updated");
+        }
+
         return false;
     }
 
