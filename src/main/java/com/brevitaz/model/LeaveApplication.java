@@ -1,6 +1,7 @@
 package com.brevitaz.model;
 
 import java.util.Date;
+import java.util.List;
 
 public class LeaveApplication
 {
@@ -12,6 +13,11 @@ public class LeaveApplication
     private Date toDate;
     private Type type;
     private Status status;
+    private Date createdDate;
+    private String createdBy;
+    private Date updatedDate;
+    private String updatedBy;
+    List<HandleRequest> handleRequests;// TODO :  what is  the appropriate name for this.
 
     public String getId() {
         return id;
@@ -77,6 +83,45 @@ public class LeaveApplication
         this.status = status;
     }
 
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public Date getUpdatedDate() {
+        return updatedDate;
+    }
+
+    public void setUpdatedDate(Date updatedDate) {
+        this.updatedDate = updatedDate;
+    }
+
+    public String getUpdatedBy() {
+        return updatedBy;
+    }
+
+    public void setUpdatedBy(String updatedBy) {
+        this.updatedBy = updatedBy;
+    }
+
+    public List<HandleRequest> getHandleRequests() {
+        return handleRequests;
+    }
+
+    public void setHandleRequests(List<HandleRequest> handleRequests) {
+        this.handleRequests = handleRequests;
+    }
 
     @Override
     public String toString() {
@@ -89,6 +134,11 @@ public class LeaveApplication
                 ", toDate=" + toDate +
                 ", type=" + type +
                 ", status=" + status +
+                ", createdDate=" + createdDate +
+                ", createdBy='" + createdBy + '\'' +
+                ", updatedDate=" + updatedDate +
+                ", updatedBy='" + updatedBy + '\'' +
+                ", handleRequests=" + handleRequests +
                 '}';
     }
 }
