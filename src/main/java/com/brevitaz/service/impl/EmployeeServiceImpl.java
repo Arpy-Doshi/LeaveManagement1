@@ -1,4 +1,8 @@
 package com.brevitaz.service.impl;
 
-public class EmployeeServiceImpl {
+import com.brevitaz.service.EmployeeService;
+
+public class EmployeeServiceImpl implements EmployeeService
+{
+
 }
