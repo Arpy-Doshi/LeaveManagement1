@@ -87,6 +87,6 @@ public class EmployeeServiceImpl implements EmployeeService
 
     @Override
     public List<Employee> getAll() {
-        return null;
+        return employeeDao.getAll();
     }
 }

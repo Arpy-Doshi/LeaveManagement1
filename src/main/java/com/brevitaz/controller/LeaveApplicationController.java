@@ -2,8 +2,12 @@ package com.brevitaz.controller;
 
 import com.brevitaz.dao.LeaveApplicationDao;
 import com.brevitaz.model.LeaveApplication;
+import com.brevitaz.service.LeaveApplicationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.constraints.Pattern;
 import java.util.Date;
 import java.util.List;
 
@@ -14,6 +18,9 @@ public class LeaveApplicationController {
 
     @Autowired
     private LeaveApplicationDao leaveApplicationDao;
+
+    @Autowired
+    private LeaveApplicationService leaveApplicationService;
 
     @RequestMapping(method = RequestMethod.POST)//do count type of leave in ser\221 1`vice
     public boolean request(@RequestBody LeaveApplication leaveApplication)  {
@@ -63,8 +70,8 @@ public class LeaveApplicationController {
 
     // we will get this list from service using getAll method.
     @RequestMapping(value = "/get-by-date/{fromDate}/{toDate}" , method = RequestMethod.GET)
-    public List<LeaveApplication> getByDate(@PathVariable Date fromDate,@PathVariable Date toDate) {
-        return leaveApplicationDao.getAll();// TODO: done by applying filter
+    public List<LeaveApplication> getByDate(@PathVariable("fromDate") @DateTimeFormat(pattern = "ddMMyyyy") Date fromDate, @PathVariable("toDate") @DateTimeFormat(pattern = "ddMMyyyy") Date toDate) {
+        return leaveApplicationService.getByDate(fromDate,toDate);// TODO: done by applying filter
     }
 
     @RequestMapping(value = "" , method = RequestMethod.GET) // all record.
@@ -81,4 +88,10 @@ public class LeaveApplicationController {
     }
 
 */
+    @RequestMapping(value = "/duplicate" , method = RequestMethod.GET) // all record.
+    public List<LeaveApplication> getDuplicate()  {
+        Date fromDate = new Date(2018-03-02);
+        Date toDate = new Date(2018-03-12);
+        return leaveApplicationService.getByDate(fromDate,toDate);
+    }
 }
