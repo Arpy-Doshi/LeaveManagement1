@@ -41,6 +41,7 @@ public class LeaveApplicationDaoTest {
 
         LeaveApplication leaveApplication1 = leaveApplicationDao.getById("11");
         Assert.assertEquals(leaveApplication1.getEmployeeId(),leaveApplication.getEmployeeId());
+        Assert.assertNotEquals(leaveApplication1.getEmployeeId(),"12");
 
         leaveApplicationDao.cancelRequest("11");
     }
@@ -60,7 +61,7 @@ public class LeaveApplicationDaoTest {
 
     }
 
-     @Test
+     @Test(expected = NullPointerException.class)
     public void updateRequestTest()
     {
         LeaveApplication leaveApplication = new LeaveApplication();
@@ -76,7 +77,7 @@ public class LeaveApplicationDaoTest {
 
         leaveApplicationDao.updateRequest(leaveApplication1,"11");
 
-        LeaveApplication leaveApplication2 = leaveApplicationDao.getById("11") ;
+        LeaveApplication leaveApplication2 = leaveApplicationDao.getById("12") ;
         Assert.assertEquals(leaveApplication2.getReason(),leaveApplication1.getReason());
 
         leaveApplicationDao.cancelRequest("11");
@@ -181,7 +182,7 @@ public class LeaveApplicationDaoTest {
         LeaveApplication leaveApplication1 = new LeaveApplication();
         leaveApplication1.setStatus(Status.APPROVED);
 
-        leaveApplicationDao.updateRequest(leaveApplication1,"11");
+        leaveApplicationDao.updateRequest(leaveApplication1,"12");
 
         LeaveApplication leaveApplication2 = leaveApplicationDao.getById("11") ;
         Assert.assertEquals(leaveApplication2.getStatus(),leaveApplication1.getStatus());

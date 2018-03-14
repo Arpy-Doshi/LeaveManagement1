@@ -80,18 +80,19 @@ public class EmployeeDaoImpl implements EmployeeDao
 
         try {
             SearchResponse response = client.search(request);
-            SearchHit[] hits = response.getHits().getHits();
-
-            Employee employee;
-
-            for (SearchHit hit : hits)
-            {
-                employee = objectMapper.readValue(hit.getSourceAsString(), Employee.class);
-                employees.add(employee);
-            }
 
             if(response.status() == RestStatus.OK)
             {
+                SearchHit[] hits = response.getHits().getHits();
+
+                Employee employee;
+
+                for (SearchHit hit : hits)
+                {
+                    employee = objectMapper.readValue(hit.getSourceAsString(), Employee.class);
+                    employees.add(employee);
+                }
+
                 return employees;
             }
             else
@@ -100,8 +101,8 @@ public class EmployeeDaoImpl implements EmployeeDao
             }
         } catch (Exception e) {
             e.printStackTrace();
+            throw new RuntimeException("Employee Doesn't exists!!");
         }
-        return null;
     }
 
     @Override
@@ -153,7 +154,7 @@ public class EmployeeDaoImpl implements EmployeeDao
     }
 
     @Override
-    public Employee getById(String id)  {
+    public Employee getById(String id) {
         GetRequest getRequest = new GetRequest(
                 indexName,
                 TYPE_NAME,
@@ -161,19 +162,18 @@ public class EmployeeDaoImpl implements EmployeeDao
 
 
         try {
-
             GetResponse response = client.get(getRequest);
-            Employee employee = objectMapper.readValue(response.getSourceAsString(), Employee.class);
             if (response.isExists()) {
+                Employee employee = objectMapper.readValue(response.getSourceAsString(), Employee.class);
                 return employee;
             } else {
-                return null;
+                    return null;
             }
         }
         catch (Exception e)
         {
             e.printStackTrace();
+            throw new RuntimeException("Employee Doesn't exists!!");
         }
-        return null;
         }
 }

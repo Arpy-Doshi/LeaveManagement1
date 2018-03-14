@@ -69,7 +69,7 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
                 return false;
             }
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return false;
@@ -120,7 +120,7 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
        {
            return false;
        }
-       } catch (IOException e) {
+       } catch (Exception e) {
             e.printStackTrace();
         }
         //System.out.println("Update: "+updateResponse);
@@ -135,10 +135,11 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
                 id);
         try {
             GetResponse getResponse = client.get(getRequest);
-            LeaveApplication leaveApplication = objectMapper.readValue(getResponse.getSourceAsString(), LeaveApplication.class);
-            System.out.println(leaveApplication.getStatus());
             if(getResponse.isExists()) {
+                LeaveApplication leaveApplication = objectMapper.readValue(getResponse.getSourceAsString(), LeaveApplication.class);
+                System.out.println(leaveApplication.getStatus());
                 return leaveApplication;
+
             }
             else
             {
@@ -148,8 +149,8 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
         catch (Exception e)
         {
             e.printStackTrace();
+            throw new RuntimeException("Leave Request Doesn't exists!!");
         }
-        return null;
     }
 
 
@@ -181,7 +182,8 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
         return leaveApplications;
 
 
-*/
+*/ try {
+
         SearchRequest request = new SearchRequest(indexName);
         request.types(TYPE_NAME);
 
@@ -190,35 +192,36 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
         sourceBuilder.query(QueryBuilders.boolQuery().must(matchQuery("employeeId", employeeId)));
         request.source(sourceBuilder);
 
-        SearchResponse response;
-        List<LeaveApplication> leaveApplications=new ArrayList<>();
-
-        try {
-            response = client.search(request);
-            SearchHit[] hits = response.getHits().getHits();
-
-            LeaveApplication leaveApplication;
-            for (SearchHit hit : hits)
-            {
-                leaveApplication = objectMapper.readValue(hit.getSourceAsString(), LeaveApplication.class);
-                leaveApplications.add(leaveApplication);
-            }
+        SearchResponse response = client.search(request);
             if(response.status() == RestStatus.OK) {
+                List<LeaveApplication> leaveApplications=new ArrayList<>();
+
+                SearchHit[] hits = response.getHits().getHits();
+
+                LeaveApplication leaveApplication;
+                for (SearchHit hit : hits)
+                {
+                    leaveApplication = objectMapper.readValue(hit.getSourceAsString(), LeaveApplication.class);
+                    leaveApplications.add(leaveApplication);
+                }
+
                 return leaveApplications;
             }
             else
             {
                 return null;
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
+            throw new RuntimeException("Doesn't Exists!!!!!!");
         }
-        return null;
     }
 
 
     @Override
     public List<LeaveApplication> checkRequest()  {
+
+        try {
         SearchRequest request = new SearchRequest(indexName);
         request.types(TYPE_NAME);
 
@@ -228,30 +231,29 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
 
         request.source(sourceBuilder);
 
-        SearchResponse response;
-        List<LeaveApplication> leaveApplications=new ArrayList<>();
-
-        try {
-            response = client.search(request);
-            SearchHit[] hits = response.getHits().getHits();
-
-            LeaveApplication leaveApplication;
-            for (SearchHit hit : hits)
-            {
-                leaveApplication = objectMapper.readValue(hit.getSourceAsString(), LeaveApplication.class);
-                leaveApplications.add(leaveApplication);
-            }
+        SearchResponse response = client.search(request);
             if(response.status() == RestStatus.OK) {
+                List<LeaveApplication> leaveApplications=new ArrayList<>();
+
+                SearchHit[] hits = response.getHits().getHits();
+
+                LeaveApplication leaveApplication;
+                for (SearchHit hit : hits)
+                {
+                    leaveApplication = objectMapper.readValue(hit.getSourceAsString(), LeaveApplication.class);
+                    leaveApplications.add(leaveApplication);
+                }
+
                 return leaveApplications;
             }
             else
             {
                 return null;
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
+            throw new RuntimeException("Doesn't Exists!!");
         }
-        return null;
     }
 
     @Override
@@ -275,7 +277,7 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
                 return false;
             }
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return false;
@@ -304,7 +306,7 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
                 return false;
             }
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return false;
@@ -319,25 +321,26 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
         SearchRequest request = new SearchRequest(indexName);
         request.types(TYPE_NAME);
         SearchResponse response = client.search(request);
-        SearchHit[] hits = response.getHits().getHits();
-
-        LeaveApplication leaveApplication;
-
-        for (SearchHit hit : hits)
-        {
-            leaveApplication = objectMapper.readValue(hit.getSourceAsString(), LeaveApplication.class);
-            leaveApplications.add(leaveApplication);
-        }
         if(response.status() == RestStatus.OK) {
+            SearchHit[] hits = response.getHits().getHits();
+
+            LeaveApplication leaveApplication;
+
+            for (SearchHit hit : hits)
+            {
+                leaveApplication = objectMapper.readValue(hit.getSourceAsString(), LeaveApplication.class);
+                leaveApplications.add(leaveApplication);
+            }
+
             return leaveApplications;
         }
         else
         {
             return null;
         }
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
+            throw new RuntimeException("Leave Applications doesn't exists");
         }
-        return null;
     }
 }

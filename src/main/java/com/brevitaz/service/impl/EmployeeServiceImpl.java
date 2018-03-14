@@ -56,8 +56,8 @@ public class EmployeeServiceImpl implements EmployeeService
     }
 
     @Override
-    public ResponseEntity<String> update(Employee employee, String id)
-    {
+    public ResponseEntity<String> update(Employee employee, String id)//TODO:service layer should handle exception
+    {//TODO:naming convention i.e. Employee employeeToBeUpdated in update
         /*StringEntity entity = null;
         Response isIndexExists = client.exists(new GetRequest(indexName), )
 

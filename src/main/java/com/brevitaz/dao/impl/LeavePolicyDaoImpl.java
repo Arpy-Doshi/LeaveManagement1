@@ -126,7 +126,7 @@ public class LeavePolicyDaoImpl implements LeavePolicyDao
             {
                 return new ResponseEntity<>("Not Deleted",HttpStatus.BAD_REQUEST);
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return new ResponseEntity<>("Not Deleted",HttpStatus.BAD_REQUEST);

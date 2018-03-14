@@ -1,6 +1,8 @@
 package com.brevitaz.model;
 
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Employee {
 
@@ -22,6 +24,10 @@ public class Employee {
     }
 
     public void setName(String name) {
+        String regex = "[0-9]+";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(name);
+        boolean isMatched = matcher.matches();
         this.name = name;
     }
 
