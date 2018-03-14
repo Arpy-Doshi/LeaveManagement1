@@ -21,8 +21,6 @@ import org.elasticsearch.rest.RestStatus;
 import org.elasticsearch.search.SearchHit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
@@ -32,7 +30,7 @@ import java.util.List;
 @Repository
 public class LeavePolicyDaoImpl implements LeavePolicyDao
 {
-    @Value("${LeavePolicy-Index-Name}")
+    @Value("${LeavePolicyServiceImpl-Index-Name}")
     private String indexName;
 
     private final String TYPE_NAME = "doc";
@@ -49,7 +47,7 @@ public class LeavePolicyDaoImpl implements LeavePolicyDao
 
 
     @Override
-    public ResponseEntity<String> create(LeavePolicy leavePolicy)  {
+    public boolean create(LeavePolicy leavePolicy)  {
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
 
         IndexRequest request = new IndexRequest(
@@ -65,22 +63,22 @@ public class LeavePolicyDaoImpl implements LeavePolicyDao
             IndexResponse indexResponse = client.index(request);
             System.out.println(indexResponse);
             if (indexResponse.status() == RestStatus.CREATED) {
-                return new ResponseEntity<>("Created", HttpStatus.CREATED);
+                return true;
             }
             else {
-                return new ResponseEntity<>("Not Created",HttpStatus.BAD_REQUEST);
+                return false;
             }
         }
         catch (Exception e) {
             e.printStackTrace();
         }
 
-        return new ResponseEntity<>("Not Created",HttpStatus.BAD_REQUEST);
+        return false;
     }
 
 
     @Override
-    public ResponseEntity<String> update(LeavePolicy leavePolicy,String id) {
+    public boolean update(LeavePolicy leavePolicy,String id) {
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
 
         try {
@@ -94,11 +92,11 @@ public class LeavePolicyDaoImpl implements LeavePolicyDao
 
             if(updateResponse.status() == RestStatus.OK)
             {
-                return new ResponseEntity<>("Updated",HttpStatus.OK);
+                return true;
             }
             else
             {
-                return new ResponseEntity<>("Not Updated",HttpStatus.BAD_REQUEST);
+                return false;
             }
         }
 
@@ -106,11 +104,11 @@ public class LeavePolicyDaoImpl implements LeavePolicyDao
             e.printStackTrace();
         }
 
-        return new ResponseEntity<>("Not Updated",HttpStatus.BAD_REQUEST);
+        return false;
     }
 
     @Override
-    public ResponseEntity<String> delete(String id) {
+    public boolean delete(String id) {
         DeleteRequest request = new DeleteRequest(
                 indexName,
                 TYPE_NAME,
@@ -120,16 +118,16 @@ public class LeavePolicyDaoImpl implements LeavePolicyDao
             DeleteResponse response = client.delete(request);
             if(response.status() == RestStatus.OK)
             {
-                return new ResponseEntity<>("Deleted",HttpStatus.OK);
+                return true;
             }
             else
             {
-                return new ResponseEntity<>("Not Deleted",HttpStatus.BAD_REQUEST);
+                return false;
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
-        return new ResponseEntity<>("Not Deleted",HttpStatus.BAD_REQUEST);
+        return false;
     }
 
     @Override
@@ -143,8 +141,8 @@ public class LeavePolicyDaoImpl implements LeavePolicyDao
         try {
 
             GetResponse response = client.get(getRequest);
-            LeavePolicy leavePolicy = objectMapper.readValue(response.getSourceAsString(), LeavePolicy.class);
             if (response.isExists()) {
+                LeavePolicy leavePolicy = objectMapper.readValue(response.getSourceAsString(), LeavePolicy.class);
                 return leavePolicy;
             } else {
                 return null;
@@ -153,18 +151,20 @@ public class LeavePolicyDaoImpl implements LeavePolicyDao
         catch (Exception e)
         {
             e.printStackTrace();
+            throw new RuntimeException("Doesn't Exists!!!");
         }
-        return null;
     }
 
     @Override
     public List<LeavePolicy> getAll()  {
+    try {
         List<LeavePolicy> leavePolicies = new ArrayList<>();
         SearchRequest request = new SearchRequest(indexName);
         request.types(TYPE_NAME);
-        try {
-            SearchResponse response = client.search(request);
+        SearchResponse response = client.search(request);
 
+        if(response.status() == RestStatus.OK)
+        {
             SearchHit[] hits = response.getHits().getHits();
 
 
@@ -173,20 +173,19 @@ public class LeavePolicyDaoImpl implements LeavePolicyDao
                 leavePolicy = objectMapper.readValue(hit.getSourceAsString(), LeavePolicy.class);
                 leavePolicies.add(leavePolicy);
             }
-                if(response.status() == RestStatus.OK)
-                {
-                    return leavePolicies;
-                }
-                else
-                {
-                    return null;
-                }
 
-         }
-         catch (Exception e) {
-            e.printStackTrace();
+            return leavePolicies;
         }
-        return null;
+        else
+        {
+            return null;
+        }
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Doesn't Exists!!!!");
+        }
 
     }
 

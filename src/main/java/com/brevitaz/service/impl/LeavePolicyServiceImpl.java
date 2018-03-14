@@ -1,3 +1,4 @@
+/*
 package com.brevitaz.service.impl;
 
 import com.brevitaz.dao.LeavePolicyDao;
@@ -31,12 +32,14 @@ public class LeavePolicyServiceImpl implements LeavePolicyService
     @Override
     public ResponseEntity<String> update(LeavePolicy leavePolicy, String id)
     {
-       /*StringEntity entity = null;
+       */
+/*StringEntity entity = null;
         Response isIndexExists = client.exists(new GetRequest(indexName), )
 
         GetIndexRequest existsRequest = new GetIndexRequest();
         GetIndexRequest res = existsRequest.indices(indexName);
-*/
+*//*
+
         if (id.trim().length() <= 0)
             return new ResponseEntity<>("Bad request", HttpStatus.BAD_REQUEST);
 
@@ -70,3 +73,4 @@ public class LeavePolicyServiceImpl implements LeavePolicyService
         return null;
     }
 }
+*/
