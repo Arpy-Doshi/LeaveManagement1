@@ -71,6 +71,7 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
 
         } catch (Exception e) {
             e.printStackTrace();
+
         }
         return false;
     }

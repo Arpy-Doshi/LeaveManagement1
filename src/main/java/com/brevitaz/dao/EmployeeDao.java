@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface EmployeeDao
 {
-    public ResponseEntity<String> create(Employee employee);
+    public boolean create(Employee employee);
     public List<Employee> getAll() ;
     public ResponseEntity<String> update(Employee employee,String id);
     public ResponseEntity<String> delete(String id);

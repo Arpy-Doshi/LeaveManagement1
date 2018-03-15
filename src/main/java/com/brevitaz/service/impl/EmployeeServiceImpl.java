@@ -32,15 +32,15 @@ public class EmployeeServiceImpl implements EmployeeService
 
 
     @Override
-    public ResponseEntity<String> create(Employee employee) {
-        if(employee.getId().trim().length() <= 0|| employee.getName().trim().length()<=0)
-            return new ResponseEntity<>("Bad request", HttpStatus.BAD_REQUEST);
-
+    public boolean create(Employee employee) {
+        if(employee.getId().trim().length() <= 0|| employee.getName().trim().length()<=0) {
+            throw new RuntimeException("Field is null");
+        }
         //Employee employee = employeeService.getByUsernameAndPassword(username,password);
 
-        else
+        else {
             return employeeDao.create(employee);
-
+        }
     }
 
     @Override

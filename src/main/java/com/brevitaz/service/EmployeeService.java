@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface EmployeeService
 {
-    public ResponseEntity<String> create (Employee employee);
+    public boolean create (Employee employee);
     public ResponseEntity<String> delete (String id);
     public ResponseEntity<String> update(Employee employee,String id);
     public Employee getById (String id);

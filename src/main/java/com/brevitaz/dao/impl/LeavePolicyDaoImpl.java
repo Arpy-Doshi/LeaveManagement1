@@ -29,7 +29,7 @@ import java.util.List;
 @Repository
 public class LeavePolicyDaoImpl implements LeavePolicyDao
 {
-    @Value("${LeavePolicyServiceImpl-Index-Name}")
+    @Value("${LeavePolicy-Index-Name}")
     private String indexName;
 
     private final String TYPE_NAME = "doc";
@@ -48,27 +48,29 @@ public class LeavePolicyDaoImpl implements LeavePolicyDao
     @Override
     public boolean create(LeavePolicy leavePolicy)  {
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        try
+        {
+            IndexRequest request = new IndexRequest(
+                    indexName,
+                    TYPE_NAME,leavePolicy.getId());
 
-        IndexRequest request = new IndexRequest(
-                indexName,
-                TYPE_NAME,leavePolicy.getId()
-        );
-
-        try {
             String json = objectMapper.writeValueAsString(leavePolicy);
 
             request.source(json, XContentType.JSON);
 
             IndexResponse indexResponse = client.index(request);
             System.out.println(indexResponse);
-            if (indexResponse.status() == RestStatus.CREATED) {
+            if (indexResponse.status() == RestStatus.CREATED)
+            {
                 return true;
             }
-            else {
+            else
+            {
                 return false;
             }
         }
-        catch (IOException e) {
+        catch (Exception e)
+        {
             e.printStackTrace();
         }
 
@@ -80,7 +82,8 @@ public class LeavePolicyDaoImpl implements LeavePolicyDao
     public boolean update(LeavePolicy leavePolicy,String id) {
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
 
-        try {
+        try
+        {
             UpdateRequest updateRequest = new UpdateRequest(
                     indexName,TYPE_NAME,
                     id).doc(objectMapper.writeValueAsString(leavePolicy), XContentType.JSON);
@@ -99,7 +102,8 @@ public class LeavePolicyDaoImpl implements LeavePolicyDao
             }
         }
 
-        catch (Exception e) {
+        catch (Exception e)
+        {
             e.printStackTrace();
         }
 
@@ -108,13 +112,16 @@ public class LeavePolicyDaoImpl implements LeavePolicyDao
 
     @Override
     public boolean delete(String id)  {
-        DeleteRequest request = new DeleteRequest(
-                indexName,
-                TYPE_NAME,
-                id);
-        try {
+        try
+        {
+            DeleteRequest request = new DeleteRequest(
+                    indexName,
+                    TYPE_NAME,id);
+
             DeleteResponse response = client.delete(request);
+
             System.out.println(response);
+
             if(response.status() == RestStatus.OK)
             {
                 return true;
@@ -123,7 +130,9 @@ public class LeavePolicyDaoImpl implements LeavePolicyDao
             {
                 return false;
             }
-        } catch (IOException e) {
+        }
+        catch (Exception e)
+        {
             e.printStackTrace();
         }
 
@@ -132,16 +141,16 @@ public class LeavePolicyDaoImpl implements LeavePolicyDao
 
     @Override
     public LeavePolicy getById(String id) {
-        GetRequest getRequest = new GetRequest(
-                indexName,
-                TYPE_NAME,
-                id);
-        try {
-            GetResponse getResponse= client.get(getRequest);
-            LeavePolicy leavePolicy  = objectMapper.readValue(getResponse.getSourceAsString(),LeavePolicy.class);
+        try
+        {
+            GetRequest getRequest = new GetRequest(
+                    indexName,
+                    TYPE_NAME,id);
 
+            GetResponse getResponse= client.get(getRequest);
             if(getResponse.isExists())
             {
+                LeavePolicy leavePolicy  = objectMapper.readValue(getResponse.getSourceAsString(),LeavePolicy.class);
                 return leavePolicy;
             }
             else
@@ -149,44 +158,50 @@ public class LeavePolicyDaoImpl implements LeavePolicyDao
                 return null;
             }
 
-        } catch (IOException e) {
+        }
+        catch (Exception e)
+        {
             e.printStackTrace();
+            throw new RuntimeException("Leave Policy Doesn't exists!!");
+
         }
 
-        return null;
     }
 
     @Override
     public List<LeavePolicy> getAll()  {
+        try {
         List<LeavePolicy> leavePolicies = new ArrayList<>();
+
         SearchRequest request = new SearchRequest(indexName);
         request.types(TYPE_NAME);
-        try {
-            SearchResponse response = client.search(request);
 
-            SearchHit[] hits = response.getHits().getHits();
+        SearchResponse response = client.search(request);
 
+        SearchHit[] hits = response.getHits().getHits();
 
-            LeavePolicy leavePolicy;
-            for (SearchHit hit : hits) {
-                leavePolicy = objectMapper.readValue(hit.getSourceAsString(), LeavePolicy.class);
-                leavePolicies.add(leavePolicy);
-            }
-            if(response.status() == RestStatus.OK)
-            {
-                return leavePolicies;
-            }
-            else
-            {
-                return null;
-            }
+        LeavePolicy leavePolicy;
+
+        for (SearchHit hit : hits)
+        {
+            leavePolicy = objectMapper.readValue(hit.getSourceAsString(), LeavePolicy.class);
+            leavePolicies.add(leavePolicy);
+        }
+        if(response.status() == RestStatus.OK)
+        {
+            return leavePolicies;
+        }
+        else
+        {
+            return null;
+        }
 
         }
-        catch (IOException e) {
+        catch (IOException e)
+        {
             e.printStackTrace();
+            throw new RuntimeException("Doesn't Exists!!");
         }
-        return null;
-
     }
 
 

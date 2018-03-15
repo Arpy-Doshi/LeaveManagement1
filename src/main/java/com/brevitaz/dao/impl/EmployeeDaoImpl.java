@@ -45,7 +45,7 @@ public class EmployeeDaoImpl implements EmployeeDao
     private ObjectMapper objectMapper;
 
     @Override
-    public ResponseEntity<String> create(Employee employee) {
+    public boolean create(Employee employee) {
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
 
         IndexRequest request = new IndexRequest(
@@ -60,16 +60,17 @@ public class EmployeeDaoImpl implements EmployeeDao
             System.out.println(indexResponse);
             if(indexResponse.status() == RestStatus.CREATED)
             {
-                return new ResponseEntity<>("Created", HttpStatus.CREATED);
+                return true;
             }
             else
             {
-                return new ResponseEntity<>("Not Created", HttpStatus.BAD_REQUEST);
+                return false;
             }
         } catch (Exception e) {
             e.printStackTrace();
+            throw new RuntimeException("Not Created");
+
         }
-        return new ResponseEntity<>("Not Created", HttpStatus.BAD_REQUEST);
     }
 
     @Override
