@@ -18,55 +18,30 @@ public class LeavePolicyServiceImpl implements LeavePolicyService
     private LeavePolicyDao leavePolicyDao;
 
     @Override
-    public ResponseEntity<String> create(LeavePolicy leavePolicy) {
-        if(leavePolicy.getId().trim().length() <= 0|| leavePolicy.getName().trim().length()<=0)
-            return new ResponseEntity<>("Bad request", HttpStatus.BAD_REQUEST);
-
-            //Employee employee = employeeService.getByUsernameAndPassword(username,password);
-
-        else
+    public boolean create(LeavePolicy leavePolicy) {
             return leavePolicyDao.create(leavePolicy);
     }
 
     @Override
-    public ResponseEntity<String> update(LeavePolicy leavePolicy, String id)
+    public boolean update(LeavePolicy leavePolicy, String id)
     {
-       /*StringEntity entity = null;
-        Response isIndexExists = client.exists(new GetRequest(indexName), )
-
-        GetIndexRequest existsRequest = new GetIndexRequest();
-        GetIndexRequest res = existsRequest.indices(indexName);
-*/
-        if (id.trim().length() <= 0)
-            return new ResponseEntity<>("Bad request", HttpStatus.BAD_REQUEST);
-
-        if(leavePolicy.getId().trim().length() <= 0)
-            return new ResponseEntity<>("Bad request", HttpStatus.BAD_REQUEST);
-
-        if(leavePolicy!=null && leavePolicy.getId().equals(id))
-            return leavePolicyDao.update(leavePolicy,id);
-        else
-            return new ResponseEntity<>("Bad Request", HttpStatus.BAD_REQUEST);
+      return leavePolicyDao.update(leavePolicy,id);
 
     }
 
     @Override
-    public ResponseEntity<String> delete(String id)
+    public boolean delete(String id)
     {
-        if (id.trim().length() <= 0)
-            return new ResponseEntity<>("Not Allowed", HttpStatus.FORBIDDEN);
-
-        else
-            return leavePolicyDao.delete(id);
+       return leavePolicyDao.delete(id);
     }
 
     @Override
     public LeavePolicy getById(String id) {
-        return null;
+        return leavePolicyDao.getById(id);
     }
 
     @Override
     public List<LeavePolicy> getAll() {
-        return null;
+        return leavePolicyDao.getAll();
     }
 }
