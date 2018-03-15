@@ -16,16 +16,16 @@ public class LeavePolicyController {
     private LeavePolicyService leavePolicyService;
 
     @RequestMapping(value = "" , method = RequestMethod.POST)
-    public ResponseEntity<String> create(@RequestBody LeavePolicy leavePolicy){
+    public boolean create(@RequestBody LeavePolicy leavePolicy){
         return leavePolicyService.create(leavePolicy);
     }
 
     @RequestMapping(value = "/{id}" , method = RequestMethod.PUT)
-    public ResponseEntity<String> update(@RequestBody LeavePolicy leavePolicy,@PathVariable String id){
+    public boolean update(@RequestBody LeavePolicy leavePolicy,@PathVariable String id){
         return leavePolicyService.update(leavePolicy,id);
     }
     @RequestMapping(value = "/{id}" , method = RequestMethod.DELETE)
-    public ResponseEntity<String> delete(@PathVariable String id) {
+    public boolean delete(@PathVariable String id) {
         return leavePolicyService.delete(id);
     }
 
