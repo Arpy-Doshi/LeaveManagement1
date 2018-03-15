@@ -1,9 +1,9 @@
 package com.brevitaz.controller;
 
-import com.brevitaz.dao.LeavePolicyDao;
 import com.brevitaz.model.LeavePolicy;
 import com.brevitaz.service.LeavePolicyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -15,16 +15,16 @@ public class LeavePolicyController {
     private LeavePolicyService leavePolicyService;
 
     @RequestMapping(value = "" , method = RequestMethod.POST)
-    public boolean create(@RequestBody LeavePolicy leavePolicy){
+    public ResponseEntity<String> create(@RequestBody LeavePolicy leavePolicy){
         return leavePolicyService.create(leavePolicy);
     }
 
     @RequestMapping(value = "/{id}" , method = RequestMethod.PUT)
-    public boolean update(@RequestBody LeavePolicy leavePolicy,@PathVariable String id){
+    public ResponseEntity<String> update(@RequestBody LeavePolicy leavePolicy,@PathVariable String id){
         return leavePolicyService.update(leavePolicy,id);
     }
     @RequestMapping(value = "/{id}" , method = RequestMethod.DELETE)
-    public boolean delete(@PathVariable String id) {
+    public ResponseEntity<String> delete(@PathVariable String id) {
         return leavePolicyService.delete(id);
     }
 

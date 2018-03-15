@@ -13,36 +13,33 @@ import java.util.List;
 @Service
 public class LeaveApplicationServiceImpl implements LeaveApplicationService
 {
-
     @Autowired
-    LeaveApplicationDao leaveApplicationDao;
+    private LeaveApplicationDao leaveApplicationDao;
+
 
     @Override
     public List<LeaveApplication> getByDate(Date fromDate, Date toDate) {
 
-       List<LeaveApplication> application = getAll();
-        List<LeaveApplication> application2 = new ArrayList<>();
-       for (LeaveApplication application1 : application )
-       {
-           if(fromDate.compareTo(application1.getFromDate()) == 0)
-           {
-               application2.add(application1);
-           }
-           else if(toDate.compareTo(application1.getToDate()) == 0)
-           {
-               application2.add(application1);
-           }
-           else if(fromDate.compareTo(application1.getFromDate()) == 1 && fromDate.compareTo(application1.getToDate()) == -1 )
-           {
-               application2.add(application1);
-           }
-       }
-        return application2;
-    }
+        List<LeaveApplication> leaveApplications1;
+        List<LeaveApplication> leaveApplications2 = new ArrayList<>();
 
-    @Override
-    public List<LeaveApplication> getAll() {
-        System.out.println("getAll service call");
-       return leaveApplicationDao.getAll();
+        if (fromDate == null || toDate == null )
+            return null;
+        else
+           leaveApplications1= leaveApplicationDao.getAll();
+
+        for (LeaveApplication leaveapplication2:leaveApplications1)
+        {
+            if (fromDate.compareTo(leaveapplication2.getFromDate()) == 0)
+                leaveApplications2.add(leaveapplication2);
+            if (toDate.compareTo(leaveapplication2.getFromDate()) == 0)
+                leaveApplications2.add(leaveapplication2);
+            if (leaveapplication2.getFromDate().compareTo(fromDate) == 1 && leaveapplication2.getFromDate().compareTo(toDate) == -1 )
+                leaveApplications2.add(leaveapplication2);
+        }
+        
+        return leaveApplications2;
+
+
     }
 }

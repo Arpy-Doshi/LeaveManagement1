@@ -6,8 +6,6 @@ import com.brevitaz.service.LeaveApplicationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.constraints.Pattern;
 import java.util.Date;
 import java.util.List;
 
@@ -17,12 +15,12 @@ import java.util.List;
 public class LeaveApplicationController {
 
     @Autowired
-    private LeaveApplicationDao leaveApplicationDao;
-
-    @Autowired
     private LeaveApplicationService leaveApplicationService;
 
-    @RequestMapping(method = RequestMethod.POST)//do count type of leave in ser\221 1`vice
+    @Autowired
+    private LeaveApplicationDao leaveApplicationDao;
+
+    @RequestMapping(method = RequestMethod.POST)//do count type of leave in service
     public boolean request(@RequestBody LeaveApplication leaveApplication)  {
         return leaveApplicationDao.request(leaveApplication);
     }
@@ -88,10 +86,4 @@ public class LeaveApplicationController {
     }
 
 */
-    @RequestMapping(value = "/duplicate" , method = RequestMethod.GET) // all record.
-    public List<LeaveApplication> getDuplicate()  {
-        Date fromDate = new Date(2018-03-02);
-        Date toDate = new Date(2018-03-12);
-        return leaveApplicationService.getByDate(fromDate,toDate);
-    }
 }
