@@ -60,7 +60,7 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
             request.source(json, XContentType.JSON);
             IndexResponse indexResponse  = client.index(request);
             System.out.println(indexResponse);
-            if(indexResponse.status() == RestStatus.CREATED)
+            if(indexResponse.status() == RestStatus.OK)
             {
                 return true;
             }
@@ -71,9 +71,9 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
 
         } catch (Exception e) {
             e.printStackTrace();
-
+            throw new RuntimeException("Bad Request!!!");
         }
-        return false;
+       /* return false;*/
     }
 
     @Override

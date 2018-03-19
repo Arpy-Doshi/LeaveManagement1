@@ -1,6 +1,5 @@
 package com.brevitaz.service;
 
-import com.brevitaz.model.Employee;
 import com.brevitaz.model.LeaveApplication;
 
 import java.util.List;

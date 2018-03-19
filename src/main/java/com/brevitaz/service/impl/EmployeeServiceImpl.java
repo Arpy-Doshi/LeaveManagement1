@@ -44,19 +44,19 @@ public class EmployeeServiceImpl implements EmployeeService
     }
 
     @Override
-    public ResponseEntity<String> delete(String id)
+    public boolean delete(String id)
     {
         System.out.println("service is called.");
 
         if (id.trim().length() <= 0)
-            return new ResponseEntity<>("Bad request", HttpStatus.BAD_REQUEST);
+            throw new RuntimeException("Bad request!!!");
 
         else
             return employeeDao.delete(id);
     }
 
     @Override
-    public ResponseEntity<String> update(Employee employee, String id)//TODO:service layer should handle exception
+    public boolean update(Employee employee, String id)//TODO:service layer should handle exception
     {//TODO:naming convention i.e. Employee employeeToBeUpdated in update
         /*StringEntity entity = null;
         Response isIndexExists = client.exists(new GetRequest(indexName), )
@@ -65,15 +65,15 @@ public class EmployeeServiceImpl implements EmployeeService
         GetIndexRequest res = existsRequest.indices(indexName);
 */
         if (id.trim().length() <= 0)
-            return new ResponseEntity<>("Bad request", HttpStatus.BAD_REQUEST);
+            throw  new RuntimeException("Bad request!!!!");
 
         if(employee.getId().trim().length() <= 0)
-            return new ResponseEntity<>("Bad request", HttpStatus.BAD_REQUEST);
+            throw  new RuntimeException("Bad request");
 
         if(employee!=null && employee.getId().equals(id))
             return employeeDao.update(employee,id);
         else
-            return new ResponseEntity<>("Bad Request", HttpStatus.BAD_REQUEST);
+            throw  new RuntimeException("Bad Request");
 
     }
 

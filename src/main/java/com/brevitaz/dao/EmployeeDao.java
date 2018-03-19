@@ -9,7 +9,7 @@ public interface EmployeeDao
 {
     public boolean create(Employee employee);
     public List<Employee> getAll() ;
-    public ResponseEntity<String> update(Employee employee,String id);
-    public ResponseEntity<String> delete(String id);
+    public boolean update(Employee employee,String id);
+    public boolean delete(String id);
     public Employee getById(String id);
 }

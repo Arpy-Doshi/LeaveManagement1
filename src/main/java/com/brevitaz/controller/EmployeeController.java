@@ -5,8 +5,11 @@ import com.brevitaz.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 import java.util.List;
 
+@ControllerAdvice
 @RestController
 @RequestMapping("/api/employees")
 public class EmployeeController {
@@ -15,7 +18,7 @@ public class EmployeeController {
     private EmployeeService employeeService;
 
     @RequestMapping(method = RequestMethod.POST)
-    public boolean create(@RequestBody Employee employee) {
+    public boolean create(@Valid @RequestBody Employee employee) {
         return employeeService.create(employee);
 
     }
@@ -28,13 +31,13 @@ public class EmployeeController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<String> update(@RequestBody Employee employee, @PathVariable String id){
+    public boolean update(@RequestBody Employee employee, @PathVariable String id){
         return employeeService.update(employee,id);
 
     }
 
     @RequestMapping(value = "/{id}", method = {RequestMethod.DELETE})
-    public ResponseEntity<String> delete(@PathVariable String id){
+    public boolean delete(@PathVariable String id){
         System.out.println("controller is called.");
         return employeeService.delete(id);
 
