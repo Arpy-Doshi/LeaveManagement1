@@ -28,11 +28,13 @@ public class LeaveServiceImpl implements LeaveService
 
         if (employeeId.trim().length()<=0)
             throw new RuntimeException("Id is null!!!");
-        else/* if (employeeId.trim().length() > 0)*/// TODO: compare with Db if not empty then only return LA
+        else if (employeeId.trim().length() > 0) {
             leaveApplications = leaveApplicationDao.getByEmployeeId(employeeId);
             return leaveApplications;
-      /*  else
+        }
+        else
             throw new RuntimeException("Bad Request!!!!");
-*/
+
+
     }
 }
