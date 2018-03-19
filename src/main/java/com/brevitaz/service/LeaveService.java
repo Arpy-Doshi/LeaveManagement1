@@ -1,4 +1,13 @@
 package com.brevitaz.service;
 
-public interface LeaveService {
+import com.brevitaz.model.Employee;
+import com.brevitaz.model.LeaveApplication;
+
+import java.util.List;
+
+public interface LeaveService
+{
+    public double checkBalance(String employeeId);
+
+    public List<LeaveApplication>getByEmployeeId(String employeeId);
 }
