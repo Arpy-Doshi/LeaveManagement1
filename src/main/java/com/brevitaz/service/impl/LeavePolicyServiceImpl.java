@@ -39,7 +39,7 @@ public class LeavePolicyServiceImpl implements LeavePolicyService
             throw new RuntimeException("Field is null!!!");
         else if (leavePolicy1.getId() != id)
             throw new RuntimeException("Id doesn't match");
-        else if(leavePolicy!=null && leavePolicy.getId().equals(id))
+        else if(leavePolicy!=null && leavePolicy.getId().equals(id))// TODO: compare with Db if not empty then only
             return leavePolicyDao.update(leavePolicy,id);
        else
             throw new RuntimeException("Bad Request!!!!");
@@ -56,9 +56,9 @@ public class LeavePolicyServiceImpl implements LeavePolicyService
             throw new RuntimeException("Id is null!!");
         else if (leavePolicy.getId().trim().length()<= 0 || leavePolicy.getName().trim().length()<=0)
             throw new RuntimeException("Field is null");
-        else if (leavePolicy.getId() != id)
+        else if (leavePolicy.getId().trim().length() != id.trim().length())
             throw new RuntimeException("Id doesn't match");
-        else if (leavePolicy!= null && leavePolicy.getId().equals(id))
+        else if (leavePolicy!= null && leavePolicy.getId().equals(id))// TODO: compare with Db if not empty then only
             return leavePolicyDao.delete(id);
         else
             throw new RuntimeException("Bad Request!!");
@@ -74,7 +74,11 @@ public class LeavePolicyServiceImpl implements LeavePolicyService
     }
 
     @Override
-    public List<LeavePolicy> getAll() {
+    public List<LeavePolicy> getAll()
+    {
+        /*if ()*/// TODO: compare with Db if not empty then only
         return leavePolicyDao.getAll();
+        /*else
+            throw new RuntimeException("Bad Request!!!");*/
     }
 }

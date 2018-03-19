@@ -264,10 +264,10 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
         try {
             UpdateRequest request = new UpdateRequest(
                     indexName,TYPE_NAME,
-                    id).doc(jsonBuilder()
+                    id).doc(objectMapper.writeValueAsString(id), XContentType.JSON);/*.doc(jsonBuilder()
                             .startObject()
                             .field("status", "APPROVED")
-                            .endObject());
+                            .endObject());*/
             UpdateResponse updateResponse = client.update(request);
             System.out.println("Update: "+updateResponse);
             if (updateResponse.status() == RestStatus.OK) {

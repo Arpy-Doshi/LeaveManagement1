@@ -5,9 +5,11 @@ import com.brevitaz.model.Employee;
 import com.brevitaz.model.LeaveApplication;
 import com.brevitaz.service.LeaveService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class LeaveServiceImpl implements LeaveService
 {
 
@@ -26,11 +28,11 @@ public class LeaveServiceImpl implements LeaveService
 
         if (employeeId.trim().length()<=0)
             throw new RuntimeException("Id is null!!!");
-        else if (employeeId.trim().length() > 0)
+        else/* if (employeeId.trim().length() > 0)*/// TODO: compare with Db if not empty then only return LA
             leaveApplications = leaveApplicationDao.getByEmployeeId(employeeId);
             return leaveApplications;
-        else
+      /*  else
             throw new RuntimeException("Bad Request!!!!");
-
+*/
     }
 }
