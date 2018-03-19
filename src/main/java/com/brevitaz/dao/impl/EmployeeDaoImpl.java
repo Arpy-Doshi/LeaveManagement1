@@ -58,7 +58,7 @@ public class EmployeeDaoImpl implements EmployeeDao
             request.source(json, XContentType.JSON);
             IndexResponse indexResponse = client.index(request);
             System.out.println(indexResponse);
-            if(indexResponse.status() == RestStatus.CREATED)
+            if(indexResponse.status() == RestStatus.OK)
             {
                 return true;
             }
