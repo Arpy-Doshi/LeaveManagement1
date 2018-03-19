@@ -4,8 +4,6 @@ import com.brevitaz.dao.LeavePolicyDao;
 import com.brevitaz.model.LeavePolicy;
 import com.brevitaz.service.LeavePolicyService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -67,8 +65,12 @@ public class LeavePolicyServiceImpl implements LeavePolicyService
     }
 
     @Override
-    public LeavePolicy getById(String id) {
-        return leavePolicyDao.getById(id);
+    public LeavePolicy getById(String id)
+    {
+        if (id.trim().length()<=0)
+            throw new RuntimeException("Id is null!!");
+        else
+            return leavePolicyDao.getById(id);
     }
 
     @Override
