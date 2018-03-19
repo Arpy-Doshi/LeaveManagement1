@@ -88,17 +88,20 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
 
     @Override
     public boolean cancelRequest(String id) {
-
         LeaveApplication leaveApplication = leaveApplicationDao.getById(id);
         if(leaveApplication == null)
         {
-            throw new InvalidIdException("Id is invalid");
+            throw new InvalidIdException("LeaveApplication with Id "+id+" does not exist");
         }
         return leaveApplicationDao.cancelRequest(id);
     }
 
     @Override
     public boolean updateRequest(LeaveApplication leaveApplication, String id) {
+        LeaveApplication leaveApplication1 = leaveApplicationDao.getById(id);
+        if(leaveApplication1 == null) {
+            throw new InvalidIdException("LeaveApplication with Id " + id + " does not exist");
+        }
         return leaveApplicationDao.updateRequest(leaveApplication,id);
     }
 

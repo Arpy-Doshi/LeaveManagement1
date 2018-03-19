@@ -13,6 +13,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/brevitaz/controller/LeaveApplicationController.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/src/main/java/com/brevitaz/errors/DateNotValidException.java">
           <value>
             <set />
@@ -29,6 +34,16 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/src/main/java/com/brevitaz/errors/LeaveApplicationNotFoundException.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/brevitaz/errors/MethodArgumentNotValidException.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/brevitaz/model/LeaveApplication.java">
           <value>
             <set />
           </value>

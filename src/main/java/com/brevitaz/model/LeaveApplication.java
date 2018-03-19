@@ -1,12 +1,17 @@
 package com.brevitaz.model;
 
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
 
+@EntityScan
 public class LeaveApplication
 {
     private String id;
     private String employeeId;
+    @NotNull
     private String employeeName;
     private String reason;
     private Date fromDate;

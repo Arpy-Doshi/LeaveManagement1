@@ -6,6 +6,8 @@ import com.brevitaz.service.LeaveApplicationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 import java.util.Date;
 import java.util.List;
 
@@ -18,7 +20,7 @@ public class LeaveApplicationController {
     private LeaveApplicationService leaveApplicationService;
 
     @RequestMapping(method = RequestMethod.POST)
-    public boolean request(@RequestBody LeaveApplication leaveApplication)  {
+    public boolean request(@Valid @RequestBody LeaveApplication leaveApplication)  {
         return leaveApplicationService.request(leaveApplication);
     }
 
