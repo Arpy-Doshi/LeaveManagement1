@@ -2,6 +2,10 @@ package com.brevitaz.service.impl;
 
 import com.brevitaz.dao.EmployeeDao;
 import com.brevitaz.dao.LeaveApplicationDao;
+import com.brevitaz.errors.InvalidDateException;
+import com.brevitaz.errors.EmployeeNotFoundException;
+import com.brevitaz.errors.InvalidIdException;
+import com.brevitaz.errors.LeaveApplicationNotFoundException;
 import com.brevitaz.model.Employee;
 import com.brevitaz.model.LeaveApplication;
 import com.brevitaz.service.LeaveApplicationService;
@@ -24,9 +28,35 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
     @Override
     public boolean request(LeaveApplication leaveApplication) {
 
-        Employee employee = employeeDao.getById(leaveApplication.getEmployeeId());
+        if(leaveApplication.getToDate().equals("") /**/||leaveApplication.getFromDate().equals("") || leaveApplication.getType().equals("")/**/)
+        {
+            System.out.println("Todate s");
+        }
 
-        if(leaveApplication.getEmployeeId().trim().length() >0 && employee.getName().trim().length()>0)
+        Date date = new Date();
+        if (leaveApplication.getFromDate().compareTo(date) == 1)
+        {
+            throw new InvalidDateException("From date is invalid");
+        }
+        if(leaveApplication.getToDate().compareTo(date) == 1)
+        {
+            throw new InvalidDateException("To date is invalid");
+        }
+        if(leaveApplication.getFromDate().compareTo(leaveApplication.getToDate()) == -1)
+        {
+            throw new InvalidDateException("Form date is bigger than To date");
+        }
+
+
+        Employee employee = employeeDao.getById(leaveApplication.getEmployeeId());
+        if(employee == null)
+        {
+            throw new EmployeeNotFoundException("employee does not exist");
+        }
+
+
+
+       /* if(leaveApplication.getEmployeeId().trim().length() >0 && employee.getName().trim().length()>0)
         {
             if(employee.getName().equals(leaveApplication.getEmployeeName()))
             {
@@ -40,13 +70,18 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
         else
         {
             return false;
-        }
+        }*/
          return false;
     }
 
     @Override
     public boolean cancelRequest(String id) {
 
+        LeaveApplication leaveApplication = leaveApplicationDao.getById(id);
+        if(leaveApplication == null)
+        {
+            throw new InvalidIdException("Id is invalid");
+        }
         return leaveApplicationDao.cancelRequest(id);
     }
 
@@ -57,6 +92,7 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
 
     @Override
     public LeaveApplication getById(String id) {
+
         return leaveApplicationDao.getById(id);
     }
 
