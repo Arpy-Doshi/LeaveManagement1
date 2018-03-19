@@ -47,7 +47,6 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
             throw new InvalidDateException("Form date is bigger than To date");
         }
 
-
         Employee employee = employeeDao.getById(leaveApplication.getEmployeeId());
         if(employee == null)
         {
