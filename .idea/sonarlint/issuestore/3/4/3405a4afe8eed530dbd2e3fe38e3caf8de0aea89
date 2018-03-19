@@ -1,0 +1,17 @@
+
+Xsquid:S2583"CChange this condition so that it does not always evaluate to "true"(´ç•á
+Qsquid:S2589"7Remove this expression which always evaluates to "true"(ù«ÄÐþÿÿÿÿ
+Qsquid:S2589"7Remove this expression which always evaluates to "true"(ù«ÄÐþÿÿÿÿ
+\squid:S00112"FDefine and throw a dedicated exception instead of using a generic one.(ÁøÐÝ
+\squid:S00112"FDefine and throw a dedicated exception instead of using a generic one.(ŠÝ·ã
+asquid:S00112"FDefine and throw a dedicated exception instead of using a generic one.(ØŸ’½ûÿÿÿÿ
+\squid:S00112"FDefine and throw a dedicated exception instead of using a generic one.(ÐŸÜ¹
+\squid:S00112"FDefine and throw a dedicated exception instead of using a generic one.(‹ó’„
+asquid:S00112"FDefine and throw a dedicated exception instead of using a generic one.(ØÅŠ¾ýÿÿÿÿ
+\squid:S00112"FDefine and throw a dedicated exception instead of using a generic one.(¢«ëË
+\squid:S00112"FDefine and throw a dedicated exception instead of using a generic one.(ÐŸÜ¹
+asquid:S00112"FDefine and throw a dedicated exception instead of using a generic one.(­¹Ážøÿÿÿÿ
+asquid:S00112"FDefine and throw a dedicated exception instead of using a generic one.(ØÅŠ¾ýÿÿÿÿ
+\squid:S00112"FDefine and throw a dedicated exception instead of using a generic one.(ÁÞ¾å
+gsquid:UselessImportCheck"@Remove this unused import 'org.springframework.http.HttpStatus'.(íŸ¤Šúÿÿÿÿ
+ksquid:UselessImportCheck"DRemove this unused import 'org.springframework.http.ResponseEntity'.(¶¯ø¦úÿÿÿÿ
