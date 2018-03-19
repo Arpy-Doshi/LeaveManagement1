@@ -8,8 +8,11 @@ import com.brevitaz.errors.InvalidIdException;
 import com.brevitaz.errors.LeaveApplicationNotFoundException;
 import com.brevitaz.model.Employee;
 import com.brevitaz.model.LeaveApplication;
+import com.brevitaz.model.Status;
 import com.brevitaz.service.LeaveApplicationService;
+import org.elasticsearch.client.RestHighLevelClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -24,6 +27,13 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
 
     @Autowired
     private EmployeeDao employeeDao;
+
+    @Autowired
+    private RestHighLevelClient client;
+
+    @Value("${LeaveApplication-Index-Name}")
+    private String indexName;
+
 
     @Override
     public boolean request(LeaveApplication leaveApplication) {
@@ -90,29 +100,93 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
     }
 
     @Override
-    public LeaveApplication getById(String id) {
+    public LeaveApplication getById(String id)
+    {/*
+        boolean exists = client..admin().indices()
+                .prepareExists(indexName)
+                .execute().actionGet().isExists();*/
 
-        return leaveApplicationDao.getById(id);
+        if (id.trim().length()<=0)
+            throw new RuntimeException("Id is null!!");
+        else /*if (client.exists())*///TODO: DB shouldn't be null
+            return leaveApplicationDao.getById(id);
+        /*else
+            throw new RuntimeException("Bad Request!!!!");*/
+
     }
 
     @Override
-    public List<LeaveApplication> checkRequest() {
-        return leaveApplicationDao.checkRequest();
+    public List<LeaveApplication> checkRequest()
+    {
+        List<LeaveApplication> leaveApplications;
+
+        List<LeaveApplication> leaveApplications1 = null;
+
+        if (indexName.isEmpty())//TODO: DB shouldn't be empty
+            throw new RuntimeException("Index is empty!!!");
+        else
+            leaveApplications = leaveApplicationDao.getAll();
+
+        for (LeaveApplication leaveApplication:leaveApplications)
+        {
+            if (leaveApplication.getStatus() == Status.APPLIED)
+                leaveApplications1.add(leaveApplication);
+
+        }
+        return leaveApplications1;
+
+        /*return leaveApplicationDao.checkRequest();*/
     }
 
     @Override
-    public boolean approveRequest(String id) {
-        return leaveApplicationDao.approveRequest(id);
+    public boolean approveRequest(String id)
+    {
+        LeaveApplication leaveApplication = leaveApplicationDao.getById(id);
+
+        if (id.trim().length()<=0)
+            throw new RuntimeException("Id is null!!");
+        else if (leaveApplication.getId().trim().length() != id.trim().length())
+            throw new RuntimeException("Id doesn't match");
+        else if (leaveApplication!= null)
+            leaveApplication.setStatus(Status.APPROVED);
+            return leaveApplicationDao.approveRequest(id);
+        /*        LeaveApplication leaveApplication1 = leaveApplication;
+            leaveApplicationDao.updateRequest(leaveApplication1,id);
+    */    /*return leaveApplicationDao.approveRequest(id);*/
     }
 
     @Override
-    public boolean declineRequest(String id) {
-        return leaveApplicationDao.declineRequest(id);
+    public boolean declineRequest(String id)
+    {
+        LeaveApplication leaveApplication = leaveApplicationDao.getById(id);
+
+        if (id.trim().length()<=0)
+            throw new RuntimeException("ID is null!!!");
+
+        else if (leaveApplication.getId().trim().length()<= 0 || leaveApplication.getEmployeeId().trim().length()<=0)
+            throw new RuntimeException("Field is null");
+
+        else if (leaveApplication.getId().trim().length() != id.trim().length())
+            throw new RuntimeException("Id doesn't match");
+
+        else if (leaveApplication!= null && leaveApplication.getId().equals(id))// TODO: compare with Db if not empty then only
+            return leaveApplicationDao.declineRequest(id);
+
+        else
+            throw new RuntimeException("Bad Request!!");
+
+
+
+        /*return leaveApplicationDao.declineRequest(id);*/
     }
 
     @Override
-    public List<LeaveApplication> getAll() {
-        return leaveApplicationDao.getAll();
+    public List<LeaveApplication> getAll()
+    {
+        if (indexName.isEmpty())//TODO: DB shouldn't be empty
+            throw new RuntimeException("Index is empty!!!");
+        else
+            return leaveApplicationDao.getAll();
     }
 
     @Override
@@ -121,22 +195,22 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
         List<LeaveApplication> leaveApplications1;
         List<LeaveApplication> leaveApplications2 = new ArrayList<>();
 
-       /* if (fromDate == null || toDate == null )
-            return null;
+        if (fromDate == null || toDate == null )
+            throw new RuntimeException("Date is null!!!");
         else
-           leaveApplications1= leaveApplicationDao.getAll();
+            leaveApplications1= leaveApplicationDao.getAll();
 
-        for (LeaveApplication leaveapplication2:leaveApplications1)
-        {
-            if (fromDate.compareTo(leaveapplication2.getFromDate()) == 0)
-                leaveApplications2.add(leaveapplication2);
-            if (toDate.compareTo(leaveapplication2.getFromDate()) == 0)
-                leaveApplications2.add(leaveapplication2);
-            if (leaveapplication2.getFromDate().compareTo(fromDate) == 1 && leaveapplication2.getFromDate().compareTo(toDate) == -1 )
-                leaveApplications2.add(leaveapplication2);
-        }
-        */
-            leaveApplications1 = leaveApplicationDao.getAll();
+            for (LeaveApplication leaveapplication2:leaveApplications1)
+            {
+                if (fromDate.compareTo(leaveapplication2.getFromDate()) == 0)
+                    leaveApplications2.add(leaveapplication2);
+                if (toDate.compareTo(leaveapplication2.getFromDate()) == 0)
+                    leaveApplications2.add(leaveapplication2);
+                if (leaveapplication2.getFromDate().compareTo(fromDate) == 1 && leaveapplication2.getFromDate().compareTo(toDate) == -1 )
+                    leaveApplications2.add(leaveapplication2);
+            }
+            return leaveApplications2;
+         /*   leaveApplications1 = leaveApplicationDao.getAll();
 
             for(LeaveApplication application : leaveApplications1)
             {
@@ -151,7 +225,7 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
                 {
                     leaveApplications2.add(application);
                 }
-            }
-        return leaveApplications2;
+            }*/
+
     }
 }
