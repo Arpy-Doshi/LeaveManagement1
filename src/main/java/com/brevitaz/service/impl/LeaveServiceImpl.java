@@ -5,9 +5,12 @@ import com.brevitaz.model.Employee;
 import com.brevitaz.model.LeaveApplication;
 import com.brevitaz.service.LeaveService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+
+@Service
 public class LeaveServiceImpl implements LeaveService
 {
 
