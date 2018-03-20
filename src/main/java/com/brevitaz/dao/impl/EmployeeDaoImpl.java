@@ -2,6 +2,7 @@ package com.brevitaz.dao.impl;
 
 import com.brevitaz.config.Config;
 import com.brevitaz.dao.EmployeeDao;
+import com.brevitaz.errors.EmployeeNotFoundException;
 import com.brevitaz.model.Employee;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -151,7 +152,7 @@ public class EmployeeDaoImpl implements EmployeeDao
             }
         } catch (Exception e) {
             e.printStackTrace();
-            throw new RuntimeException("Bad Request!!!");
+            throw new EmployeeNotFoundException("not found!!!");
         }
          }
 
@@ -169,13 +170,14 @@ public class EmployeeDaoImpl implements EmployeeDao
                 Employee employee = objectMapper.readValue(response.getSourceAsString(), Employee.class);
                 return employee;
             } else {
-                    return null;
+                return null;
+                /*   throw new EmployeeNotFoundException("not exists!!");*/
             }
         }
         catch (Exception e)
         {
             e.printStackTrace();
-            throw new RuntimeException("Employee Doesn't exists!!");
+            throw new EmployeeNotFoundException("Employee Doesn't exists!!");
         }
         }
 }

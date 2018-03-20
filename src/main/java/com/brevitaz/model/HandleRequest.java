@@ -1,9 +1,16 @@
 package com.brevitaz.model;
 
 
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+
+import javax.validation.constraints.NotNull;
+
+@EntityScan
 public class HandleRequest
 {
+    @NotNull
     private String EmployeeId;
+
     private Status status;
 
     public String getEmployeeId() {

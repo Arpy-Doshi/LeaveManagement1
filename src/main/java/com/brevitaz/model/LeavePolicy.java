@@ -1,13 +1,23 @@
 package com.brevitaz.model;
 
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
 
+@EntityScan
 public class LeavePolicy
 {
+    @NotNull
     private String id;
+
+    @NotNull
     private String name;
+
+    @NotNull
     private List<LeavePolicyRule> leavePolicyRules;
+
     private Date createdDate;
     private String createdBy;
     private Date updatedDate;

@@ -1,9 +1,17 @@
 package com.brevitaz.model;
 
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+
+import javax.validation.constraints.NotNull;
+
+@EntityScan
 public class LeavePolicyRule
 {
+    @NotNull
     private String id;
+    @NotNull
     private String name;
+    @NotNull
     private String description;
 
     public String getId() {

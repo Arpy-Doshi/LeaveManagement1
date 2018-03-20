@@ -1,21 +1,15 @@
 package com.brevitaz.service.impl;
 
 import com.brevitaz.dao.EmployeeDao;
+import com.brevitaz.errors.EmployeeNotFoundException;
+import com.brevitaz.errors.IndexNotFoundException;
+import com.brevitaz.errors.InvalidIdException;
 import com.brevitaz.model.Employee;
 import com.brevitaz.service.EmployeeService;
-import org.apache.http.entity.ContentType;
-import org.apache.http.entity.StringEntity;
-import org.elasticsearch.action.admin.indices.get.GetIndexRequest;
-import org.elasticsearch.action.get.GetRequest;
-import org.elasticsearch.client.Response;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
-import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -33,26 +27,27 @@ public class EmployeeServiceImpl implements EmployeeService
 
     @Override
     public boolean create(Employee employee) {
-        if(employee.getId().trim().length() <= 0|| employee.getName().trim().length()<=0) {
+      /*  if(employee.getId().trim().length() <= 0|| employee.getName().trim().length()<=0) {
             throw new RuntimeException("Field is null");
         }
-        //Employee employee = employeeService.getByUsernameAndPassword(username,password);
+      */  /*else {
 
-        else {
-            return employeeDao.create(employee);
-        }
+        }*/
+        return employeeDao.create(employee);
     }
 
     @Override
     public boolean delete(String id)
     {
-        System.out.println("service is called.");
-
         if (id.trim().length() <= 0)
-            throw new RuntimeException("Bad request!!!");
+            throw new InvalidIdException("Id is null!!!");
 
-        else
+        Employee employee = employeeDao.getById(id);
+
+        if (employee != null)
             return employeeDao.delete(id);
+        else
+            throw new EmployeeNotFoundException("Employee with Id "+id+" doesn't exists!!!");
     }
 
     @Override
@@ -65,25 +60,51 @@ public class EmployeeServiceImpl implements EmployeeService
         GetIndexRequest res = existsRequest.indices(indexName);
 */
         if (id.trim().length() <= 0)
-            throw  new RuntimeException("Bad request!!!!");
+            throw  new InvalidIdException("Id is null!!!!");
 
         if(employee.getId().trim().length() <= 0)
-            throw  new RuntimeException("Bad request");
+            throw  new InvalidIdException("Id is null!!!");
 
-        if(employee!=null && employee.getId().equals(id))
-            return employeeDao.update(employee,id);
+        if (employee.getId().equals(id))
+        {
+            if(employee!=null)
+                return employeeDao.update(employee,id);
+            else
+                throw  new EmployeeNotFoundException("Employee with Id "+id+" doesn't exists!!!");
+
+        }
         else
-            throw  new RuntimeException("Bad Request");
+            throw new InvalidIdException("Id doesn't match!!!");
 
     }
 
     @Override
-    public Employee getById(String id) {
-        return null;
+    public Employee getById(String id)
+    {
+        if (id.trim().length() <= 0)
+            throw  new InvalidIdException("Id is null!!!!");
+
+        Employee employee = employeeDao.getById(id);
+
+        if (employee != null)
+            return employeeDao.getById(id);
+        else
+            throw new EmployeeNotFoundException("Employee with Id "+id+" doesn't exists!!!");
     }
 
     @Override
-    public List<Employee> getAll() {
-        return employeeDao.getAll();
+    public List<Employee> getAll()
+    {
+/*
+        boolean exists = client.admin().indices()
+                .prepareExists(indexName)
+                .execute().actionGet().isExists();
+
+        if (exists == false)
+            throw new IndexNotFoundException("Index doesn't exists!!!!!");
+        else
+*/
+            return employeeDao.getAll();
     }
 }
+

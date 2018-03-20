@@ -6,15 +6,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ControllerAdvice
 @ResponseStatus(HttpStatus.NOT_FOUND)
-public class EmployeeNotFoundException extends NullPointerException{
-
-
-    public EmployeeNotFoundException() {
+public class IndexNotFoundException extends NullPointerException {
+    public IndexNotFoundException() {
     }
 
-    public EmployeeNotFoundException(String exception)
-    {
-        super(exception);
+    public IndexNotFoundException(String msg) {
+        super(msg);
     }
-
 }
