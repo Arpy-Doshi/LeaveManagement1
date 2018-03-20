@@ -30,7 +30,7 @@ public class LeaveApplicationController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public boolean updateRequest(@RequestBody LeaveApplication leaveApplication,@PathVariable String id) {
+    public boolean updateRequest(@Valid @RequestBody LeaveApplication leaveApplication,@PathVariable String id) {
         return leaveApplicationService.updateRequest(leaveApplication,id);
     }
 

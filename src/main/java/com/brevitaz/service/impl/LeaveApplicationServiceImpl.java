@@ -2,10 +2,7 @@ package com.brevitaz.service.impl;
 
 import com.brevitaz.dao.EmployeeDao;
 import com.brevitaz.dao.LeaveApplicationDao;
-import com.brevitaz.errors.InvalidDateException;
-import com.brevitaz.errors.EmployeeNotFoundException;
-import com.brevitaz.errors.InvalidIdException;
-import com.brevitaz.errors.LeaveApplicationNotFoundException;
+import com.brevitaz.errors.*;
 import com.brevitaz.model.Employee;
 import com.brevitaz.model.LeaveApplication;
 import com.brevitaz.model.Status;
@@ -39,11 +36,6 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
     @Override
     public boolean request(LeaveApplication leaveApplication) {
 
-    /*    if(leaveApplication.getToDate().equals("") *//**//*||leaveApplication.getFromDate().equals("") || leaveApplication.getType().equals("")*//**//*)
-        {
-            throw new InvalidDateException("Date is null");
-        }
-*/
         Date date = new Date();
         if (leaveApplication.getFromDate().compareTo(date) == -1)
         {
@@ -60,15 +52,12 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
 
 
         Employee employee = employeeDao.getById(leaveApplication.getEmployeeId());
-        if(employee == null)
+         if(employee == null)
         {
-            throw new EmployeeNotFoundException("employee does not exist");
+            throw new EmployeeNotFoundException("Employee with Id "+employee.getId()+" does not exist");
         }
 
-        if(leaveApplication.getEmployeeId().trim().length() <=0 || employee.getName().trim().length()<=0)
-            throw new InvalidIdException("Field is null");
-        if (employee.getName().equals(leaveApplication.getEmployeeName())/* && leaveApplication.getFromDate().compareTo(date) == 1
-                && leaveApplication.getToDate().compareTo(date) == 1 && leaveApplication.getFromDate().compareTo(leaveApplication.getToDate()) == -1*/) {
+        if (employee.getId().equals(leaveApplication.getEmployeeId())) {
             leaveApplication.setStatus(Status.APPLIED);
             if (leaveApplication.getFromDate().getTime() - date.getTime() >= 1296000000)
             {
@@ -82,43 +71,60 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
             }
         }
         else
-            throw new RuntimeException("Bad Request!!!!");
-        // return true;
+            throw new InvalidIdException("Id doesn't match!!!!");
     }
 
     @Override
     public boolean cancelRequest(String id) {
+
+/*
+        if (id.trim().length() <= 0)
+            throw  new InvalidIdException("Id is null!!!!");
+*/
+
         LeaveApplication leaveApplication = leaveApplicationDao.getById(id);
-        if(leaveApplication == null)
-        {
+
+        if(leaveApplication != null)
+            return leaveApplicationDao.cancelRequest(id);
+        else
             throw new InvalidIdException("LeaveApplication with Id "+id+" does not exist");
-        }
-        return leaveApplicationDao.cancelRequest(id);
+
+
     }
 
     @Override
     public boolean updateRequest(LeaveApplication leaveApplication, String id) {
-        LeaveApplication leaveApplication1 = leaveApplicationDao.getById(id);
-        if(leaveApplication1 == null) {
-            throw new InvalidIdException("LeaveApplication with Id " + id + " does not exist");
+      /*  if (id.trim().length() <= 0)
+            throw  new InvalidIdException("Id is null!!!!");
+
+        if(leaveApplication.getId().trim().length() <= 0)
+            throw  new InvalidIdException("LeaveApplication Id is null!!!");
+*/
+        if (leaveApplication.getId().equals(id))
+        {
+            if(leaveApplication!=null)
+                return leaveApplicationDao.updateRequest(leaveApplication,id);
+            else
+                throw  new LeaveApplicationNotFoundException("LeaveApplication with Id "+id+" doesn't exists!!!");
+
         }
-        return leaveApplicationDao.updateRequest(leaveApplication,id);
+        else
+            throw new InvalidIdException("Id doesn't match!!!");
+
     }
 
     @Override
     public LeaveApplication getById(String id)
-    {/*
-        boolean exists = client..admin().indices()
-                .prepareExists(indexName)
-                .execute().actionGet().isExists();*/
-
-        if (id.trim().length()<=0)
+    {
+        /*if (id.trim().length()<=0)
             throw new RuntimeException("Id is null!!");
-        else /*if (client.exists())*///TODO: DB shouldn't be null
-            return leaveApplicationDao.getById(id);
-        /*else
-            throw new RuntimeException("Bad Request!!!!");*/
+*/
+        LeaveApplication leaveApplication=leaveApplicationDao.getById(id);
 
+        if (leaveApplication != null)
+            return leaveApplicationDao.getById(id);
+        else
+            throw new LeaveApplicationNotFoundException("LeaveApplication with Id "+id+" doesn't exists!!!");
     }
 
     @Override
@@ -170,30 +176,27 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
         LeaveApplication leaveApplication = leaveApplicationDao.getById(id);
 
         if (id.trim().length()<=0)
-            throw new RuntimeException("ID is null!!!");
+            throw new InvalidIdException("ID is null!!!");
 
-        else if (leaveApplication.getId().trim().length()<= 0 || leaveApplication.getEmployeeId().trim().length()<=0)
-            throw new RuntimeException("Field is null");
+        if (leaveApplication.getId().equals(id)) {
 
-        else if (leaveApplication.getId().trim().length() != id.trim().length())
-            throw new RuntimeException("Id doesn't match");
+            if (leaveApplication != null && leaveApplication.getId().equals(id))// TODO: compare with Db if not empty then only
+                return leaveApplicationDao.declineRequest(id);
 
-        else if (leaveApplication!= null && leaveApplication.getId().equals(id))// TODO: compare with Db if not empty then only
-            return leaveApplicationDao.declineRequest(id);
-
+            else
+                throw new LeaveApplicationNotFoundException("LeaveApplication with Id " + id + " doesn't exists!!!");
+        }
         else
-            throw new RuntimeException("Bad Request!!");
+            throw new InvalidIdException("Id doesn't match!!!");
 
 
-
-        /*return leaveApplicationDao.declineRequest(id);*/
     }
 
     @Override
     public List<LeaveApplication> getAll()
     {
         if (indexName.isEmpty())//TODO: DB shouldn't be empty
-            throw new RuntimeException("Index is empty!!!");
+            throw new IndexNotFoundException("Index is empty!!!");
         else
             return leaveApplicationDao.getAll();
     }
@@ -203,12 +206,15 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
 
         List<LeaveApplication> leaveApplications1;
         List<LeaveApplication> leaveApplications2 = new ArrayList<>();
-
+/*
+        LeaveApplicationService leaveApplicationService = null;
+        */
         if (fromDate == null || toDate == null )
-            throw new RuntimeException("Date is null!!!");
+            throw new InvalidDateException("Date is null!!!");
         else
-            leaveApplications1= leaveApplicationDao.getAll();
-
+          /*  leaveApplications1= leaveApplicationService.getAll();
+*/
+                leaveApplications1=leaveApplicationDao.getAll();
             for (LeaveApplication leaveapplication2:leaveApplications1)
             {
                 if (fromDate.compareTo(leaveapplication2.getFromDate()) == 0)
