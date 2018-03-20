@@ -154,6 +154,7 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
     public boolean approveRequest(String id)
     {
         LeaveApplication leaveApplication = leaveApplicationDao.getById(id);
+/*
 
         if (leaveApplication == null)
             throw new RuntimeException("Update can't be performed!!!");
@@ -162,10 +163,19 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
             throw new RuntimeException("Id is null!!");
         else if (leaveApplication.getId().trim().length() != id.trim().length())
             throw new RuntimeException("Id doesn't match");
-        else if (leaveApplication!= null)
-            leaveApplication.setStatus(Status.APPROVED);
-            return leaveApplicationDao.approveRequest(id);
-        /*        LeaveApplication leaveApplication1 = leaveApplication;
+*/
+        if (leaveApplication.getId().equals(id)) {
+           if (leaveApplication!= null) {
+                 leaveApplication.setStatus(Status.APPROVED);
+                 return leaveApplicationDao.approveRequest(leaveApplication, id);
+            }
+            else
+                 throw new InvalidIdException("\"LeaveApplication with Id \"+id+\" doesn't exists!!!\"");
+
+        }
+        else
+            throw new InvalidIdException("Id doesn't match!!!");
+/*        LeaveApplication leaveApplication1 = leaveApplication;
             leaveApplicationDao.updateRequest(leaveApplication1,id);
     */    /*return leaveApplicationDao.approveRequest(id);*/
     }
@@ -175,9 +185,9 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
     {
         LeaveApplication leaveApplication = leaveApplicationDao.getById(id);
 
-        if (id.trim().length()<=0)
+        /*if (id.trim().length()<=0)
             throw new InvalidIdException("ID is null!!!");
-
+*/
         if (leaveApplication.getId().equals(id)) {
 
             if (leaveApplication != null && leaveApplication.getId().equals(id))// TODO: compare with Db if not empty then only
@@ -209,10 +219,10 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
 /*
         LeaveApplicationService leaveApplicationService = null;
         */
-        if (fromDate == null || toDate == null )
+     /*   if (fromDate == null || toDate == null )
             throw new InvalidDateException("Date is null!!!");
         else
-          /*  leaveApplications1= leaveApplicationService.getAll();
+     */     /*  leaveApplications1= leaveApplicationService.getAll();
 */
                 leaveApplications1=leaveApplicationDao.getAll();
             for (LeaveApplication leaveapplication2:leaveApplications1)

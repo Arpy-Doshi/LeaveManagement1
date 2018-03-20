@@ -3,6 +3,7 @@ package com.brevitaz.dao.impl;
 import com.brevitaz.config.Config;
 import com.brevitaz.dao.EmployeeDao;
 import com.brevitaz.errors.EmployeeNotFoundException;
+import com.brevitaz.errors.IndexNotFoundException;
 import com.brevitaz.model.Employee;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -99,11 +100,11 @@ public class EmployeeDaoImpl implements EmployeeDao
             }
             else
             {
-                return null;
+                throw new IndexNotFoundException("Index is empty!!!");
             }
         } catch (Exception e) {
             e.printStackTrace();
-            throw new RuntimeException("Employee Doesn't exists!!");
+            throw new IndexNotFoundException("Index is empty!!!");
         }
     }
 
@@ -126,7 +127,7 @@ public class EmployeeDaoImpl implements EmployeeDao
             }
         } catch (Exception e) {
             e.printStackTrace();
-            throw new RuntimeException("Bad Request!!!");
+            throw new EmployeeNotFoundException("Employee with Id "+id+" doesn't exists!!!");
         }
 
     }
@@ -152,7 +153,7 @@ public class EmployeeDaoImpl implements EmployeeDao
             }
         } catch (Exception e) {
             e.printStackTrace();
-            throw new EmployeeNotFoundException("not found!!!");
+            throw new EmployeeNotFoundException("Employee with Id "+id+" doesn't exists!!!");
         }
          }
 
@@ -170,14 +171,13 @@ public class EmployeeDaoImpl implements EmployeeDao
                 Employee employee = objectMapper.readValue(response.getSourceAsString(), Employee.class);
                 return employee;
             } else {
-                return null;
-                /*   throw new EmployeeNotFoundException("not exists!!");*/
+                   throw new EmployeeNotFoundException("Employee with Id "+id+" doesn't exists!!!");
             }
         }
         catch (Exception e)
         {
             e.printStackTrace();
-            throw new EmployeeNotFoundException("Employee Doesn't exists!!");
+            throw new EmployeeNotFoundException("Employee with Id "+id+" doesn't exists!!!");
         }
         }
 }

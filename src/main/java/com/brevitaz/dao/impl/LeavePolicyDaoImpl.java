@@ -1,6 +1,8 @@
 package com.brevitaz.dao.impl;
 
 import com.brevitaz.dao.LeavePolicyDao;
+import com.brevitaz.errors.IndexNotFoundException;
+import com.brevitaz.errors.InvalidIdException;
 import com.brevitaz.model.LeavePolicy;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -72,9 +74,9 @@ public class LeavePolicyDaoImpl implements LeavePolicyDao
         catch (Exception e)
         {
             e.printStackTrace();
+            throw new InvalidIdException("not created!!!");
         }
 
-        return false;
     }
 
 
@@ -105,9 +107,9 @@ public class LeavePolicyDaoImpl implements LeavePolicyDao
         catch (Exception e)
         {
             e.printStackTrace();
+            throw new InvalidIdException("LeavePolicy doesn't exists!!!");
         }
 
-        return false;
     }
 
     @Override
@@ -134,9 +136,9 @@ public class LeavePolicyDaoImpl implements LeavePolicyDao
         catch (Exception e)
         {
             e.printStackTrace();
+            throw new InvalidIdException("LeavePolicy doesn't exists!!!");
         }
 
-        return false;
     }
 
     @Override
@@ -155,14 +157,13 @@ public class LeavePolicyDaoImpl implements LeavePolicyDao
             }
             else
             {
-                return null;
-            }
+                throw new InvalidIdException("LeavePolicy doesn't exists!!!");            }
 
         }
         catch (Exception e)
         {
             e.printStackTrace();
-            throw new RuntimeException("Leave Policy Doesn't exists!!");
+            throw new InvalidIdException("LeavePolicy doesn't exists!!!");
 
         }
 
@@ -193,14 +194,14 @@ public class LeavePolicyDaoImpl implements LeavePolicyDao
         }
         else
         {
-            return null;
+           throw new IndexNotFoundException("Index doesn't exists!!!");
         }
 
         }
-        catch (IOException e)
+        catch (Exception e)
         {
             e.printStackTrace();
-            throw new RuntimeException("Doesn't Exists!!");
+            throw new IndexNotFoundException("Index doesn't exists!!!");
         }
     }
 

@@ -38,10 +38,10 @@ public class EmployeeServiceImpl implements EmployeeService
 
     @Override
     public boolean delete(String id)
-    {
+    {/*
         if (id.trim().length() <= 0)
             throw new InvalidIdException("Id is null!!!");
-
+*/
         Employee employee = employeeDao.getById(id);
 
         if (employee != null)
@@ -59,12 +59,12 @@ public class EmployeeServiceImpl implements EmployeeService
         GetIndexRequest existsRequest = new GetIndexRequest();
         GetIndexRequest res = existsRequest.indices(indexName);
 */
-        if (id.trim().length() <= 0)
+        /*if (id.trim().length() <= 0)
             throw  new InvalidIdException("Id is null!!!!");
-
-        if(employee.getId().trim().length() <= 0)
+*/
+  /*      if(employee.getId().trim().length() <= 0)
             throw  new InvalidIdException("Id is null!!!");
-
+*/
         if (employee.getId().equals(id))
         {
             if(employee!=null)
@@ -81,9 +81,9 @@ public class EmployeeServiceImpl implements EmployeeService
     @Override
     public Employee getById(String id)
     {
-        if (id.trim().length() <= 0)
+  /*      if (id.trim().length() <= 0)
             throw  new InvalidIdException("Id is null!!!!");
-
+*/
         Employee employee = employeeDao.getById(id);
 
         if (employee != null)

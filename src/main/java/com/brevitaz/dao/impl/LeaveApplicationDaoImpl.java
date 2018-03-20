@@ -1,6 +1,10 @@
 package com.brevitaz.dao.impl;
 
 import com.brevitaz.dao.LeaveApplicationDao;
+import com.brevitaz.errors.EmployeeNotFoundException;
+import com.brevitaz.errors.IndexNotFoundException;
+import com.brevitaz.errors.LeaveApplicationNotFoundException;
+import com.brevitaz.model.Employee;
 import com.brevitaz.model.LeaveApplication;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -71,7 +75,7 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
 
         } catch (Exception e) {
             e.printStackTrace();
-            throw new RuntimeException("Bad Request!!!");
+            throw new LeaveApplicationNotFoundException("Employee not created!!!");
         }
        /* return false;*/
     }
@@ -99,9 +103,9 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
 
         } catch (Exception e) {
             e.printStackTrace();
+            throw new LeaveApplicationNotFoundException("doesn't exists!!!");
         }
 
-        return false;
     }
 
     @Override
@@ -123,9 +127,8 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
        }
        } catch (Exception e) {
             e.printStackTrace();
+           throw new LeaveApplicationNotFoundException("doesn't exists!!!");
         }
-        //System.out.println("Update: "+updateResponse);
-        return false;
     }
 
     @Override
@@ -144,13 +147,13 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
             }
             else
             {
-                return null;
+                throw new LeaveApplicationNotFoundException("LeaveApplication with ID "+id+" doesn't exists!!!");
             }
         }
         catch (Exception e)
         {
             e.printStackTrace();
-            throw new RuntimeException("Leave Request Doesn't exists!!");
+            throw new LeaveApplicationNotFoundException("doesn't exists!!!");
         }
     }
 
@@ -210,11 +213,11 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
             }
             else
             {
-                return null;
+                throw new EmployeeNotFoundException("Employee Id "+employeeId+" doesn't exists!!!");
             }
         } catch (Exception e) {
             e.printStackTrace();
-            throw new RuntimeException("Doesn't Exists!!!!!!");
+        throw new LeaveApplicationNotFoundException("doesn't exists!!!");
         }
     }
 
@@ -249,39 +252,36 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
             }
             else
             {
-                return null;
+                throw new LeaveApplicationNotFoundException("LeaveApplications doesn't exists!!!");
             }
         } catch (Exception e) {
             e.printStackTrace();
-            throw new RuntimeException("Doesn't Exists!!");
+            throw new LeaveApplicationNotFoundException("doesn't exists!!!");
         }
     }
 
     @Override
-    public boolean approveRequest(String id) {
-        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+    public boolean approveRequest(LeaveApplication leaveApplication,String id) {
 
-        try {
+        try{
+            objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
             UpdateRequest request = new UpdateRequest(
                     indexName,TYPE_NAME,
-                    id).doc(objectMapper.writeValueAsString(id), XContentType.JSON);/*.doc(jsonBuilder()
-                            .startObject()
-                            .field("status", "APPROVED")
-                            .endObject());*/
+                    id).doc(objectMapper.writeValueAsString(leaveApplication), XContentType.JSON);
             UpdateResponse updateResponse = client.update(request);
-            System.out.println("Update: "+updateResponse);
-            if (updateResponse.status() == RestStatus.OK) {
+            if(updateResponse.status() == RestStatus.OK )
+            {
                 return true;
             }
             else
             {
                 return false;
             }
-
         } catch (Exception e) {
             e.printStackTrace();
+            throw new LeaveApplicationNotFoundException("doesn't exists!!!");
         }
-        return false;
+        //System.out.println("Update: "+updateResponse);
     }
 
     @Override
@@ -309,8 +309,8 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
 
         } catch (Exception e) {
             e.printStackTrace();
+            throw new LeaveApplicationNotFoundException("doesn't exists!!!");
         }
-        return false;
 
     }
 
@@ -337,11 +337,11 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
         }
         else
         {
-            return null;
+            throw new IndexNotFoundException("Index doesn't exists!!!");
         }
         } catch (Exception e) {
             e.printStackTrace();
-            throw new RuntimeException("Leave Applications doesn't exists");
+            throw new IndexNotFoundException("Leave Application's Index doesn't exists");
         }
     }
 }

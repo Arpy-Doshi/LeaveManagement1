@@ -37,9 +37,6 @@ public class LeavePolicyServiceImpl implements LeavePolicyService
         if (id.trim().length()<=0)
             throw new RuntimeException("Id is null!!");
 */
-
-        LeavePolicy leavePolicy1 = leavePolicyDao.getById(leavePolicy.getId());
-
         /* if (leavePolicy.getId().trim().length()<=0 || leavePolicy.getName().trim().length()<=0)
             throw new RuntimeException("Field is null!!!");
         else if (leavePolicy1.getId() != id)
@@ -58,29 +55,30 @@ public class LeavePolicyServiceImpl implements LeavePolicyService
     }
 
     @Override
-    public boolean delete(String id)
-    {
+    public boolean delete(String id) {
         LeavePolicy leavePolicy = leavePolicyDao.getById(id);
 
-        if (id.trim().length()<=0)
+      /*  if (id.trim().length()<=0)
             throw new RuntimeException("Id is null!!");
         else if (leavePolicy.getId().trim().length()<= 0 || leavePolicy.getName().trim().length()<=0)
             throw new RuntimeException("Field is null");
         else if (leavePolicy.getId().trim().length() != id.trim().length())
             throw new RuntimeException("Id doesn't match");
-        else if (leavePolicy!= null && leavePolicy.getId().equals(id))// TODO: compare with Db if not empty then only
-            return leavePolicyDao.delete(id);
-        else
-            throw new RuntimeException("Bad Request!!");
+        else*/
+            if (leavePolicy != null)
+                return leavePolicyDao.delete(id);
+            else
+                throw new InvalidIdException("LeavePolicy at id \" + id + \" doesn't exists!!!!");
     }
 
     @Override
     public LeavePolicy getById(String id)
     {
-        if (id.trim().length()<=0)
-            throw new RuntimeException("Id is null!!");
-        else
+        LeavePolicy leavePolicy = leavePolicyDao.getById(id);
+        if (leavePolicy!=null)
             return leavePolicyDao.getById(id);
+        else
+            throw new InvalidIdException("LeavePolicy at id \" + id + \" doesn't exists!!!!");
     }
 
     @Override

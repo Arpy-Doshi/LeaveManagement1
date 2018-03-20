@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ControllerAdvice
-@ResponseStatus(HttpStatus.NOT_FOUND)
+@ResponseStatus(HttpStatus.NO_CONTENT)
 public class IndexNotFoundException extends NullPointerException {
     public IndexNotFoundException() {
     }
