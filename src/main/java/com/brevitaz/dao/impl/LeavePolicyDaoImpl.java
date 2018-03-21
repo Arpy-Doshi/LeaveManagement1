@@ -71,12 +71,12 @@ public class LeavePolicyDaoImpl implements LeavePolicyDao
                 return false;
             }
         }
-        catch (Exception e)
+        catch (IOException e)
         {
             e.printStackTrace();
-            throw new InvalidIdException("not created!!!");
+           // throw new InvalidIdException("not created!!!");
         }
-
+        return false;
     }
 
 
@@ -104,12 +104,12 @@ public class LeavePolicyDaoImpl implements LeavePolicyDao
             }
         }
 
-        catch (Exception e)
+        catch (IOException e)
         {
             e.printStackTrace();
-            throw new InvalidIdException("LeavePolicy doesn't exists!!!");
+            //throw new InvalidIdException("LeavePolicy doesn't exists!!!");
         }
-
+        return false;
     }
 
     @Override
@@ -133,12 +133,12 @@ public class LeavePolicyDaoImpl implements LeavePolicyDao
                 return false;
             }
         }
-        catch (Exception e)
+        catch (IOException e)
         {
             e.printStackTrace();
-            throw new InvalidIdException("LeavePolicy doesn't exists!!!");
+            //throw new InvalidIdException("LeavePolicy doesn't exists!!!");
         }
-
+        return false;
     }
 
     @Override
@@ -160,13 +160,13 @@ public class LeavePolicyDaoImpl implements LeavePolicyDao
                 throw new InvalidIdException("LeavePolicy doesn't exists!!!");            }
 
         }
-        catch (Exception e)
+        catch (IOException e)
         {
             e.printStackTrace();
-            throw new InvalidIdException("LeavePolicy doesn't exists!!!");
+            //throw new InvalidIdException("LeavePolicy doesn't exists!!!");
 
         }
-
+        return null;
     }
 
     @Override
@@ -194,11 +194,10 @@ public class LeavePolicyDaoImpl implements LeavePolicyDao
         }
         else
         {
-           throw new IndexNotFoundException("Index doesn't exists!!!");
+            return null;
         }
-
         }
-        catch (Exception e)
+        catch (IOException e)
         {
             e.printStackTrace();
             throw new IndexNotFoundException("Index doesn't exists!!!");
