@@ -24,11 +24,11 @@ public class LeaveController
     public double checkBalance(@PathVariable String employeeId)
     {
         return leaveService.checkBalance(employeeId);
-    }// TODO: it should be in leave controller
+    }
 
     @RequestMapping(value = "/employee/{employeeId}" , method = RequestMethod.GET) // personal record.
     public List<LeaveApplication> getByEmployeeId(@PathVariable String employeeId)  {
-        return leaveService.getByEmployeeId(employeeId);// TODO:should be in employee controller
+        return leaveService.getByEmployeeId(employeeId);
     }
 
 }

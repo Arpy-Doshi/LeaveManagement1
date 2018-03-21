@@ -3,6 +3,7 @@ package com.brevitaz.dao.impl;
 import com.brevitaz.dao.LeaveApplicationDao;
 import com.brevitaz.errors.EmployeeNotFoundException;
 import com.brevitaz.errors.IndexNotFoundException;
+import com.brevitaz.errors.InvalidIdException;
 import com.brevitaz.errors.LeaveApplicationNotFoundException;
 import com.brevitaz.model.Employee;
 import com.brevitaz.model.LeaveApplication;
@@ -140,21 +141,18 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
         try {
             GetResponse getResponse = client.get(getRequest);
             if(getResponse.isExists()) {
-                LeaveApplication leaveApplication = objectMapper.readValue(getResponse.getSourceAsString(), LeaveApplication.class);
-                System.out.println(leaveApplication.getStatus());
-                return leaveApplication;
-
+                return objectMapper.readValue(getResponse.getSourceAsString(), LeaveApplication.class);
             }
             else
             {
-                throw new LeaveApplicationNotFoundException("LeaveApplication with ID "+id+" doesn't exists!!!");
+                throw new InvalidIdException("LeaveApplication with ID "+id+" doesn't exists!!!");
             }
         }
         catch (Exception e)
         {
             e.printStackTrace();
-            throw new LeaveApplicationNotFoundException("doesn't exists!!!");
         }
+        return null;
     }
 
 

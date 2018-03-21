@@ -77,54 +77,22 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
     @Override
     public boolean cancelRequest(String id) {
 
-/*
-        if (id.trim().length() <= 0)
-            throw  new InvalidIdException("Id is null!!!!");
-*/
-
-        LeaveApplication leaveApplication = leaveApplicationDao.getById(id);
-
-        if(leaveApplication != null)
-            return leaveApplicationDao.cancelRequest(id);
-        else
-            throw new InvalidIdException("LeaveApplication with Id "+id+" does not exist");
-
-
+        leaveApplicationDao.getById(id);
+       return leaveApplicationDao.cancelRequest(id);
     }
 
     @Override
     public boolean updateRequest(LeaveApplication leaveApplication, String id) {
-      /*  if (id.trim().length() <= 0)
-            throw  new InvalidIdException("Id is null!!!!");
-
-        if(leaveApplication.getId().trim().length() <= 0)
-            throw  new InvalidIdException("LeaveApplication Id is null!!!");
-*/
-        if (leaveApplication.getId().equals(id))
-        {
-            if(leaveApplication!=null)
-                return leaveApplicationDao.updateRequest(leaveApplication,id);
-            else
-                throw  new LeaveApplicationNotFoundException("LeaveApplication with Id "+id+" doesn't exists!!!");
-
-        }
-        else
-            throw new InvalidIdException("Id doesn't match!!!");
+        leaveApplicationDao.getById(id);
+        return leaveApplicationDao.updateRequest(leaveApplication,id);
 
     }
 
     @Override
     public LeaveApplication getById(String id)
     {
-        /*if (id.trim().length()<=0)
-            throw new RuntimeException("Id is null!!");
-*/
-        LeaveApplication leaveApplication=leaveApplicationDao.getById(id);
+       return leaveApplicationDao.getById(id);
 
-        if (leaveApplication != null)
-            return leaveApplicationDao.getById(id);
-        else
-            throw new LeaveApplicationNotFoundException("LeaveApplication with Id "+id+" doesn't exists!!!");
     }
 
     @Override
@@ -146,8 +114,6 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
 
         }
         return leaveApplications1;
-
-        /*return leaveApplicationDao.checkRequest();*/
     }
 
     @Override
