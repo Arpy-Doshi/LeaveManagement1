@@ -283,13 +283,33 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
     }
 
     @Override
-    public boolean declineRequest(String id) {
-        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-
-        try {
+    public boolean declineRequest(LeaveApplication leaveApplication,String id) {
+        try{
+            objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
             UpdateRequest request = new UpdateRequest(
                     indexName,TYPE_NAME,
-                    id)/*.doc(config.getObjectMapper().writeValueAsString("status","APPROVED"), XContentType.JSON)*/;
+                    id).doc(objectMapper.writeValueAsString(leaveApplication), XContentType.JSON);
+            UpdateResponse updateResponse = client.update(request);
+            if(updateResponse.status() == RestStatus.OK )
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new LeaveApplicationNotFoundException("doesn't exists!!!");
+        }
+
+
+        /*objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+*/
+        /*try {
+            UpdateRequest request = new UpdateRequest(
+                    indexName,TYPE_NAME,
+                    id)*//*.doc(config.getObjectMapper().writeValueAsString("status","APPROVED"), XContentType.JSON)*//*;
 
             request.doc(jsonBuilder()
                     .startObject()
@@ -309,7 +329,7 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
             e.printStackTrace();
             throw new LeaveApplicationNotFoundException("doesn't exists!!!");
         }
-
+*/
     }
 
     @Override

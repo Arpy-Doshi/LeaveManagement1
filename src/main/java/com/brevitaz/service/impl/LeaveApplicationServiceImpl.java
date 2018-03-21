@@ -117,7 +117,7 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
     }
 
     @Override
-    public boolean approveRequest(String id)
+    public boolean approveRequest(String id)// TODO: assign requesthandlers at post time only & if status if applied then only approve or reject
     {
         LeaveApplication leaveApplication = leaveApplicationDao.getById(id);
 /*
@@ -132,7 +132,8 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
 */
         if (leaveApplication.getId().equals(id)) {
            if (leaveApplication!= null) {
-                 leaveApplication.setStatus(Status.APPROVED);
+                 /*leaveApplication.setStatus(Status.APPROVED);
+                 */
                  return leaveApplicationDao.approveRequest(leaveApplication, id);
             }
             else
@@ -147,25 +148,21 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
     }
 
     @Override
-    public boolean declineRequest(String id)
+    public boolean declineRequest(String id)//todo: same as approve
     {
         LeaveApplication leaveApplication = leaveApplicationDao.getById(id);
 
-        /*if (id.trim().length()<=0)
-            throw new InvalidIdException("ID is null!!!");
-*/
         if (leaveApplication.getId().equals(id)) {
-
-            if (leaveApplication != null && leaveApplication.getId().equals(id))// TODO: compare with Db if not empty then only
-                return leaveApplicationDao.declineRequest(id);
-
+            if (leaveApplication!= null) {
+                leaveApplication.setStatus(Status.REJECTED);
+                return leaveApplicationDao.declineRequest(leaveApplication, id);
+            }
             else
-                throw new LeaveApplicationNotFoundException("LeaveApplication with Id " + id + " doesn't exists!!!");
+                throw new InvalidIdException("\"LeaveApplication with Id \"+id+\" doesn't exists!!!\"");
+
         }
         else
             throw new InvalidIdException("Id doesn't match!!!");
-
-
     }
 
     @Override
