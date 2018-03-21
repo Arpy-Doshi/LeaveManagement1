@@ -153,9 +153,6 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
     @Override
     public List<LeaveApplication> getAll()
     {
-        if (indexName.isEmpty())//TODO: DB shouldn't be empty
-            throw new IndexNotFoundException("Index is empty!!!");
-        else
             return leaveApplicationDao.getAll();
     }
 
