@@ -18,7 +18,7 @@ public interface LeaveApplicationDao {
 
     public boolean approveRequest(LeaveApplication leaveApplication,String id);
 
-    public boolean declineRequest( String id);
+    public boolean declineRequest(LeaveApplication leaveApplication,String id);
 
    /* public LeaveApplication getReport();
 */
