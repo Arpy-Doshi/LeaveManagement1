@@ -277,9 +277,10 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
             }
         } catch (Exception e) {
             e.printStackTrace();
-            throw new LeaveApplicationNotFoundException("doesn't exists!!!");
+           // throw new LeaveApplicationNotFoundException("doesn't exists!!!");
         }
         //System.out.println("Update: "+updateResponse);
+        return false;
     }
 
     @Override
@@ -300,9 +301,9 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
             }
         } catch (Exception e) {
             e.printStackTrace();
-            throw new LeaveApplicationNotFoundException("doesn't exists!!!");
+            //throw new LeaveApplicationNotFoundException("doesn't exists!!!");
         }
-
+        return false;
 
         /*objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
 */

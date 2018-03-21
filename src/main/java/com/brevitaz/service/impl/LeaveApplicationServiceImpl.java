@@ -36,7 +36,7 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
     @Override
     public boolean request(LeaveApplication leaveApplication) {
 
-       /* Date date = new Date();
+        Date date = new Date();
         if (leaveApplication.getFromDate().compareTo(date) == -1)
         {
             throw new InvalidDateException("From date is invalid");
@@ -52,11 +52,11 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
 
 
         Employee employee = employeeDao.getById(leaveApplication.getEmployeeId());
-         if(employee == null)
+        /* if(employee == null)
         {
             throw new EmployeeNotFoundException("Employee with Id "+employee.getId()+" does not exist");
         }
-
+*/
         if (employee.getId().equals(leaveApplication.getEmployeeId())) {
             leaveApplication.setStatus(Status.APPLIED);
             if (leaveApplication.getFromDate().getTime() - date.getTime() >= 1296000000)
@@ -71,8 +71,8 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
             }
         }
         else
-            throw new InvalidIdException("Id doesn't match!!!!");*/
-       return false;
+            throw new InvalidIdException("Id doesn't match!!!!");/*
+       return false;*/
     }
 
     @Override
@@ -121,43 +121,30 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
     public boolean approveRequest(String id)// TODO: assign requesthandlers at post time only & if status if applied then only approve or reject
     {
         LeaveApplication leaveApplication = leaveApplicationDao.getById(id);
-/*
 
-        if (leaveApplication == null)
-            throw new RuntimeException("Update can't be performed!!!");
-
-        if (id.trim().length()<=0)
-            throw new RuntimeException("Id is null!!");
-        else if (leaveApplication.getId().trim().length() != id.trim().length())
-            throw new RuntimeException("Id doesn't match");
-*/
         if (leaveApplication.getId().equals(id)) {
-           if (leaveApplication!= null) {
-                 /*leaveApplication.setStatus(Status.APPROVED);
+           /*if (leaveApplication!= null) {
+           */      /*leaveApplication.setStatus(Status.APPROVED);
                  */
                  return leaveApplicationDao.approveRequest(leaveApplication, id);
             }
-            else
-                 throw new InvalidIdException("\"LeaveApplication with Id \"+id+\" doesn't exists!!!\"");
-
-        }
-        else
+          else
             throw new InvalidIdException("Id doesn't match!!!");
     }
 
     @Override
-    public boolean declineRequest(String id)//todo: same as approve
+    public boolean declineRequest(String id)// TODO: same as approve
     {
         LeaveApplication leaveApplication = leaveApplicationDao.getById(id);
 
         if (leaveApplication.getId().equals(id)) {
-            if (leaveApplication!= null) {
-                leaveApplication.setStatus(Status.REJECTED);
-                return leaveApplicationDao.declineRequest(leaveApplication, id);
-            }
+            /*if (leaveApplication!= null) {
+            *//*    leaveApplication.setStatus(Status.REJECTED);
+              */  return leaveApplicationDao.declineRequest(leaveApplication, id);
+            /*}
             else
                 throw new InvalidIdException("\"LeaveApplication with Id \"+id+\" doesn't exists!!!\"");
-
+*/
         }
         else
             throw new InvalidIdException("Id doesn't match!!!");
