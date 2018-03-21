@@ -42,12 +42,12 @@ public class EmployeeServiceImpl implements EmployeeService
         if (id.trim().length() <= 0)
             throw new InvalidIdException("Id is null!!!");
 */
-        Employee employee = employeeDao.getById(id);
+        /*Employee employee =*/ employeeDao.getById(id);
 
-        if (employee != null)
-            return employeeDao.delete(id);
-        else
-            throw new EmployeeNotFoundException("Employee with Id "+id+" doesn't exists!!!");
+     /*   if (employee != null)
+     */       return employeeDao.delete(id);
+       /* else
+            throw new EmployeeNotFoundException("Employee with Id "+id+" doesn't exists!!!");*/
     }
 
     @Override
@@ -66,13 +66,12 @@ public class EmployeeServiceImpl implements EmployeeService
             throw  new InvalidIdException("Id is null!!!");
 */
         if (employee.getId().equals(id))
-        {
-            if(employee!=null)
+        {/*
+            if(employee!=null)*/
                 return employeeDao.update(employee,id);
-            else
+           /* else
                 throw  new EmployeeNotFoundException("Employee with Id "+id+" doesn't exists!!!");
-
-        }
+*/      }
         else
             throw new InvalidIdException("Id doesn't match!!!");
 
@@ -84,12 +83,12 @@ public class EmployeeServiceImpl implements EmployeeService
   /*      if (id.trim().length() <= 0)
             throw  new InvalidIdException("Id is null!!!!");
 */
-        Employee employee = employeeDao.getById(id);
+        /*Employee employee =*/ employeeDao.getById(id);
 
-        if (employee != null)
-            return employeeDao.getById(id);
-        else
-            throw new EmployeeNotFoundException("Employee with Id "+id+" doesn't exists!!!");
+       /* if (employee != null)
+       */     return employeeDao.getById(id);
+       /* else
+            throw new EmployeeNotFoundException("Employee with Id "+id+" doesn't exists!!!");*/
     }
 
     @Override

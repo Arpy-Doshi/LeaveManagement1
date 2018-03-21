@@ -152,8 +152,8 @@ public class LeavePolicyDaoImpl implements LeavePolicyDao
             GetResponse getResponse= client.get(getRequest);
             if(getResponse.isExists())
             {
-                LeavePolicy leavePolicy  = objectMapper.readValue(getResponse.getSourceAsString(),LeavePolicy.class);
-                return leavePolicy;
+                return objectMapper.readValue(getResponse.getSourceAsString(),LeavePolicy.class);
+
             }
             else
             {
@@ -178,18 +178,18 @@ public class LeavePolicyDaoImpl implements LeavePolicyDao
         request.types(TYPE_NAME);
 
         SearchResponse response = client.search(request);
-
-        SearchHit[] hits = response.getHits().getHits();
-
-        LeavePolicy leavePolicy;
-
-        for (SearchHit hit : hits)
-        {
-            leavePolicy = objectMapper.readValue(hit.getSourceAsString(), LeavePolicy.class);
-            leavePolicies.add(leavePolicy);
-        }
         if(response.status() == RestStatus.OK)
         {
+
+            SearchHit[] hits = response.getHits().getHits();
+
+            LeavePolicy leavePolicy;
+
+            for (SearchHit hit : hits)
+            {
+                leavePolicy = objectMapper.readValue(hit.getSourceAsString(), LeavePolicy.class);
+                leavePolicies.add(leavePolicy);
+            }
             return leavePolicies;
         }
         else
