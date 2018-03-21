@@ -1,10 +1,7 @@
 package com.brevitaz.dao.impl;
 
 import com.brevitaz.dao.LeaveApplicationDao;
-import com.brevitaz.errors.EmployeeNotFoundException;
-import com.brevitaz.errors.IndexNotFoundException;
-import com.brevitaz.errors.InvalidIdException;
-import com.brevitaz.errors.LeaveApplicationNotFoundException;
+import com.brevitaz.errors.*;
 import com.brevitaz.model.Employee;
 import com.brevitaz.model.LeaveApplication;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -65,7 +62,7 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
             request.source(json, XContentType.JSON);
             IndexResponse indexResponse  = client.index(request);
             System.out.println(indexResponse);
-            if(indexResponse.status() == RestStatus.OK)
+            if(indexResponse.status() == RestStatus.CREATED)
             {
                 return true;
             }
@@ -74,11 +71,10 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
                 return false;
             }
 
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
-            throw new LeaveApplicationNotFoundException("Employee not created!!!");
         }
-       /* return false;*/
+       return false;
     }
 
     @Override
@@ -104,9 +100,8 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
 
         } catch (Exception e) {
             e.printStackTrace();
-            throw new LeaveApplicationNotFoundException("doesn't exists!!!");
         }
-
+        return false;
     }
 
     @Override
@@ -128,8 +123,8 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
        }
        } catch (Exception e) {
             e.printStackTrace();
-           throw new LeaveApplicationNotFoundException("doesn't exists!!!");
         }
+        return false;
     }
 
     @Override
@@ -340,6 +335,10 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
         SearchRequest request = new SearchRequest(indexName);
         request.types(TYPE_NAME);
         SearchResponse response = client.search(request);
+        if(response.getHits().totalHits == 0)
+        {
+            throw new NoContentException("No content found");
+        }
         if(response.status() == RestStatus.OK) {
             SearchHit[] hits = response.getHits().getHits();
 

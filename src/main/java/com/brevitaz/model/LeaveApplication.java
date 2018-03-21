@@ -13,15 +13,13 @@ public class LeaveApplication
 
     @NotNull
     private String employeeId;
-
+    @NotNull
     private String employeeName;
-
     private String reason;
-
+    @NotNull
     private Date fromDate;
-
+    @NotNull
     private Date toDate;
-
     private Type type;
     private Status status;
     private Date createdDate;
