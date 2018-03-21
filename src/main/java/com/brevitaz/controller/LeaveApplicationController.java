@@ -1,10 +1,12 @@
 package com.brevitaz.controller;
 
 import com.brevitaz.dao.LeaveApplicationDao;
+import com.brevitaz.errors.FieldEmptyException;
 import com.brevitaz.model.LeaveApplication;
 import com.brevitaz.service.LeaveApplicationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -20,7 +22,12 @@ public class LeaveApplicationController {
     private LeaveApplicationService leaveApplicationService;
 
     @RequestMapping(method = RequestMethod.POST)
-    public boolean request(@Valid @RequestBody LeaveApplication leaveApplication)  {
+    public boolean request(@Valid @RequestBody LeaveApplication leaveApplication ,BindingResult bindingResult)  {
+
+        if(bindingResult.hasErrors())
+        {
+            throw new FieldEmptyException("Enter required details");
+        }
         return leaveApplicationService.request(leaveApplication);
     }
 

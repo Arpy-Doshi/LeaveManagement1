@@ -9,19 +9,17 @@ import java.util.List;
 @EntityScan
 public class LeaveApplication
 {
-    @NotNull
     private String id;
 
     @NotNull
     private String employeeId;
 
-    @NotNull
     private String employeeName;
 
     private String reason;
-    @NotNull
+
     private Date fromDate;
-    @NotNull
+
     private Date toDate;
 
     private Type type;

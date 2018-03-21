@@ -36,7 +36,7 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
     @Override
     public boolean request(LeaveApplication leaveApplication) {
 
-        Date date = new Date();
+       /* Date date = new Date();
         if (leaveApplication.getFromDate().compareTo(date) == -1)
         {
             throw new InvalidDateException("From date is invalid");
@@ -71,7 +71,8 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
             }
         }
         else
-            throw new InvalidIdException("Id doesn't match!!!!");
+            throw new InvalidIdException("Id doesn't match!!!!");*/
+       return false;
     }
 
     @Override
@@ -142,9 +143,6 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
         }
         else
             throw new InvalidIdException("Id doesn't match!!!");
-/*        LeaveApplication leaveApplication1 = leaveApplication;
-            leaveApplicationDao.updateRequest(leaveApplication1,id);
-    */    /*return leaveApplicationDao.approveRequest(id);*/
     }
 
     @Override
