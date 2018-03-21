@@ -1,7 +1,6 @@
 package com.brevitaz.service.impl;
 
 import com.brevitaz.dao.LeaveApplicationDao;
-import com.brevitaz.model.Employee;
 import com.brevitaz.model.LeaveApplication;
 import com.brevitaz.service.LeaveService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,19 +24,25 @@ public class LeaveServiceImpl implements LeaveService
     @Override
     public List<LeaveApplication> getByEmployeeId(String employeeId)
     {
+        leaveApplicationDao.getByEmployeeId(employeeId);
+
+        return leaveApplicationDao.getByEmployeeId(employeeId);
+    }
+/*
         List<LeaveApplication> leaveApplications = null;
 
         if (employeeId.trim().length()<=0)
             throw new RuntimeException("Id is null!!!");
         else if (employeeId.trim().length() > 0) {
-            leaveApplications = leaveApplicationDao.getByEmployeeId(employeeId);
-            return leaveApplications;
+            leaveApplications =
+ return leaveApplicationDao.getByEmployeeId(employeeId);
+  return leaveApplications;
         }
         else
             throw new RuntimeException("Bad Request!!!!");
 
 
     }
-
+*/
 
 }

@@ -7,6 +7,7 @@ import com.brevitaz.errors.IndexNotFoundException;
 import com.brevitaz.model.Employee;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import org.elasticsearch.action.delete.DeleteRequest;
 import org.elasticsearch.action.delete.DeleteResponse;
 import org.elasticsearch.action.get.GetRequest;
@@ -68,11 +69,11 @@ public class EmployeeDaoImpl implements EmployeeDao
             {
                 return false;
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
-            throw new RuntimeException("Not Created");
-
+            //throw new RuntimeException("Not Created");
         }
+        return false;
     }
 
     @Override
@@ -100,9 +101,11 @@ public class EmployeeDaoImpl implements EmployeeDao
             }
             else
             {
-                throw new IndexNotFoundException("Index is empty!!!");
+                return null;
             }
-        } catch (Exception e) {
+        }
+        catch (IOException e)
+        {
             e.printStackTrace();
             throw new IndexNotFoundException("Index is empty!!!");
         }
@@ -125,10 +128,11 @@ public class EmployeeDaoImpl implements EmployeeDao
             {
                 return false;
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
-            throw new EmployeeNotFoundException("Employee with Id "+id+" doesn't exists!!!");
+           // throw new EmployeeNotFoundException("Employee with Id "+id+" doesn't exists!!!");
         }
+        return false;
 
     }
 
@@ -151,10 +155,11 @@ public class EmployeeDaoImpl implements EmployeeDao
             {
                 return false;
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
-            throw new EmployeeNotFoundException("Employee with Id "+id+" doesn't exists!!!");
+            //throw new EmployeeNotFoundException("Employee with Id "+id+" doesn't exists!!!");
         }
+        return false;
          }
 
     @Override
@@ -167,17 +172,20 @@ public class EmployeeDaoImpl implements EmployeeDao
 
         try {
             GetResponse response = client.get(getRequest);
-            if (response.isExists()) {
-                Employee employee = objectMapper.readValue(response.getSourceAsString(), Employee.class);
-                return employee;
-            } else {
-                   throw new EmployeeNotFoundException("Employee with Id "+id+" doesn't exists!!!");
+            if (response.isExists())
+            {
+                return objectMapper.readValue(response.getSourceAsString(), Employee.class);
+            }
+            else
+            {
+                throw new EmployeeNotFoundException("Employee with Id "+id+" doesn't exists!!!");
             }
         }
-        catch (Exception e)
+        catch (IOException e)
         {
             e.printStackTrace();
-            throw new EmployeeNotFoundException("Employee with Id "+id+" doesn't exists!!!");
+            //throw new EmployeeNotFoundException("Employee with Id "+id+" doesn't exists!!!");
         }
+        return null;
         }
 }

@@ -44,10 +44,10 @@ public class LeavePolicyServiceImpl implements LeavePolicyService
         */
 
         if (leavePolicy.getId().equals(id)) {
-            if (leavePolicy != null)
-                return leavePolicyDao.update(leavePolicy, id);
-            else
-                throw new InvalidIdException("LeavePolicy at id " + id + " doesn't exists!!!!");
+           /* if (leavePolicy != null)
+           */     return leavePolicyDao.update(leavePolicy, id);
+            /*else
+                throw new InvalidIdException("LeavePolicy at id " + id + " doesn't exists!!!!");*/
         }
         else
             throw new InvalidIdException("Id doesn't match!!!");
@@ -56,7 +56,7 @@ public class LeavePolicyServiceImpl implements LeavePolicyService
 
     @Override
     public boolean delete(String id) {
-        LeavePolicy leavePolicy = leavePolicyDao.getById(id);
+        /*LeavePolicy leavePolicy =*/ leavePolicyDao.getById(id);
 
       /*  if (id.trim().length()<=0)
             throw new RuntimeException("Id is null!!");
@@ -65,20 +65,20 @@ public class LeavePolicyServiceImpl implements LeavePolicyService
         else if (leavePolicy.getId().trim().length() != id.trim().length())
             throw new RuntimeException("Id doesn't match");
         else*/
-            if (leavePolicy != null)
-                return leavePolicyDao.delete(id);
-            else
-                throw new InvalidIdException("LeavePolicy at id \" + id + \" doesn't exists!!!!");
+          /*  if (leavePolicy != null)
+          */      return leavePolicyDao.delete(id);
+            /*else
+                throw new InvalidIdException("LeavePolicy at id \" + id + \" doesn't exists!!!!");*/
     }
 
     @Override
     public LeavePolicy getById(String id)
     {
-        LeavePolicy leavePolicy = leavePolicyDao.getById(id);
-        if (leavePolicy!=null)
+      /*  LeavePolicy leavePolicy =*/ leavePolicyDao.getById(id);
+        /*if (leavePolicy!=null)*/
             return leavePolicyDao.getById(id);
-        else
-            throw new InvalidIdException("LeavePolicy at id \" + id + \" doesn't exists!!!!");
+        /*else
+            throw new InvalidIdException("LeavePolicy at id \" + id + \" doesn't exists!!!!");*/
     }
 
     @Override
