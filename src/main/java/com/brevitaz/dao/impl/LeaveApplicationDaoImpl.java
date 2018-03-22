@@ -297,9 +297,9 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
             }
         } catch (Exception e) {
             e.printStackTrace();
-            //throw new LeaveApplicationNotFoundException("doesn't exists!!!");
+            throw new LeaveApplicationNotFoundException("doesn't exists!!!");
         }
-        return false;
+
 
         /*objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
 */
@@ -337,33 +337,20 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
         SearchRequest request = new SearchRequest(indexName);
         request.types(TYPE_NAME);
         SearchResponse response = client.search(request);
-            System.out.println(response.status());
-            System.out.println(response.getHits().totalHits);
-        if(response.getHits().totalHits == 0)
-        if(response.getHits().getTotalHits() == 0)
-        {
-            throw new NoContentException("No content found");
-        }
-        if(response.status() == RestStatus.OK && response.getHits().totalHits > 0 ) {
+        if(response.status() == RestStatus.OK) {
             SearchHit[] hits = response.getHits().getHits();
 
             LeaveApplication leaveApplication;
 
-            for (SearchHit hit : hits)
-            {
+            for (SearchHit hit : hits) {
                 leaveApplication = objectMapper.readValue(hit.getSourceAsString(), LeaveApplication.class);
                 leaveApplications.add(leaveApplication);
+                return leaveApplications;
             }
-
-            return leaveApplications;
-        }
-        else
-        {
-            throw new IndexNotFoundException("Index doesn't exists!!!");
         }
         } catch (Exception e) {
             e.printStackTrace();
-            throw new IndexNotFoundException("Leave Application's Index doesn't exists");
         }
+        return null;
     }
 }

@@ -50,7 +50,6 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
             throw new InvalidDateException("Form date is bigger than To date");
         }
 
-
         Employee employee = employeeDao.getById(leaveApplication.getEmployeeId());
 
         if (employee.getId().equals(leaveApplication.getEmployeeId())) {
@@ -87,11 +86,19 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
         return leaveApplicationDao.getById(id);
     }
 
-   /* @Override
+    @Override
     public List<LeaveApplication> getAll() {
-        return leaveApplicationDao.getAll();
+        List<LeaveApplication> leaveApplications = leaveApplicationDao.getAll();
+        if(leaveApplications == null)
+        {
+            throw new NoContentException("No content found");
+        }
+        else
+        {
+            return leaveApplications;
+        }
     }
-*/
+
 
     @Override
     public List<LeaveApplication> checkRequest()
@@ -100,7 +107,7 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
 
         List<LeaveApplication> leaveApplications1 = new ArrayList<>();
 
-        /*if (indexName.isEmpty())//TODO: DB shouldn't be empty
+        /*if (indexName.isEmpty())
             throw new RuntimeException("Index is empty!!!");
         else
         */    leaveApplications = leaveApplicationDao.getAll();
@@ -118,14 +125,27 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
     public boolean approveRequest(String id)// TODO: assign requesthandlers at post time only & if status if applied then only approve or reject
     {
         LeaveApplication leaveApplication = leaveApplicationDao.getById(id);
+/*
 
+        if (leaveApplication == null)
+            throw new RuntimeException("Update can't be performed!!!");
+
+        if (id.trim().length()<=0)
+            throw new RuntimeException("Id is null!!");
+        else if (leaveApplication.getId().trim().length() != id.trim().length())
+            throw new RuntimeException("Id doesn't match");
+*/
         if (leaveApplication.getId().equals(id)) {
-           /*if (leaveApplication!= null) {
-           */      /*leaveApplication.setStatus(Status.APPROVED);
+           if (leaveApplication!= null) {
+                 /*leaveApplication.setStatus(Status.APPROVED);
                  */
                  return leaveApplicationDao.approveRequest(leaveApplication, id);
             }
-          else
+            else
+                 throw new InvalidIdException("\"LeaveApplication with Id \"+id+\" doesn't exists!!!\"");
+
+        }
+        else
             throw new InvalidIdException("Id doesn't match!!!");
     }
 
@@ -147,26 +167,7 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
             throw new InvalidIdException("Id doesn't match!!!");
     }
 
-    @Override
-    public List<LeaveApplication> getAll()
-    {
-        /*List<LeaveApplication> leaveApplications =*/ leaveApplicationDao.getAll();
-       /* if(leaveApplications == null)
-        {
-            throw new NoContentException("No content found");
-        }
-        else
-        {
-       */     return leaveApplicationDao.getAll();
-        /*}*/
-    }
 
-   /* @Override
-    public List<LeaveApplication> getAll()
-    {
-            return leaveApplicationDao.getAll();
-    }
-*/
     @Override
     public List<LeaveApplication> getByDate(Date fromDate, Date toDate) {
 
