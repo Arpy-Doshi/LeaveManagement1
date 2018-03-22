@@ -18,16 +18,6 @@ public class CenteralizedErrorController
     public CenteralizedErrorController() {
     }
 
-    @ExceptionHandler(EmployeeNotFoundException.class)
-    public ResponseEntity<ErrorDetail> employeeNotFoundException(EmployeeNotFoundException e, WebRequest w)
-    {
-        ErrorDetail errorDetail = new ErrorDetail(new Date() , e.getMessage() ,
-                w.getDescription(false));
-        return new ResponseEntity<ErrorDetail>(errorDetail, HttpStatus.NOT_FOUND);
-    }
-
-
-
 
     @ExceptionHandler(InvalidDateException.class)
     public ResponseEntity<ErrorDetail> invalidDateException(InvalidDateException e, WebRequest w)
@@ -44,13 +34,6 @@ public class CenteralizedErrorController
         return new ResponseEntity<ErrorDetail>(errorDetail,HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(LeaveApplicationNotFoundException.class)
-    public ResponseEntity<ErrorDetail> leaveApplicationNotFoundException(LeaveApplicationNotFoundException e , WebRequest w)
-    {
-        ErrorDetail errorDetail = new ErrorDetail(new Date(), e.getMessage(),
-                w.getDescription(false));
-        return new ResponseEntity<ErrorDetail>(errorDetail,HttpStatus.NOT_FOUND);
-    }
 
   /*  @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorDetail> methodArgumentNotValidException(MethodArgumentNotValidException e , WebRequest w)

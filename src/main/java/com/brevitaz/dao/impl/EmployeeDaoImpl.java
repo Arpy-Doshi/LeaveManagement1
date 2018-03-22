@@ -2,7 +2,6 @@ package com.brevitaz.dao.impl;
 
 import com.brevitaz.dao.EmployeeDao;
 import com.brevitaz.errors.InvalidIdException;
-import com.brevitaz.errors.EmployeeNotFoundException;
 import com.brevitaz.model.Employee;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
