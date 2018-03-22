@@ -80,26 +80,11 @@ public class CenteralizedErrorController
         return new ResponseEntity<ErrorDetail>(errorDetail,HttpStatus.NO_CONTENT);
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ErrorDetail> invalidInput(MethodArgumentNotValidException ex ,WebRequest w ) {
+    public ResponseEntity<ErrorDetail> methodArgumentNotValidException(MethodArgumentNotValidException ex ,WebRequest w ) {
         BindingResult result = ex.getBindingResult();
         ErrorDetail errorDetail = new ErrorDetail(new Date(), w.getDescription(false), ValidationUtil.fromBindingErrors(result));
-        /*response.setErrorCode("Validation Error");
-        response.setErrorMessage("Invalid inputs.");
-        response.setErrors(ValidationUtil.fromBindingErrors(result));
-        */return new ResponseEntity<ErrorDetail>(errorDetail, HttpStatus.BAD_REQUEST);
+       return new ResponseEntity<ErrorDetail>(errorDetail, HttpStatus.BAD_REQUEST);
     }
 
 
