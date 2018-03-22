@@ -1,13 +1,10 @@
 package com.brevitaz.dao.impl;
 
-import com.brevitaz.config.Config;
 import com.brevitaz.dao.EmployeeDao;
-import com.brevitaz.errors.EmployeeNotFoundException;
-import com.brevitaz.errors.IndexNotFoundException;
+import com.brevitaz.errors.InvalidIdException;
 import com.brevitaz.model.Employee;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import org.elasticsearch.action.delete.DeleteRequest;
 import org.elasticsearch.action.delete.DeleteResponse;
 import org.elasticsearch.action.get.GetRequest;
@@ -24,8 +21,6 @@ import org.elasticsearch.rest.RestStatus;
 import org.elasticsearch.search.SearchHit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
@@ -98,10 +93,7 @@ public class EmployeeDaoImpl implements EmployeeDao
 
                 return employees;
             }
-            else
-            {
-                throw new IndexNotFoundException("Index is empty!!!");
-            }
+
         }
         catch (IOException e)
         {
@@ -129,7 +121,7 @@ public class EmployeeDaoImpl implements EmployeeDao
             }
         } catch (IOException e) {
             e.printStackTrace();
-           // throw new EmployeeNotFoundException("Employee with Id "+id+" doesn't exists!!!");
+
         }
         return false;
 
@@ -156,8 +148,7 @@ public class EmployeeDaoImpl implements EmployeeDao
             }
         } catch (IOException e) {
             e.printStackTrace();
-            //throw new EmployeeNotFoundException("Employee with Id "+id+" doesn't exists!!!");
-        }
+           }
         return false;
          }
 
@@ -177,13 +168,12 @@ public class EmployeeDaoImpl implements EmployeeDao
             }
             else
             {
-                throw new EmployeeNotFoundException("Employee with Id "+id+" doesn't exists!!!");
+                throw new InvalidIdException("Employee with Id "+id+" doesn't exists!!!");
             }
         }
         catch (IOException e)
         {
             e.printStackTrace();
-            //throw new EmployeeNotFoundException("Employee with Id "+id+" doesn't exists!!!");
         }
         return null;
         }

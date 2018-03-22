@@ -1,8 +1,6 @@
 package com.brevitaz.service.impl;
 
 import com.brevitaz.dao.EmployeeDao;
-import com.brevitaz.errors.EmployeeNotFoundException;
-import com.brevitaz.errors.IndexNotFoundException;
 import com.brevitaz.errors.InvalidIdException;
 import com.brevitaz.model.Employee;
 import com.brevitaz.service.EmployeeService;

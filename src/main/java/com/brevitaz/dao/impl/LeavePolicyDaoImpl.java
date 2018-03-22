@@ -1,7 +1,6 @@
 package com.brevitaz.dao.impl;
 
 import com.brevitaz.dao.LeavePolicyDao;
-import com.brevitaz.errors.IndexNotFoundException;
 import com.brevitaz.errors.InvalidIdException;
 import com.brevitaz.model.LeavePolicy;
 import com.fasterxml.jackson.annotation.JsonInclude;

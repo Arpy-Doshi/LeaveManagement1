@@ -22,6 +22,7 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.rest.RestStatus;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
+import org.omg.CORBA.DynAnyPackage.Invalid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
@@ -207,11 +208,11 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
             }
             else
             {
-                throw new EmployeeNotFoundException("Employee Id "+employeeId+" doesn't exists!!!");
+                throw new InvalidIdException("Employee Id "+employeeId+" doesn't exists!!!");
             }
         } catch (Exception e) {
             e.printStackTrace();
-        throw new LeaveApplicationNotFoundException("doesn't exists!!!");
+        throw new InvalidIdException("doesn't exists!!!");
         }
     }
 
@@ -246,11 +247,11 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
             }
             else
             {
-                throw new LeaveApplicationNotFoundException("LeaveApplications doesn't exists!!!");
+                throw new InvalidIdException("LeaveApplications doesn't exists!!!");
             }
         } catch (Exception e) {
             e.printStackTrace();
-            throw new LeaveApplicationNotFoundException("doesn't exists!!!");
+            throw new InvalidIdException("doesn't exists!!!");
         }
     }
 
@@ -297,7 +298,7 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
             }
         } catch (Exception e) {
             e.printStackTrace();
-            throw new LeaveApplicationNotFoundException("doesn't exists!!!");
+            throw new InvalidIdException("doesn't exists!!!");
         }
 
 
