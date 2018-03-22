@@ -85,7 +85,7 @@ public class EmployeeDaoImpl implements EmployeeDao
         try {
             SearchResponse response = client.search(request);
 
-            if(response.status() == RestStatus.OK)
+            if(response.getHits().totalHits > 0 && response.status() == RestStatus.OK)
             {
                 SearchHit[] hits = response.getHits().getHits();
 
@@ -101,14 +101,14 @@ public class EmployeeDaoImpl implements EmployeeDao
             }
             else
             {
-                return null;
+                throw new IndexNotFoundException("Index is empty!!!");
             }
         }
         catch (IOException e)
         {
             e.printStackTrace();
-            throw new IndexNotFoundException("Index is empty!!!");
         }
+        return null;
     }
 
     @Override

@@ -12,7 +12,8 @@ import java.util.regex.Pattern;
 @EntityScan
 public class Employee {
 
-    @NotNull
+    @NotNull(message = "Id shouldn't be null")
+    @Size(min = 1,max = 20)
     private String id;
 
     @NotNull
@@ -28,8 +29,14 @@ public class Employee {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setId(String id)
+    {
+        Pattern p1 = Pattern.compile("^[ A-Za-z0-9]+$");
+        Matcher m = p1.matcher(id);
+        boolean b = m.matches();
+        if (b == true)
+
+            this.id = id;
     }
 
     public String getName() {

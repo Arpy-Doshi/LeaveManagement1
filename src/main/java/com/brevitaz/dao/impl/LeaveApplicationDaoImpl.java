@@ -336,11 +336,13 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
         SearchRequest request = new SearchRequest(indexName);
         request.types(TYPE_NAME);
         SearchResponse response = client.search(request);
+            System.out.println(response.status());
+            System.out.println(response.getHits().totalHits);
         if(response.getHits().totalHits == 0)
         {
             throw new NoContentException("No content found");
         }
-        if(response.status() == RestStatus.OK) {
+        if(response.status() == RestStatus.OK && response.getHits().totalHits > 0 ) {
             SearchHit[] hits = response.getHits().getHits();
 
             LeaveApplication leaveApplication;
@@ -355,11 +357,12 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
         }
         else
         {
-            throw new IndexNotFoundException("Index doesn't exists!!!");
+            throw new InvalidIdException("doesn't exists!!!");
         }
         } catch (Exception e) {
             e.printStackTrace();
-            throw new IndexNotFoundException("Leave Application's Index doesn't exists");
+
         }
+        return null;
     }
 }

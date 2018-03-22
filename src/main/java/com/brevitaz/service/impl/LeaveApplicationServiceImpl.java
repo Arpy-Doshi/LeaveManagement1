@@ -153,9 +153,23 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
     @Override
     public List<LeaveApplication> getAll()
     {
-            return leaveApplicationDao.getAll();
+        /*List<LeaveApplication> leaveApplications =*/ leaveApplicationDao.getAll();
+       /* if(leaveApplications == null)
+        {
+            throw new NoContentException("No content found");
+        }
+        else
+        {
+       */     return leaveApplicationDao.getAll();
+        /*}*/
     }
 
+   /* @Override
+    public List<LeaveApplication> getAll()
+    {
+            return leaveApplicationDao.getAll();
+    }
+*/
     @Override
     public List<LeaveApplication> getByDate(Date fromDate, Date toDate) {
 

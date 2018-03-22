@@ -1,12 +1,14 @@
 package com.brevitaz.model;
 
 import java.util.Date;
+import java.util.List;
 
 public class ErrorDetail
 {
     private Date timestamp;
     private String message;
     private String details;
+    private List<String> errors;
 
     public ErrorDetail() {
 
@@ -17,6 +19,13 @@ public class ErrorDetail
         this.message = message;
         this.details = details;
     }
+
+    public ErrorDetail(Date timestamp,  String details,List<String> errors) {
+        this.timestamp = timestamp;
+        this.details = details;
+        this.errors=errors;
+    }
+
 
     public Date getTimestamp() {
         return timestamp;
@@ -42,4 +51,11 @@ public class ErrorDetail
         this.details = details;
     }
 
+    public List<String> getErrors() {
+        return errors;
+    }
+
+    public void setErrors(List<String> errors) {
+        this.errors = errors;
+    }
 }
