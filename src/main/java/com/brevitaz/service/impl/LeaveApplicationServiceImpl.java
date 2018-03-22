@@ -52,11 +52,7 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
 
 
         Employee employee = employeeDao.getById(leaveApplication.getEmployeeId());
-        /* if(employee == null)
-        {
-            throw new EmployeeNotFoundException("Employee with Id "+employee.getId()+" does not exist");
-        }
-*/
+
         if (employee.getId().equals(leaveApplication.getEmployeeId())) {
             leaveApplication.setStatus(Status.APPLIED);
             if (leaveApplication.getFromDate().getTime() - date.getTime() >= 1296000000)
@@ -71,13 +67,11 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
             }
         }
         else
-            throw new InvalidIdException("Id doesn't match!!!!");/*
-       return false;*/
+            throw new InvalidIdException("Id doesn't match!!!!");
     }
 
     @Override
     public boolean cancelRequest(String id) {
-
         leaveApplicationDao.getById(id);
        return leaveApplicationDao.cancelRequest(id);
     }
@@ -86,15 +80,18 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
     public boolean updateRequest(LeaveApplication leaveApplication, String id) {
         leaveApplicationDao.getById(id);
         return leaveApplicationDao.updateRequest(leaveApplication,id);
-
     }
 
     @Override
-    public LeaveApplication getById(String id)
-    {
-       return leaveApplicationDao.getById(id);
-
+    public LeaveApplication getById(String id) {
+        return leaveApplicationDao.getById(id);
     }
+
+    @Override
+    public List<LeaveApplication> getAll() {
+        return leaveApplicationDao.getAll();
+    }
+
 
     @Override
     public List<LeaveApplication> checkRequest()

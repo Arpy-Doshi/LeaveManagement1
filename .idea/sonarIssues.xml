@@ -23,6 +23,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/brevitaz/dao/impl/EmployeeDaoImpl.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/src/main/java/com/brevitaz/dao/impl/LeaveApplicationDaoImpl.java">
           <value>
             <set />
@@ -129,6 +134,16 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/../LeaveManagement2/src/main/java/com/brevitaz/service/impl/LeavePolicyServiceImpl.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../demo/src/EnumDemo.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../erpsystem/leavemanagement/src/main/java/com/brevitaz/dao/impl/LeavePolicyDaoImpl.java">
           <value>
             <set />
           </value>

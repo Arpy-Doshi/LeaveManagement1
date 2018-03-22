@@ -59,8 +59,8 @@ public class EmployeeDaoImpl implements EmployeeDao
             String json = objectMapper.writeValueAsString(employee);
             request.source(json, XContentType.JSON);
             IndexResponse indexResponse = client.index(request);
-            System.out.println(indexResponse.status());
-            if(indexResponse.status() == RestStatus.OK)
+            System.out.println(indexResponse);
+            if(indexResponse.status() == RestStatus.CREATED)
             {
                 return true;
             }
@@ -167,6 +167,8 @@ public class EmployeeDaoImpl implements EmployeeDao
                 indexName,
                 TYPE_NAME,
                 id);
+
+
         try {
             GetResponse response = client.get(getRequest);
             if (response.isExists())

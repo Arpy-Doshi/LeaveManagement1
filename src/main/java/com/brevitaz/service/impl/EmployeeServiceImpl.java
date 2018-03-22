@@ -53,29 +53,28 @@ public class EmployeeServiceImpl implements EmployeeService
     @Override
     public boolean update(Employee employee, String id)//TODO:service layer should handle exception
     {//TODO:naming convention i.e. Employee employeeToBeUpdated in update
-       /* *//*StringEntity entity = null;
+        /*StringEntity entity = null;
         Response isIndexExists = client.exists(new GetRequest(indexName), )
 
         GetIndexRequest existsRequest = new GetIndexRequest();
         GetIndexRequest res = existsRequest.indices(indexName);
-*//*
-        *//*if (id.trim().length() <= 0)
+*/
+        /*if (id.trim().length() <= 0)
             throw  new InvalidIdException("Id is null!!!!");
-*//*
-  *//*      if(employee.getId().trim().length() <= 0)
+*/
+  /*      if(employee.getId().trim().length() <= 0)
             throw  new InvalidIdException("Id is null!!!");
-*//*
+*/
         if (employee.getId().equals(id))
-        {*//*
-            if(employee!=null)*//*
+        {/*
+            if(employee!=null)*/
                 return employeeDao.update(employee,id);
-           *//* else
+           /* else
                 throw  new EmployeeNotFoundException("Employee with Id "+id+" doesn't exists!!!");
-*//*      }
+*/      }
         else
             throw new InvalidIdException("Id doesn't match!!!");
-*/
-        return employeeDao.update(employee,id);
+
     }
 
     @Override
