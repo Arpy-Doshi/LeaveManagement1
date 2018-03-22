@@ -27,21 +27,7 @@ public class CenteralizedErrorController
     }
 
 
-    @ExceptionHandler(FieldEmptyException.class)
-    public ResponseEntity<ErrorDetail> fieldEmptyException(FieldEmptyException e, WebRequest w)
-    {
-        ErrorDetail errorDetail = new ErrorDetail(new Date() , e.getMessage() ,
-                w.getDescription(false));
-        return new ResponseEntity<ErrorDetail>(errorDetail, HttpStatus.BAD_REQUEST);
-    }
 
-    @ExceptionHandler(IndexNotFoundException.class)
-    public ResponseEntity<ErrorDetail> indexNotFoundException(IndexNotFoundException e, WebRequest w)
-    {
-        ErrorDetail errorDetail = new ErrorDetail(new Date() , e.getMessage() ,
-                w.getDescription(false));
-        return new ResponseEntity<ErrorDetail>(errorDetail, HttpStatus.NO_CONTENT);
-    }
 
     @ExceptionHandler(InvalidDateException.class)
     public ResponseEntity<ErrorDetail> invalidDateException(InvalidDateException e, WebRequest w)

@@ -1,7 +1,5 @@
 package com.brevitaz.controller;
 
-import com.brevitaz.dao.LeaveApplicationDao;
-import com.brevitaz.errors.FieldEmptyException;
 import com.brevitaz.model.LeaveApplication;
 import com.brevitaz.service.LeaveApplicationService;
 import org.springframework.beans.factory.annotation.Autowired;
