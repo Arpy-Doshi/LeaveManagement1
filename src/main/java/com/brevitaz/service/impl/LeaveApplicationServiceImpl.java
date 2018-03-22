@@ -87,11 +87,11 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
         return leaveApplicationDao.getById(id);
     }
 
-    @Override
+   /* @Override
     public List<LeaveApplication> getAll() {
         return leaveApplicationDao.getAll();
     }
-
+*/
 
     @Override
     public List<LeaveApplication> checkRequest()
