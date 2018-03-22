@@ -12,9 +12,9 @@ import java.util.regex.Pattern;
 @EntityScan
 public class Employee {
 
-    @NotNull(message = "Id shouldn't be null")
-    @Size(min = 1,max = 20)
-    private String id;
+    @NotNull/*(message = "Id shouldn't be null")*/
+   /* @Size(min = 1,max = 20)
+   */ private String id;
 
     @NotNull
     @Size(min = 2,max = 20 , message = "name should have minimun 2 and maximum 20 characters")
