@@ -21,11 +21,6 @@ public class LeaveApplicationController {
 
     @RequestMapping(method = RequestMethod.POST)
     public boolean request(@Valid @RequestBody LeaveApplication leaveApplication ,BindingResult bindingResult)  {
-
-        if(bindingResult.hasErrors())
-        {
-            throw new FieldEmptyException("Enter required details");
-        }
         return leaveApplicationService.request(leaveApplication);
     }
 

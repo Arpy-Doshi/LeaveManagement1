@@ -1,6 +1,7 @@
 package com.brevitaz.dao.impl;
 
 import com.brevitaz.dao.EmployeeDao;
+import com.brevitaz.errors.InvalidIdException;
 import com.brevitaz.errors.EmployeeNotFoundException;
 import com.brevitaz.model.Employee;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -93,10 +94,7 @@ public class EmployeeDaoImpl implements EmployeeDao
 
                 return employees;
             }
-            else
-            {
-                throw new IndexNotFoundException("Index is empty!!!");
-            }
+
         }
         catch (IOException e)
         {
@@ -124,7 +122,7 @@ public class EmployeeDaoImpl implements EmployeeDao
             }
         } catch (IOException e) {
             e.printStackTrace();
-           // throw new EmployeeNotFoundException("Employee with Id "+id+" doesn't exists!!!");
+
         }
         return false;
 
@@ -151,8 +149,7 @@ public class EmployeeDaoImpl implements EmployeeDao
             }
         } catch (IOException e) {
             e.printStackTrace();
-            //throw new EmployeeNotFoundException("Employee with Id "+id+" doesn't exists!!!");
-        }
+           }
         return false;
          }
 
@@ -172,13 +169,12 @@ public class EmployeeDaoImpl implements EmployeeDao
             }
             else
             {
-                throw new EmployeeNotFoundException("Employee with Id "+id+" doesn't exists!!!");
+                throw new InvalidIdException("Employee with Id "+id+" doesn't exists!!!");
             }
         }
         catch (IOException e)
         {
             e.printStackTrace();
-            //throw new EmployeeNotFoundException("Employee with Id "+id+" doesn't exists!!!");
         }
         return null;
         }
