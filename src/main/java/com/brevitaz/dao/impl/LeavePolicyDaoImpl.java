@@ -157,8 +157,8 @@ public class LeavePolicyDaoImpl implements LeavePolicyDao
             }
             else
             {
-                throw new InvalidIdException("LeavePolicy doesn't exists!!!");            }
-
+                throw new InvalidIdException("LeavePolicy doesn't exists!!!");
+            }
         }
         catch (IOException e)
         {

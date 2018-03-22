@@ -62,7 +62,8 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
             request.source(json, XContentType.JSON);
             IndexResponse indexResponse  = client.index(request);
             System.out.println(indexResponse);
-            if(indexResponse.status() == RestStatus.CREATED)
+            System.out.println(indexResponse.status());
+            if(indexResponse.status() == RestStatus.OK)
             {
                 return true;
             }
@@ -143,7 +144,7 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
                 throw new InvalidIdException("LeaveApplication with ID "+id+" doesn't exists!!!");
             }
         }
-        catch (Exception e)
+        catch (IOException e)
         {
             e.printStackTrace();
         }
@@ -335,7 +336,7 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
         SearchRequest request = new SearchRequest(indexName);
         request.types(TYPE_NAME);
         SearchResponse response = client.search(request);
-        if(response.getHits().totalHits == 0)
+        if(response.getHits().getTotalHits() == 0)
         {
             throw new NoContentException("No content found");
         }
