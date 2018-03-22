@@ -336,30 +336,20 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
         SearchRequest request = new SearchRequest(indexName);
         request.types(TYPE_NAME);
         SearchResponse response = client.search(request);
-        if(response.getHits().getTotalHits() == 0)
-        {
-            throw new NoContentException("No content found");
-        }
         if(response.status() == RestStatus.OK) {
             SearchHit[] hits = response.getHits().getHits();
 
             LeaveApplication leaveApplication;
 
-            for (SearchHit hit : hits)
-            {
+            for (SearchHit hit : hits) {
                 leaveApplication = objectMapper.readValue(hit.getSourceAsString(), LeaveApplication.class);
                 leaveApplications.add(leaveApplication);
+                return leaveApplications;
             }
-
-            return leaveApplications;
-        }
-        else
-        {
-            throw new IndexNotFoundException("Index doesn't exists!!!");
         }
         } catch (Exception e) {
             e.printStackTrace();
-            throw new IndexNotFoundException("Leave Application's Index doesn't exists");
         }
+        return null;
     }
 }

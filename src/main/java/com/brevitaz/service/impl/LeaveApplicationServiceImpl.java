@@ -50,7 +50,6 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
             throw new InvalidDateException("Form date is bigger than To date");
         }
 
-
         Employee employee = employeeDao.getById(leaveApplication.getEmployeeId());
 
         if (employee.getId().equals(leaveApplication.getEmployeeId())) {
@@ -89,9 +88,16 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
 
     @Override
     public List<LeaveApplication> getAll() {
-        return leaveApplicationDao.getAll();
+        List<LeaveApplication> leaveApplications = leaveApplicationDao.getAll();
+        if(leaveApplications == null)
+        {
+            throw new NoContentException("No content found");
+        }
+        else
+        {
+            return leaveApplications;
+        }
     }
-
 
     @Override
     public List<LeaveApplication> checkRequest()
@@ -100,16 +106,12 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
 
         List<LeaveApplication> leaveApplications1 = new ArrayList<>();
 
-        /*if (indexName.isEmpty())
-            throw new RuntimeException("Index is empty!!!");
-        else
-        */    leaveApplications = leaveApplicationDao.getAll();
+        leaveApplications = leaveApplicationDao.getAll();
 
         for (LeaveApplication leaveApplication:leaveApplications)
         {
             if (leaveApplication.getStatus() == Status.APPLIED)
                 leaveApplications1.add(leaveApplication);
-
         }
         return leaveApplications1;
     }
@@ -154,7 +156,6 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
             }
             else
                 throw new InvalidIdException("\"LeaveApplication with Id \"+id+\" doesn't exists!!!\"");
-
         }
         else
             throw new InvalidIdException("Id doesn't match!!!");

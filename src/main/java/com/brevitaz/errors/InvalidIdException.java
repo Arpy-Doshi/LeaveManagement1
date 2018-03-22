@@ -10,5 +10,4 @@ public class InvalidIdException extends RuntimeException{
     {
         super(message);
     }
-
 }

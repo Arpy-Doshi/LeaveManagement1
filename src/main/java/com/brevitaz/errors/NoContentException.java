@@ -10,5 +10,4 @@ public class NoContentException extends RuntimeException{
     {
         super(msg);
     }
-
 }
