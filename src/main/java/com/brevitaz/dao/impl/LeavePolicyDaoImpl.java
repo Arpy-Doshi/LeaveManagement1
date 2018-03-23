@@ -199,7 +199,7 @@ public class LeavePolicyDaoImpl implements LeavePolicyDao
         catch (IOException e)
         {
             e.printStackTrace();
-            throw new IndexNotFoundException("Index doesn't exists!!!");
+            throw new InvalidIdException("Index doesn't exists!!!");
         }
     }
 

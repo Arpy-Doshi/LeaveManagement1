@@ -25,12 +25,13 @@ public class EmployeeServiceImpl implements EmployeeService
 
     @Override
     public boolean create(Employee employee) {
-      /*  if(employee.getId().trim().length() <= 0|| employee.getName().trim().length()<=0) {
-            throw new RuntimeException("Field is null");
-        }
-      */  /*else {
 
-        }*/
+       /* Employee employee1 = employeeDao.getById(employee.getId());
+        if (employee1 != null)
+        {
+            throw new InvalidIdException("Employee Already Exists!!!");
+        }
+*/
         return employeeDao.create(employee);
     }
 

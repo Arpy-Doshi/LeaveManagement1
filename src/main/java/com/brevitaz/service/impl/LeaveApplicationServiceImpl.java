@@ -34,7 +34,8 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
 
 
     @Override
-    public boolean request(LeaveApplication leaveApplication) {
+    public boolean request(LeaveApplication leaveApplication)// TODO: JodaTime for time condition.
+     {// Todo: Add method for checking probation condition, check balance. Create structure as per acceptance criteria.
 
         Date date = new Date();
         if (leaveApplication.getFromDate().compareTo(date) == -1)
@@ -50,10 +51,10 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
             throw new InvalidDateException("Form date is bigger than To date");
         }
 
-        Employee employee = employeeDao.getById(leaveApplication.getEmployeeId());
+        //Employee employee = employeeDao.getById(leaveApplication.getEmployeeId());
 
-        if (employee.getId().equals(leaveApplication.getEmployeeId())) {
-            leaveApplication.setStatus(Status.APPLIED);
+       /* if (employee.getId().equals(leaveApplication.getEmployeeId())) {
+       */     leaveApplication.setStatus(Status.APPLIED);
             if (leaveApplication.getFromDate().getTime() - date.getTime() >= 1296000000)
             {
                 leaveApplication.setType(Type.PLANNED_LEAVE);
@@ -64,15 +65,14 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
                 leaveApplication.setType(Type.UNPLANNED_LEAVE);
                 return leaveApplicationDao.request(leaveApplication);
             }
-        }
+        /*}
         else
-            throw new InvalidIdException("Id doesn't match!!!!");
+            throw new InvalidIdException("Id doesn't match!!!!");*/
     }
 
     @Override
     public boolean cancelRequest(String id) {
-        leaveApplicationDao.getById(id);
-       return leaveApplicationDao.cancelRequest(id);
+       return leaveApplicationDao.cancelRequest(id);//Todo: nameing should be update status to cancelled.
     }
 
     @Override

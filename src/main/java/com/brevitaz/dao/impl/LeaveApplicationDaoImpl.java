@@ -80,13 +80,15 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
     }
 
     @Override
-    public boolean cancelRequest(String id){
+    public boolean cancelRequest(String id)
+    {
         DeleteRequest request = new DeleteRequest(
                 indexName,
                 TYPE_NAME,
                 id);
 
-        try {
+        try {//Todo:
+            //Todo:find some appropriate thing for respone so it can check where it exists and deleted at same time
             DeleteResponse response = client.delete(request);
             System.out.println(response.status());
 
@@ -95,16 +97,13 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
             {
                 return true;
             }
-            else
-            {
-                return false;
-            }
 
         } catch (Exception e) {
             e.printStackTrace();
         }
         return false;
     }
+
 
     @Override
     public boolean updateRequest(LeaveApplication leaveApplication,String id){
@@ -140,14 +139,10 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
             if(getResponse.isExists()) {
                 return objectMapper.readValue(getResponse.getSourceAsString(), LeaveApplication.class);
             }
-            else
-            {
-                throw new InvalidIdException("LeaveApplication with ID "+id+" doesn't exists!!!");
-            }
         }
         catch (IOException e)
         {
-            e.printStackTrace();
+            e.printStackTrace();// Todo: Use Logger to log all exception with proper messages.
         }
         return null;
     }

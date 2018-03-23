@@ -2,5 +2,5 @@ package com.brevitaz.model;
 
 public enum Status
 {
-    APPROVED,APPLIED,REJECTED;
+    APPROVED,APPLIED,REJECTED,CANCELLED;
 }

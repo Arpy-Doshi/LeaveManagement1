@@ -26,7 +26,7 @@ public class LeaveApplication
     private String createdBy;
     private Date updatedDate;
     private String updatedBy;
-    List<HandleRequest> handleRequests;// TODO :  what is  the appropriate name for this.
+    List<HandleRequest> approvals;// TODO :  what is  the appropriate name for this.
 
     public String getId() {
         return id;
@@ -125,11 +125,11 @@ public class LeaveApplication
     }
 
     public List<HandleRequest> getHandleRequests() {
-        return handleRequests;
+        return approvals;
     }
 
     public void setHandleRequests(List<HandleRequest> handleRequests) {
-        this.handleRequests = handleRequests;
+        this.approvals = handleRequests;
     }
 
     @Override
@@ -147,7 +147,7 @@ public class LeaveApplication
                 ", createdBy='" + createdBy + '\'' +
                 ", updatedDate=" + updatedDate +
                 ", updatedBy='" + updatedBy + '\'' +
-                ", handleRequests=" + handleRequests +
+                ", handleRequests=" + approvals +
                 '}';
     }
 }

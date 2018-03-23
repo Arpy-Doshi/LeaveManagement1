@@ -1,5 +1,6 @@
 package com.brevitaz.model;
 
+import com.brevitaz.util.Username;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 import javax.validation.constraints.NotNull;
@@ -17,6 +18,7 @@ public class Employee {
    */ private String id;
 
     @NotNull
+    @Username
     @Size(min = 2,max = 20 , message = "name should have minimun 2 and maximum 20 characters")
     private String name;
 
