@@ -37,6 +37,14 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
     public boolean request(LeaveApplication leaveApplication)// TODO: JodaTime for time condition.
      {// Todo: Add method for checking probation condition, check balance. Create structure as per acceptance criteria.
 
+      /*  try {
+            LeaveApplication leaveApplication1 = leaveApplicationDao.getById(leaveApplication.getId());
+        }
+        catch(InvalidIdException ex)
+        {
+            throw new InvalidIdException("LeaveApplication with id "+leaveApplication.getId()+" does not exist.");
+            return leaveApplicationDao.request(leaveApplication);
+        }*/
         Date date = new Date();
         if (leaveApplication.getFromDate().compareTo(date) == -1)
         {
@@ -143,7 +151,6 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
             }
             else
                  throw new InvalidIdException("\"LeaveApplication with Id \"+id+\" doesn't exists!!!\"");
-
         }
         else
             throw new InvalidIdException("Id doesn't match!!!");

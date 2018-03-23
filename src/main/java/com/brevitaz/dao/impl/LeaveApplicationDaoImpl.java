@@ -107,8 +107,7 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
 
     @Override
     public boolean updateRequest(LeaveApplication leaveApplication,String id){
-
-       try{
+        try{
            objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         UpdateRequest request = new UpdateRequest(
                 indexName,TYPE_NAME,

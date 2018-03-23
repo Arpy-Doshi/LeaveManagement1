@@ -59,9 +59,6 @@ public class Employee {
             this.name = name;
     }
 
-
-
-
     public Date getDateOfJoining() {
         return dateOfJoining;
     }
