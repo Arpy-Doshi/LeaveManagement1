@@ -18,46 +18,35 @@ public class CenteralizedErrorController
     public CenteralizedErrorController() {
     }
 
-    @ExceptionHandler(EmployeeNotFoundException.class)
-    public ResponseEntity<ErrorDetail> employeeNotFoundException(EmployeeNotFoundException e, WebRequest w)
-    {
-        ErrorDetail errorDetail = new ErrorDetail(new Date() , e.getMessage() ,
-                w.getDescription(false));
-        return new ResponseEntity<ErrorDetail>(errorDetail, HttpStatus.NOT_FOUND);
-    }
 
 
     @ExceptionHandler(FieldEmptyException.class)
-    public ResponseEntity<ErrorDetail> fieldEmptyException(FieldEmptyException e, WebRequest w)
+    public ResponseEntity<ErrorDetail> fieldEmptyException(FieldEmptyException e, WebRequest request)
     {
         ErrorDetail errorDetail = new ErrorDetail(new Date() , e.getMessage() ,
-                w.getDescription(false));
+                request.getDescription(false));
         return new ResponseEntity<ErrorDetail>(errorDetail, HttpStatus.BAD_REQUEST);
     }
 
 
     @ExceptionHandler(InvalidDateException.class)
-    public ResponseEntity<ErrorDetail> invalidDateException(InvalidDateException e, WebRequest w)
+    public ResponseEntity<ErrorDetail> invalidDateException(InvalidDateException e, WebRequest request)
     {
         ErrorDetail errorDetail = new ErrorDetail(new Date() , e.getMessage() ,
-                w.getDescription(false));
+                request.getDescription(false));
         return new ResponseEntity<ErrorDetail>(errorDetail, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(InvalidIdException.class)
-    public ResponseEntity<ErrorDetail> invalidIdException(InvalidIdException e , WebRequest w)
+    public ResponseEntity<ErrorDetail> invalidIdException(InvalidIdException e , WebRequest request)
     {
-        ErrorDetail errorDetail = new ErrorDetail(new Date(), e.getMessage(), w.getDescription(false));
+        ErrorDetail errorDetail = new ErrorDetail(new Date(), e.getMessage(), request.getDescription(false));
         return new ResponseEntity<ErrorDetail>(errorDetail,HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(LeaveApplicationNotFoundException.class)
-    public ResponseEntity<ErrorDetail> leaveApplicationNotFoundException(LeaveApplicationNotFoundException e , WebRequest w)
-    {
-        ErrorDetail errorDetail = new ErrorDetail(new Date(), e.getMessage(),
-                w.getDescription(false));
-        return new ResponseEntity<ErrorDetail>(errorDetail,HttpStatus.NOT_FOUND);
-    }
+
+
+
 
   /*  @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorDetail> methodArgumentNotValidException(MethodArgumentNotValidException e , WebRequest w)
@@ -67,16 +56,16 @@ public class CenteralizedErrorController
     }
 */
     @ExceptionHandler(NoContentException.class)
-    public ResponseEntity<ErrorDetail> noContentException(NoContentException e , WebRequest w)
+    public ResponseEntity<ErrorDetail> noContentException(NoContentException e , WebRequest request)
     {
-        ErrorDetail errorDetail = new ErrorDetail(new Date(), e.getMessage(), w.getDescription(false));
+        ErrorDetail errorDetail = new ErrorDetail(new Date(), e.getMessage(), request.getDescription(false));
         return new ResponseEntity<ErrorDetail>(errorDetail,HttpStatus.NO_CONTENT);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ErrorDetail> methodArgumentNotValidException(MethodArgumentNotValidException ex ,WebRequest w ) {
+    public ResponseEntity<ErrorDetail> methodArgumentNotValidException(MethodArgumentNotValidException ex ,WebRequest request ) {
         BindingResult result = ex.getBindingResult();
-        ErrorDetail errorDetail = new ErrorDetail(new Date(), w.getDescription(false), ValidationUtil.fromBindingErrors(result));
+        ErrorDetail errorDetail = new ErrorDetail(new Date(), request.getDescription(false), ValidationUtil.fromBindingErrors(result));
        return new ResponseEntity<ErrorDetail>(errorDetail, HttpStatus.BAD_REQUEST);
     }
 
