@@ -3,18 +3,20 @@ package com.brevitaz.service.impl;
 import com.brevitaz.dao.EmployeeDao;
 import com.brevitaz.dao.LeaveApplicationDao;
 import com.brevitaz.errors.*;
-import com.brevitaz.model.Employee;
 import com.brevitaz.model.LeaveApplication;
 import com.brevitaz.model.Status;
 import com.brevitaz.model.Type;
 import com.brevitaz.service.LeaveApplicationService;
 import org.elasticsearch.client.RestHighLevelClient;
+import org.joda.time.DateTime;
+import org.joda.time.Days;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Logger;
 
 @Service
 public class LeaveApplicationServiceImpl implements LeaveApplicationService
@@ -39,15 +41,49 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
     public boolean request(LeaveApplication leaveApplication)// TODO: JodaTime for time condition.
      {// Todo: Add method for checking probation condition, check balance. Create structure as per acceptance criteria.
 
-      /*  try {
-            LeaveApplication leaveApplication1 = leaveApplicationDao.getById(leaveApplication.getId());
-        }
-        catch(InvalidIdException ex)
-        {
-            throw new InvalidIdException("LeaveApplication with id "+leaveApplication.getId()+" does not exist.");
-            return leaveApplicationDao.request(leaveApplication);
-        }*/
-        Date date = new Date();
+
+
+         DateTime fromDate = new DateTime(leaveApplication.getFromDate());
+         DateTime toDate = new DateTime(leaveApplication.getToDate());
+         DateTime currentDate = new DateTime();
+
+         if(fromDate.isBefore(currentDate))
+         {
+            throw new InvalidDateException("fromDate is invalid");
+         }
+         if(toDate.isBefore(currentDate))
+         {
+             throw new InvalidDateException("toDate is invalid");
+         }
+         if(fromDate.isAfter(toDate))
+         {
+             throw new InvalidDateException("fromDate is bigger than toDate which is invalid");
+         }
+
+         leaveApplication.setStatus(Status.APPLIED);
+
+
+         long days = Days.daysBetween(currentDate , fromDate).getDays();
+         System.out.println(days);
+         if(days >= 15)
+         {
+             leaveApplication.setType(Type.PLANNED_LEAVE);
+             return leaveApplicationDao.request(leaveApplication);
+         }
+
+         else
+         {
+             leaveApplication.setType(Type.UNPLANNED_LEAVE);
+             return leaveApplicationDao.request(leaveApplication);
+         }
+
+
+
+
+
+
+
+      /*  Date date = new Date();
         if (leaveApplication.getFromDate().compareTo(date) == -1)
         {
             throw new InvalidDateException("From date is invalid");
@@ -60,11 +96,13 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
         {
             throw new InvalidDateException("Form date is bigger than To date");
         }
+*/
 
-        //Employee employee = employeeDao.getById(leaveApplication.getEmployeeId());
 
-       /* if (employee.getId().equals(leaveApplication.getEmployeeId())) {
-       */     leaveApplication.setStatus(Status.APPLIED);
+
+
+
+       /*  leaveApplication.setStatus(Status.APPLIED);
             if (leaveApplication.getFromDate().getTime() - date.getTime() >= 1296000000)
             {
                 leaveApplication.setType(Type.PLANNED_LEAVE);
@@ -74,10 +112,8 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
             {
                 leaveApplication.setType(Type.UNPLANNED_LEAVE);
                 return leaveApplicationDao.request(leaveApplication);
-            }
-        /*}
-        else
-            throw new InvalidIdException("Id doesn't match!!!!");*/
+            }*/
+
     }
 
     @Override
@@ -149,18 +185,18 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
             {
                 if(leaveApplication.getHr().getStatus()==Status.REJECTED && leaveApplication.getAdmin().getStatus()==Status.REJECTED)
                 {
-                    leaveApplication.setStatus(Status.CANCELLED);
+                    leaveApplication.setStatus(Status.REJECTED);
                     return leaveApplicationDao.updateRequest(leaveApplication,id);
                 }
                 else
                 {
-                    leaveApplication.setStatus(leaveApplication.getHr().getStatus());
+                    leaveApplication.setStatus(Status.APPROVED);
                     return leaveApplicationDao.updateRequest(leaveApplication, id);
                 }
             }
             else
             {
-                leaveApplication.setStatus(Status.CANCELLED);
+                leaveApplication.setStatus(Status.REJECTED);
                 return leaveApplicationDao.updateRequest(leaveApplication,id);
             }}
         catch(NullPointerException e)
