@@ -8,17 +8,16 @@ import javax.validation.constraints.NotNull;
 @EntityScan
 public class HandleRequest
 {
-    @NotNull
-    private String EmployeeId;
+    private String employeeId;
 
     private Status status;
 
     public String getEmployeeId() {
-        return EmployeeId;
+        return employeeId;
     }
 
     public void setEmployeeId(String employeeId) {
-        EmployeeId = employeeId;
+        employeeId = employeeId;
     }
 
     public Status getStatus() {
@@ -32,7 +31,7 @@ public class HandleRequest
     @Override
     public String toString() {
         return "HandleRequest{" +
-                "EmployeeId='" + EmployeeId + '\'' +
+                "EmployeeId='" + employeeId + '\'' +
                 ", status=" + status +
                 '}';
     }

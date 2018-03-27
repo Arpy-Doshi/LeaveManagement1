@@ -1,5 +1,6 @@
 package com.brevitaz.util;
 
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ObjectError;
 

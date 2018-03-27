@@ -1,5 +1,6 @@
 package com.brevitaz.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 import javax.validation.constraints.NotNull;
@@ -10,15 +11,10 @@ import java.util.List;
 public class LeaveApplication
 {
     private String id;
-
-    @NotNull
     private String employeeId;
-    @NotNull
     private String employeeName;
     private String reason;
-    @NotNull
     private Date fromDate;
-    @NotNull
     private Date toDate;
     private Type type;
     private Status status;
@@ -26,8 +22,9 @@ public class LeaveApplication
     private String createdBy;
     private Date updatedDate;
     private String updatedBy;
-    List<HandleRequest> approvals;// TODO :  what is  the appropriate name for this.
-
+   // List<HandleRequest> approvals;// TODO :  what is  the appropriate name for this.
+    private HandleRequest hr;
+    private HandleRequest admin;
     public String getId() {
         return id;
     }
@@ -124,12 +121,28 @@ public class LeaveApplication
         this.updatedBy = updatedBy;
     }
 
-    public List<HandleRequest> getHandleRequests() {
+   /* public List<HandleRequest> getApprovals() {
         return approvals;
     }
 
-    public void setHandleRequests(List<HandleRequest> handleRequests) {
+    public void setApprovals(List<HandleRequest> handleRequests) {
         this.approvals = handleRequests;
+    }*/
+
+    public HandleRequest getHr() {
+        return hr;
+    }
+
+    public void setHr(HandleRequest hr) {
+        this.hr = hr;
+    }
+
+    public HandleRequest getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(HandleRequest admin) {
+        this.admin = admin;
     }
 
     @Override
@@ -147,7 +160,8 @@ public class LeaveApplication
                 ", createdBy='" + createdBy + '\'' +
                 ", updatedDate=" + updatedDate +
                 ", updatedBy='" + updatedBy + '\'' +
-                ", handleRequests=" + approvals +
+                ", hr=" + hr +
+                ", admin=" + admin +
                 '}';
     }
 }

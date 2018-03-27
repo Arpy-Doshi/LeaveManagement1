@@ -20,6 +20,8 @@ public interface LeaveApplicationDao {
 
     public boolean declineRequest(LeaveApplication leaveApplication,String id);
 
+
+
    /* public LeaveApplication getReport();
 */
 

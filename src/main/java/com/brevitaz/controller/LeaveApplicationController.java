@@ -39,20 +39,16 @@ public class LeaveApplicationController {
         return leaveApplicationService.getById(id);
     }
 
+    @RequestMapping(value = /*"/employeeId/{employeeId}/xyz/approveOrReject/RequestId/{id}"*/"/{id}/approveOrRejected" , method = RequestMethod.PUT)
+    public boolean approveOrRejected(@RequestBody  LeaveApplication leaveApplication, @PathVariable String id) {
+        return leaveApplicationService.approveOrRejected(leaveApplication,id);
+    }
+
     @RequestMapping(value = "/check-requests" , method = RequestMethod.GET)// TODO : Should be part of getAll with filter
     public List<LeaveApplication> checkRequest()  {
         return leaveApplicationService.checkRequest();
     }
 
-    @RequestMapping(value = "/{id}/approve" , method = RequestMethod.PUT)//status changes in service & request should be POST or PUT?
-    public boolean approveRequest(@PathVariable String id) {
-        return leaveApplicationService.approveRequest(id);
-    }
-
-    @RequestMapping(value = "/{id}/decline" , method = RequestMethod.PUT)//status changes in service
-    public boolean declineRequest(@PathVariable String id) {
-        return leaveApplicationService.declineRequest(id);
-    }
 
     @RequestMapping(value = "/get-by-date/{fromDate}/{toDate}" , method = RequestMethod.GET)
     public List<LeaveApplication> getByDate(@PathVariable("fromDate") @DateTimeFormat(pattern = "dd-MM-yyyy") Date fromDate, @PathVariable("toDate") @DateTimeFormat(pattern = "dd-MM-yyyy") Date toDate) {
@@ -72,5 +68,17 @@ public class LeaveApplicationController {
         //return leaveApplicationDao.getReport();
     }
 
+*/
+
+
+    /*@RequestMapping(value = "/{id}/approve" , method = RequestMethod.PUT)//status changes in service & request should be POST or PUT?
+    public boolean approveRequest(@PathVariable String id) {
+        return leaveApplicationService.approveRequest(id);
+    }
+
+    @RequestMapping(value = "/{id}/decline" , method = RequestMethod.PUT)//status changes in service
+    public boolean declineRequest(@PathVariable String id) {
+        return leaveApplicationService.declineRequest(id);
+    }
 */
 }

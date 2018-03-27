@@ -64,7 +64,7 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
             IndexResponse indexResponse  = client.index(request);
             System.out.println(indexResponse);
             System.out.println(indexResponse.status());
-            if(indexResponse.status() == RestStatus.OK)
+            if(indexResponse.status() == RestStatus.CREATED)
             {
                 return true;
             }
@@ -252,7 +252,7 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
     @Override
     public boolean approveRequest(LeaveApplication leaveApplication,String id) {
 
-        try{
+        /*try{
             objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
             UpdateRequest request = new UpdateRequest(
                     indexName,TYPE_NAME,
@@ -270,13 +270,13 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
             e.printStackTrace();
            // throw new LeaveApplicationNotFoundException("doesn't exists!!!");
         }
-        //System.out.println("Update: "+updateResponse);
+        //System.out.println("Update: "+updateResponse);*/
         return false;
     }
 
     @Override
     public boolean declineRequest(LeaveApplication leaveApplication,String id) {
-        try{
+       /* try{
             objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
             UpdateRequest request = new UpdateRequest(
                     indexName,TYPE_NAME,
@@ -293,7 +293,8 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
         } catch (Exception e) {
             e.printStackTrace();
             throw new InvalidIdException("doesn't exists!!!");
-        }
+        }*/
+       return false;
 
 
         /*objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
@@ -323,6 +324,7 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
         }
 */
     }
+
 
     @Override
     public List<LeaveApplication> getAll()  {
