@@ -3,7 +3,6 @@ package com.brevitaz.service.impl;
 import com.brevitaz.dao.EmployeeDao;
 import com.brevitaz.dao.LeaveApplicationDao;
 import com.brevitaz.errors.*;
-import com.brevitaz.model.Employee;
 import com.brevitaz.model.LeaveApplication;
 import com.brevitaz.model.Status;
 import com.brevitaz.model.Type;
