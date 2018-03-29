@@ -39,12 +39,12 @@ public class LeaveApplicationController {
         return leaveApplicationService.getById(id);
     }
 
-    @RequestMapping(value = /*"/employeeId/{employeeId}/xyz/approveOrReject/RequestId/{id}"*/"/{id}/approveOrRejected" , method = RequestMethod.PUT)
-    public boolean approveOrRejected(@RequestBody  LeaveApplication leaveApplication, @PathVariable String id) {
-        return leaveApplicationService.approveOrRejected(leaveApplication,id);
+    @RequestMapping(value ="/{id}/statusUpdate" , method = RequestMethod.PUT)
+    public boolean statusUpdate(@RequestBody  LeaveApplication leaveApplication, @PathVariable String id) {
+        return leaveApplicationService.statusUpdate(leaveApplication,id);
     }
 
-    @RequestMapping(value = "/check-requests" , method = RequestMethod.GET)// TODO : Should be part of getAll with filter
+    @RequestMapping(value = "/check-requests" , method = RequestMethod.GET)
     public List<LeaveApplication> checkRequest()  {
         return leaveApplicationService.checkRequest();
     }
@@ -52,7 +52,7 @@ public class LeaveApplicationController {
 
     @RequestMapping(value = "/get-by-date/{fromDate}/{toDate}" , method = RequestMethod.GET)
     public List<LeaveApplication> getByDate(@PathVariable("fromDate") @DateTimeFormat(pattern = "dd-MM-yyyy") Date fromDate, @PathVariable("toDate") @DateTimeFormat(pattern = "dd-MM-yyyy") Date toDate) {
-        return leaveApplicationService.getByDate(fromDate,toDate);// TODO: done by applying filter
+        return leaveApplicationService.getByDate(fromDate,toDate);
     }
 
     @RequestMapping(value = "" , method = RequestMethod.GET)
