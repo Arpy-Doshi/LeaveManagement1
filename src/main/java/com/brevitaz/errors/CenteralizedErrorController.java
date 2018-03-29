@@ -49,6 +49,14 @@ public class CenteralizedErrorController
         return new ResponseEntity<ErrorDetail>(errorDetail,HttpStatus.NO_CONTENT);
     }
 
+    @ExceptionHandler(NotAllowedException.class)
+    public ResponseEntity<ErrorDetail> notAllowedException(NotAllowedException e , WebRequest w)
+    {
+        ErrorDetail errorDetail = new ErrorDetail(new Date(), e.getMessage(), w.getDescription(false));
+        return new ResponseEntity<ErrorDetail>(errorDetail,HttpStatus.BAD_REQUEST);
+    }
+
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorDetail> methodArgumentNotValidException(MethodArgumentNotValidException ex ,WebRequest w ) {
         BindingResult result = ex.getBindingResult();

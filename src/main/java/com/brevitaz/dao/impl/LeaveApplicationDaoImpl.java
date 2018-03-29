@@ -68,13 +68,8 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
             {
                 return true;
             }
-            else
-            {
-                return false;
-            }
-
         } catch (IOException e) {
-            e.printStackTrace();
+            e.getMessage();
         }
        return false;
     }
@@ -117,12 +112,8 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
        {
            return true;
        }
-       else
-       {
-           return false;
-       }
-       } catch (Exception e) {
-            e.printStackTrace();
+       } catch (IOException | NullPointerException e) {
+            e.getMessage();
         }
         return false;
     }
@@ -200,14 +191,10 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
 
                 return leaveApplications;
             }
-            else
-            {
-                throw new InvalidIdException("Employee Id "+employeeId+" doesn't exists!!!");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (IOException | NullPointerException e) {
         throw new InvalidIdException("doesn't exists!!!");
         }
+        return null;
     }
 
 
@@ -239,14 +226,10 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
 
                 return leaveApplications;
             }
-            else
-            {
-                throw new InvalidIdException("LeaveApplications doesn't exists!!!");
-            }
         } catch (Exception e) {
-            e.printStackTrace();
             throw new InvalidIdException("doesn't exists!!!");
         }
+        return null;
     }
 
     @Override

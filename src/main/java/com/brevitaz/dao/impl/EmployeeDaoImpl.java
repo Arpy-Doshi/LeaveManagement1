@@ -171,10 +171,9 @@ public class EmployeeDaoImpl implements EmployeeDao
                 throw new InvalidIdException("Employee with Id "+id+" doesn't exists!!!");
             }
         }
-        catch (IOException e)
+        catch (IOException| NullPointerException e)
         {
-            e.printStackTrace();
+            throw new InvalidIdException("Employee with Id "+id+" doesn't exists!!!");
         }
-        return null;
         }
 }

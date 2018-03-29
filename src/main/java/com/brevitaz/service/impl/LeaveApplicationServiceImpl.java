@@ -3,6 +3,7 @@ package com.brevitaz.service.impl;
 import com.brevitaz.dao.EmployeeDao;
 import com.brevitaz.dao.LeaveApplicationDao;
 import com.brevitaz.errors.*;
+import com.brevitaz.model.Employee;
 import com.brevitaz.model.LeaveApplication;
 import com.brevitaz.model.Status;
 import com.brevitaz.model.Type;
@@ -41,48 +42,49 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
     public boolean request(LeaveApplication leaveApplication)// TODO: JodaTime for time condition.
      {// Todo: Add method for checking probation condition, check balance. Create structure as per acceptance criteria.
 
+         Employee employee = employeeDao.getById(leaveApplication.getEmployeeId());
+
+         if (employee.getName().equals(leaveApplication.getEmployeeName()) && employee.getId().equals(leaveApplication.getEmployeeId())) {
+
+             boolean isProbation =leaveApplicationService.checkProbation(leaveApplication.getEmployeeId());
+
+             if (isProbation == true)
+                 throw new NotAllowedException("Employee with id "+leaveApplication.getEmployeeId()+" is Not Allowed  to make Request!!!");
+             else {
+
+                 DateTime fromDate = new DateTime(leaveApplication.getFromDate());
+                 DateTime toDate = new DateTime(leaveApplication.getToDate());
+                 DateTime currentDate = new DateTime();
+
+                 if (fromDate.isBefore(currentDate)) {
+                     throw new InvalidDateException("fromDate is invalid");
+                 }
+                 if (toDate.isBefore(currentDate)) {
+                     throw new InvalidDateException("toDate is invalid");
+                 }
+                 if (fromDate.isAfter(toDate)) {
+                     throw new InvalidDateException("fromDate is bigger than toDate which is invalid");
+                 }
+
+                 leaveApplication.setStatus(Status.APPLIED);
 
 
-         DateTime fromDate = new DateTime(leaveApplication.getFromDate());
-         DateTime toDate = new DateTime(leaveApplication.getToDate());
-         DateTime currentDate = new DateTime();
+                 long days = Days.daysBetween(currentDate, fromDate).getDays();
+                 System.out.println(days);
+                 if (days >= 15) {
+                     leaveApplication.setType(Type.PLANNED_LEAVE);
+                     return leaveApplicationDao.request(leaveApplication);
+                 } else {
+                     leaveApplication.setType(Type.UNPLANNED_LEAVE);
+                     return leaveApplicationDao.request(leaveApplication);
+                 }
+             }
 
-         if(fromDate.isBefore(currentDate))
-         {
-            throw new InvalidDateException("fromDate is invalid");
          }
-         if(toDate.isBefore(currentDate))
-         {
-             throw new InvalidDateException("toDate is invalid");
-         }
-         if(fromDate.isAfter(toDate))
-         {
-             throw new InvalidDateException("fromDate is bigger than toDate which is invalid");
-         }
-
-         leaveApplication.setStatus(Status.APPLIED);
-
-
-         long days = Days.daysBetween(currentDate , fromDate).getDays();
-         System.out.println(days);
-         if(days >= 15)
-         {
-             leaveApplication.setType(Type.PLANNED_LEAVE);
-             return leaveApplicationDao.request(leaveApplication);
-         }
-
          else
          {
-             leaveApplication.setType(Type.UNPLANNED_LEAVE);
-             return leaveApplicationDao.request(leaveApplication);
+             throw new InvalidIdException("Employee doesn't match!!!");
          }
-
-
-
-
-
-
-
       /*  Date date = new Date();
         if (leaveApplication.getFromDate().compareTo(date) == -1)
         {
@@ -117,6 +119,24 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
     }
 
     @Override
+    public boolean checkProbation(String employeeId)
+    {
+        Employee employee = employeeDao.getById(employeeId);
+
+        DateTime dateOfJoining = new DateTime(employee.getDateOfJoining());
+        DateTime currentDate = new DateTime();
+
+        long days = Days.daysBetween(dateOfJoining, currentDate).getDays();
+        System.out.println(days);
+        if (days <= 10)
+            return true;
+        else
+            return false;
+    }
+
+
+
+    @Override
     public boolean cancelRequest(String id) {
        return leaveApplicationDao.cancelRequest(id);//Todo: nameing should be update status to cancelled.
     }
@@ -124,6 +144,21 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
     @Override
     public boolean updateRequest(LeaveApplication leaveApplication, String id) {
         leaveApplicationDao.getById(id);
+
+        DateTime fromDate = new DateTime(leaveApplication.getFromDate());
+        DateTime toDate = new DateTime(leaveApplication.getToDate());
+        DateTime currentDate = new DateTime();
+
+        if (fromDate.isBefore(currentDate)) {
+            throw new InvalidDateException("fromDate is invalid");
+        }
+        if (toDate.isBefore(currentDate)) {
+            throw new InvalidDateException("toDate is invalid");
+        }
+        if (fromDate.isAfter(toDate)) {
+            throw new InvalidDateException("fromDate is bigger than toDate which is invalid");
+        }
+        leaveApplication.setStatus(Status.APPLIED);
         return leaveApplicationDao.updateRequest(leaveApplication,id);
     }
 
@@ -247,6 +282,8 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
             }*/
 
     }
+
+
 
     @Override
     public boolean approveRequest(String id)// TODO: assign requesthandlers at post time only & if status if applied then only approve or reject

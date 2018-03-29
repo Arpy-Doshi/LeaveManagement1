@@ -60,6 +60,12 @@ public class LeaveApplicationController {
         return leaveApplicationService.getAll();
     }
 
+    @RequestMapping(value = "/employee/{employeeId}" , method = RequestMethod.GET)
+    public boolean checkProbation (@PathVariable String employeeId)
+    {
+        return leaveApplicationService.checkProbation(employeeId);
+    }
+
     //**************** what should i pass in below two methods ?
    /*
    @RequestMapping(value = "/get-report" , method = RequestMethod.GET)//2 things in service 1 is emp wise i.e. getById & 2 is date wise i.e.From Date To Date

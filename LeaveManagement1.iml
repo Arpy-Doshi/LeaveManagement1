@@ -67,7 +67,6 @@
     <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpcore-nio:4.4.9" level="project" />
     <orderEntry type="library" name="Maven: org.elasticsearch.plugin:parent-join-client:6.1.1" level="project" />
     <orderEntry type="library" name="Maven: org.elasticsearch.plugin:aggs-matrix-stats-client:6.1.1" level="project" />
-    <orderEntry type="library" name="Maven: joda-time:joda-time:2.9.9" level="project" />
     <orderEntry type="library" name="Maven: org.elasticsearch:elasticsearch:6.1.1" level="project" />
     <orderEntry type="library" name="Maven: org.apache.lucene:lucene-core:7.1.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.lucene:lucene-analyzers-common:7.1.0" level="project" />

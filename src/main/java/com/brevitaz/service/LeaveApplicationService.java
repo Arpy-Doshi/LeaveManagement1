@@ -17,6 +17,7 @@ public interface LeaveApplicationService
 
     public List<LeaveApplication> checkRequest() ;
 
+
     public boolean approveRequest(String id);
 
     public boolean declineRequest( String id);
@@ -30,4 +31,7 @@ public interface LeaveApplicationService
 
     public List<LeaveApplication> getAll();
     public List<LeaveApplication> getByDate(Date fromDate, Date toDate);
+
+
+    public boolean checkProbation(String employeeId);
 }

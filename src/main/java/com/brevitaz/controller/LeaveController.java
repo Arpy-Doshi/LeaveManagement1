@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/leaves")
+@RequestMapping("/api/leaves")
 public class LeaveController
 {
     @Autowired
@@ -30,5 +30,6 @@ public class LeaveController
     public List<LeaveApplication> getByEmployeeId(@PathVariable String employeeId)  {
         return leaveService.getByEmployeeId(employeeId);
     }
+
 
 }

@@ -9,4 +9,5 @@ public interface LeaveService
     public double checkBalance(String employeeId);
 
     public List<LeaveApplication>getByEmployeeId(String employeeId);
+
 }
