@@ -1,6 +1,7 @@
 package com.brevitaz.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.joda.time.DateTime;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 import javax.validation.constraints.NotNull;

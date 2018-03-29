@@ -22,9 +22,9 @@ public interface LeaveApplicationService
 
     public boolean declineRequest( String id);
 
-    public boolean approveOrRejected(LeaveApplication leaveApplication,String id);
+    public boolean statusUpdate(LeaveApplication leaveApplication,String id);
 
-    public boolean finalStatus(String id);
+    public boolean finalStatusUpdate(String id);
 
    /* public LeaveApplication getReport();
 */

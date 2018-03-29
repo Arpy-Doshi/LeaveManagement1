@@ -5,6 +5,7 @@ import com.brevitaz.dao.LeaveApplicationDao;
 import com.brevitaz.errors.*;
 import com.brevitaz.model.Employee;
 import com.brevitaz.model.LeaveApplication;
+import com.brevitaz.model.LeavePolicy;
 import com.brevitaz.model.Status;
 import com.brevitaz.model.Type;
 import com.brevitaz.service.LeaveApplicationService;
@@ -138,7 +139,9 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
 
     @Override
     public boolean cancelRequest(String id) {
-       return leaveApplicationDao.cancelRequest(id);//Todo: nameing should be update status to cancelled.
+        LeaveApplication leaveApplication = leaveApplicationDao.getById(id);
+        leaveApplication.setStatus(Status.CANCELLED);
+       return leaveApplicationDao.updateRequest(leaveApplication,id);
     }
 
     @Override
@@ -203,16 +206,16 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
     }
 
     @Override
-    public boolean approveOrRejected(LeaveApplication leaveApplication, String id) {
+    public boolean statusUpdate(LeaveApplication leaveApplication, String id) {
         boolean b = leaveApplicationDao.updateRequest(leaveApplication,id);
 
-        leaveApplicationService.finalStatus(id);
+        leaveApplicationService.finalStatusUpdate(id);
 
         return b;
     }
 
     @Override
-    public boolean finalStatus(String id) {
+    public boolean finalStatusUpdate(String id) {
         LeaveApplication leaveApplication = leaveApplicationDao.getById(id);
 
         try{
@@ -233,7 +236,8 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
             {
                 leaveApplication.setStatus(Status.REJECTED);
                 return leaveApplicationDao.updateRequest(leaveApplication,id);
-            }}
+            }
+        }
         catch(NullPointerException e)
         {
             return false;
@@ -243,16 +247,49 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
     @Override
     public List<LeaveApplication> getByDate(Date fromDate, Date toDate) {
 
-        List<LeaveApplication> leaveApplications1;
+        DateTime fromDateJoda = new DateTime(fromDate);
+        DateTime toDateJoda = new DateTime(toDate);
+
+        List<LeaveApplication> leaveApplications = new ArrayList<>();
+
+        List<LeaveApplication> leaveApplications1 = leaveApplicationDao.getAll();
+
+        for(LeaveApplication leaveApplication: leaveApplications1)
+        {
+            DateTime fromDateLeaveJoda = new DateTime(leaveApplication.getFromDate());
+            System.out.println(toDateJoda);
+            System.out.println(fromDateLeaveJoda);
+            System.out.println(toDateJoda.plusDays(1));
+            System.out.println(fromDateJoda.isEqual(fromDateLeaveJoda));
+
+            if(fromDateJoda.isAfter(fromDateLeaveJoda.minusDays(1)))
+            {
+                System.out.println(fromDateJoda.isEqual(fromDateLeaveJoda));
+                leaveApplications.add(leaveApplication);
+            }
+            else if(toDateJoda.isEqual(fromDateLeaveJoda.plusDays(1)))
+            {
+                leaveApplications.add(leaveApplication);
+            }
+            else if(fromDateLeaveJoda.isAfter(fromDateJoda) && fromDateLeaveJoda.isBefore(toDateJoda))
+            {
+                leaveApplications.add(leaveApplication);
+            }
+        }
+        return leaveApplications;
+
+
+
+    /*    List<LeaveApplication> leaveApplications1;
         List<LeaveApplication> leaveApplications2 = new ArrayList<>();
-/*
+
         LeaveApplicationService leaveApplicationService = null;
-        */
-     /*   if (fromDate == null || toDate == null )
+
+        if (fromDate == null || toDate == null )
             throw new InvalidDateException("Date is null!!!");
         else
-     */     /*  leaveApplications1= leaveApplicationService.getAll();
-*/
+            leaveApplications1= leaveApplicationService.getAll();
+
         leaveApplications1=leaveApplicationDao.getAll();
         for (LeaveApplication leaveapplication2:leaveApplications1)
         {
@@ -263,30 +300,13 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
             if (leaveapplication2.getFromDate().compareTo(fromDate) == 1 && leaveapplication2.getFromDate().compareTo(toDate) == -1 )
                 leaveApplications2.add(leaveapplication2);
         }
-        return leaveApplications2;
-         /*   leaveApplications1 = leaveApplicationDao.getAll();
+        return leaveApplications2;  */
 
-            for(LeaveApplication application : leaveApplications1)
-            {
-                if (fromDate.compareTo(application.getFromDate()) == 0)
-                    leaveApplications2.add(application);
-
-                else if(toDate.compareTo(application.getFromDate()) == 0)
-                {
-                    leaveApplications2.add(application);
-                }
-                else if(application.getFromDate().compareTo(fromDate) == 1 && application.getFromDate().compareTo(toDate) == -1)
-                {
-                    leaveApplications2.add(application);
-                }
-            }*/
 
     }
 
-
-
     @Override
-    public boolean approveRequest(String id)// TODO: assign requesthandlers at post time only & if status if applied then only approve or reject
+    public boolean approveRequest(String id)
     {
         /*LeaveApplication leaveApplication = leaveApplicationDao.getById(id);
 *//*
@@ -298,7 +318,7 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
             throw new RuntimeException("Id is null!!");
         else if (leaveApplication.getId().trim().length() != id.trim().length())
             throw new RuntimeException("Id doesn't match");
-*//*
+e*//*
         if (leaveApplication.getId().equals(id)) {
             if (leaveApplication!= null) {
                  *//*leaveApplication.setStatus(Status.APPROVED);
@@ -314,7 +334,7 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
     }
 
     @Override
-    public boolean declineRequest(String id)// TODO: same as approve
+    public boolean declineRequest(String id)//
     {
        /* LeaveApplication leaveApplication = leaveApplicationDao.getById(id);
 

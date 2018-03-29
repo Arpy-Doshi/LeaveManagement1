@@ -75,32 +75,6 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
     }
 
     @Override
-    public boolean cancelRequest(String id)
-    {
-        DeleteRequest request = new DeleteRequest(
-                indexName,
-                TYPE_NAME,
-                id);
-
-        try {//Todo:
-            //Todo:find some appropriate thing for respone so it can check where it exists and deleted at same time
-            DeleteResponse response = client.delete(request);
-            System.out.println(response.status());
-
-            System.out.println(response);
-            if(response.status() == RestStatus.OK)
-            {
-                return true;
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-
-    @Override
     public boolean updateRequest(LeaveApplication leaveApplication,String id){
         try{
            objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
@@ -137,6 +111,31 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
         return null;
     }
 
+
+    @Override
+    public List<LeaveApplication> getAll()  {
+        List<LeaveApplication> leaveApplications = new ArrayList<>();
+
+        try {
+            SearchRequest request = new SearchRequest(indexName);
+            request.types(TYPE_NAME);
+            SearchResponse response = client.search(request);
+            if(response.status() == RestStatus.OK) {
+                SearchHit[] hits = response.getHits().getHits();
+
+                LeaveApplication leaveApplication;
+
+                for (SearchHit hit : hits) {
+                    leaveApplication = objectMapper.readValue(hit.getSourceAsString(), LeaveApplication.class);
+                    leaveApplications.add(leaveApplication);
+                }
+                return leaveApplications;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     @Override
     public List<LeaveApplication> getByEmployeeId(String employeeId)
@@ -198,39 +197,6 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
     }
 
 
-    @Override
-    public List<LeaveApplication> checkRequest()  {
-
-        try {
-        SearchRequest request = new SearchRequest(indexName);
-        request.types(TYPE_NAME);
-
-        SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
-
-        sourceBuilder.query(QueryBuilders.boolQuery().must(matchQuery("status", "APPLIED")));
-
-        request.source(sourceBuilder);
-
-        SearchResponse response = client.search(request);
-            if(response.status() == RestStatus.OK) {
-                List<LeaveApplication> leaveApplications=new ArrayList<>();
-
-                SearchHit[] hits = response.getHits().getHits();
-
-                LeaveApplication leaveApplication;
-                for (SearchHit hit : hits)
-                {
-                    leaveApplication = objectMapper.readValue(hit.getSourceAsString(), LeaveApplication.class);
-                    leaveApplications.add(leaveApplication);
-                }
-
-                return leaveApplications;
-            }
-        } catch (Exception e) {
-            throw new InvalidIdException("doesn't exists!!!");
-        }
-        return null;
-    }
 
     @Override
     public boolean approveRequest(LeaveApplication leaveApplication,String id) {
@@ -310,27 +276,68 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
 
 
     @Override
-    public List<LeaveApplication> getAll()  {
-        List<LeaveApplication> leaveApplications = new ArrayList<>();
+    public boolean cancelRequest(String id)
+    {/*
+        DeleteRequest request = new DeleteRequest(
+                indexName,
+                TYPE_NAME,
+                id);
 
-        try {
-        SearchRequest request = new SearchRequest(indexName);
-        request.types(TYPE_NAME);
-        SearchResponse response = client.search(request);
-        if(response.status() == RestStatus.OK) {
-            SearchHit[] hits = response.getHits().getHits();
+        try {//Todo:
+            //Todo:find some appropriate thing for respone so it can check where it exists and deleted at same time
+            DeleteResponse response = client.delete(request);
+            System.out.println(response.status());
 
-            LeaveApplication leaveApplication;
-
-            for (SearchHit hit : hits) {
-                leaveApplication = objectMapper.readValue(hit.getSourceAsString(), LeaveApplication.class);
-                leaveApplications.add(leaveApplication);
-                return leaveApplications;
+            System.out.println(response);
+            if(response.status() == RestStatus.OK)
+            {
+                return true;
             }
-        }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
+     */   return false;
+    }
+
+
+    @Override
+    public List<LeaveApplication> checkRequest()  {
+
+     /*   try {
+        SearchRequest request = new SearchRequest(indexName);
+        request.types(TYPE_NAME);
+
+        SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
+
+        sourceBuilder.query(QueryBuilders.boolQuery().must(matchQuery("status", "APPLIED")));
+
+        request.source(sourceBuilder);
+
+        SearchResponse response = client.search(request);
+            if(response.status() == RestStatus.OK) {
+                List<LeaveApplication> leaveApplications=new ArrayList<>();
+
+                SearchHit[] hits = response.getHits().getHits();
+
+                LeaveApplication leaveApplication;
+                for (SearchHit hit : hits)
+                {
+                    leaveApplication = objectMapper.readValue(hit.getSourceAsString(), LeaveApplication.class);
+                    leaveApplications.add(leaveApplication);
+                }
+
+                return leaveApplications;
+            }
+            else
+            {
+                throw new InvalidIdException("LeaveApplications doesn't exists!!!");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new InvalidIdException("doesn't exists!!!");
+        }*/
         return null;
     }
+
 }
