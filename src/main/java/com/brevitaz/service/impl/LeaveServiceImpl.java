@@ -36,164 +36,85 @@ public class LeaveServiceImpl implements LeaveService
 
         List<LeaveApplication> leaveApplications1 = new ArrayList<>();
 
-        DateTime currentDate = new DateTime("12-12");
+        DateTime lastMonth = new DateTime("12-12");
 
-        DateTime date = new DateTime();
+        DateTime currentDate = new DateTime("2017-12-30");
 
-        double balance = 0,deductionBalance = 0;
+        double balance = 0, deductionBalance = 0;
 
-        LocalDate dateTime = new LocalDate("01-01");
+        LocalDate firstMonth = new LocalDate("01-01");
 
         Employee employee = employeeDao.getById(employeeId);
         DateTime doj = new DateTime(employee.getDateOfJoining());
+        System.out.println(doj);
+        String joiningYear = doj.year().getAsText();
+        String currentYear = currentDate.year().getAsText();
+        System.out.println(currentDate);
 
-
-        if (doj.getYear() == date.getYear()) {
-            if (doj.getMonthOfYear() != (1) || doj.getMonthOfYear() != (4)
-                    || doj.getMonthOfYear() != (7) || doj.getMonthOfYear() != (10)) {
-                if (doj.getMonthOfYear() == (2) || doj.getMonthOfYear() != (5)
-                        || doj.getMonthOfYear() != (8) || doj.getMonthOfYear() != (11)) {
-                    balance = 3;
-                    for (int x = doj.getMonthOfYear();x<13;x=x+2){
-                        if (dateTime.plusMonths(x).getMonthOfYear() <= currentDate.getMonthOfYear()) {
-                            balance = balance + 4;
-
-                            if (dateTime.plusMonths(x =x + 3).getMonthOfYear() > currentDate.getMonthOfYear()
-                                    ) {
-
-                                for (LeaveApplication leaveApplication : leaveApplications) {
-                                    if (leaveApplication.getStatus() == Status.APPLIED
-                                            || leaveApplication.getStatus() == Status.APPROVED) {
-                                        leaveApplications1.add(leaveApplication);
-                                    }
-                                }
-
-                                for (LeaveApplication leaveApplication1 : leaveApplications1) {
-                                    DateTime fromDate = new DateTime(leaveApplication1.getFromDate());
-                                    DateTime toDate = new DateTime(leaveApplication1.getToDate());
-
-                                    float duration = toDate.getDayOfYear() - fromDate.getDayOfYear();
-                                    deductionBalance = deductionBalance + duration;
-                                }
-
-                                balance = balance - deductionBalance;
-
-                                System.out.println("balance on " + date.toLocalDate() + " is " + balance);
-                            }
-                        }
-                    }
-
-                } else
-                    balance = 2;
-
-
+        for (LeaveApplication leaveApplication : leaveApplications) {
+            if (leaveApplication.getStatus() == Status.APPLIED
+                    || leaveApplication.getStatus() == Status.APPROVED) {
+                leaveApplications1.add(leaveApplication);
             }
         }
-        if (date.getYear() >doj.getYear() ) {
 
-            if (dateTime.dayOfYear().getAsText().equals("1")) {
+        for (LeaveApplication leaveApplication1 : leaveApplications1) {
+            DateTime fromDate = new DateTime(leaveApplication1.getFromDate());
+            DateTime toDate = new DateTime(leaveApplication1.getToDate());
+
+            float duration = toDate.getDayOfYear() - fromDate.getDayOfYear();
+            deductionBalance = deductionBalance + duration;
+        }
+
+        System.out.println(deductionBalance);
+
+        if (joiningYear.equals(currentYear)){
+        if (doj.getMonthOfYear() != (1) || doj.getMonthOfYear() != (4)
+                    || doj.getMonthOfYear() != (7) || doj.getMonthOfYear() != (10))
+            {
+                int x = doj.getMonthOfYear();
+                if (doj.getMonthOfYear() == (2) || doj.getMonthOfYear() == (5)
+                        || doj.getMonthOfYear() == (8) || doj.getMonthOfYear() == (11)) {
+                    balance = 3;
+                    for (x=doj.getMonthOfYear();x<12;x=x++){
+                        if (firstMonth.plusMonths(x=x+2).getMonthOfYear() <= lastMonth.getMonthOfYear()) {
+                            balance = balance + 4;
+                            x=x+2;
+                        }
+                    }
+                        System.out.println("doj 2 nd month"+balance);
+
+                } else {
+                    balance = 2;
+                    for (x=doj.getMonthOfYear();x<12;x=x++){
+                        if (firstMonth.plusMonths(x = x + 1).getMonthOfYear() <= lastMonth.getMonthOfYear()) {
+                            balance = balance + 4;
+                            x=x+2;
+                        }
+                    }
+                    System.out.println("doj 5 th month"+balance);
+                }
+            }
+        }
+        else /*if (doj.getYear() < currentDate.getYear())*/{
+            if (firstMonth.dayOfYear().getAsText().equals("1")) {
                 balance = 4;
             }
-
-            if (dateTime.plusMonths(3).getMonthOfYear() > currentDate.getMonthOfYear()) {
-
-                for (LeaveApplication leaveApplication : leaveApplications) {
-                    if (leaveApplication.getStatus() == Status.APPLIED
-                            || leaveApplication.getStatus() == Status.APPROVED) {
-                        leaveApplications1.add(leaveApplication);
-                    }
-                }
-
-                for (LeaveApplication leaveApplication1 : leaveApplications1) {
-                    DateTime fromDate = new DateTime(leaveApplication1.getFromDate());
-                    DateTime toDate = new DateTime(leaveApplication1.getToDate());
-
-                    float duration = toDate.getDayOfYear() - fromDate.getDayOfYear();
-                    deductionBalance = deductionBalance + duration;
-                }
-
-                balance = balance - deductionBalance;
-
-                System.out.println("balance on " + date.toLocalDate() + " is " + balance);
-            }
-
-            if (dateTime.plusMonths(3).getMonthOfYear() <= currentDate.getMonthOfYear()) {
-                balance = balance + 4;
-                if (dateTime.plusMonths(6).getMonthOfYear() > currentDate.getMonthOfYear()
-                        ) {
-
-                    for (LeaveApplication leaveApplication : leaveApplications) {
-                        if (leaveApplication.getStatus() == Status.APPLIED
-                                || leaveApplication.getStatus() == Status.APPROVED) {
-                            leaveApplications1.add(leaveApplication);
-                        }
-                    }
-
-                    for (LeaveApplication leaveApplication1 : leaveApplications1) {
-                        DateTime fromDate = new DateTime(leaveApplication1.getFromDate());
-                        DateTime toDate = new DateTime(leaveApplication1.getToDate());
-
-                        float duration = toDate.getDayOfYear() - fromDate.getDayOfYear();
-                        deductionBalance = deductionBalance + duration;
-                    }
-
-                    balance = balance - deductionBalance;
-
-                    System.out.println("balance on " + date.toLocalDate() + " is " + balance);
+            for (int i = 0; i < 12; i++)
+            {
+                if (firstMonth.plusMonths(i=i+2).getMonthOfYear() <= lastMonth.getMonthOfYear()) {
+                    balance = balance + 4;
+                    i=i+2;
                 }
             }
-
-            if (dateTime.plusMonths(6).getMonthOfYear() <= currentDate.getMonthOfYear()) {
-                balance = balance + 4;
-                if (dateTime.plusMonths(9).getMonthOfYear() > currentDate.getMonthOfYear()
-                        ) {
-
-                    for (LeaveApplication leaveApplication : leaveApplications) {
-                        if (leaveApplication.getStatus() == Status.APPLIED
-                                || leaveApplication.getStatus() == Status.APPROVED) {
-                            leaveApplications1.add(leaveApplication);
-                        }
-                    }
-
-                    for (LeaveApplication leaveApplication1 : leaveApplications1) {
-                        DateTime fromDate = new DateTime(leaveApplication1.getFromDate());
-                        DateTime toDate = new DateTime(leaveApplication1.getToDate());
-
-                        float duration = toDate.getDayOfYear() - fromDate.getDayOfYear();
-                        deductionBalance = deductionBalance + duration;
-                    }
-
-                    balance = balance - deductionBalance;
-                    System.out.println("balance on " + date.toLocalDate() + " is " + balance);
-                }
-
-            }
-
-            if (dateTime.plusMonths(9).getMonthOfYear() <= currentDate.getMonthOfYear()) {
-                balance = balance + 4;
-                for (LeaveApplication leaveApplication : leaveApplications) {
-                    if (leaveApplication.getStatus() == Status.APPLIED
-                            || leaveApplication.getStatus() == Status.APPROVED) {
-                        leaveApplications1.add(leaveApplication);
-                    }
-                }
-
-                for (LeaveApplication leaveApplication1 : leaveApplications1) {
-                    DateTime fromDate = new DateTime(leaveApplication1.getFromDate());
-                    DateTime toDate = new DateTime(leaveApplication1.getToDate());
-
-                    float duration = toDate.getDayOfYear() - fromDate.getDayOfYear();
-                    deductionBalance = deductionBalance + duration;
-                }
-
-                balance = balance - deductionBalance;
-                System.out.println("balance on " + date.toLocalDate() + " is " + balance);
-            }
-
+            System.out.println("doj next year"+balance);
         }
 
-        return balance;
+        balance = balance - deductionBalance;
+        System.out.println("balance on " + currentDate.toLocalDate() + " is " + balance);
+            return balance;
     }
+
 
     @Override
     public List<LeaveApplication> getByEmployeeId(String employeeId)

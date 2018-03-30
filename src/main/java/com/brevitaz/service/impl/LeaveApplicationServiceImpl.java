@@ -49,10 +49,10 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
 
              boolean isProbation =leaveApplicationService.checkProbation(leaveApplication.getEmployeeId());
 
-             if (isProbation == true)
+          /*   if (isProbation == true)
                  throw new NotAllowedException("Employee with id "+leaveApplication.getEmployeeId()+" is Not Allowed  to make Request!!!");
              else {
-
+*/
                  DateTime fromDate = new DateTime(leaveApplication.getFromDate());
                  DateTime toDate = new DateTime(leaveApplication.getToDate());
                  DateTime currentDate = new DateTime();
@@ -79,7 +79,7 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
                      leaveApplication.setType(Type.UNPLANNED_LEAVE);
                      return leaveApplicationDao.request(leaveApplication);
                  }
-             }
+            /* }*/
 
          }
          else
@@ -171,30 +171,18 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
     }
 
     @Override
-    public List<LeaveApplication> getAll() {
-        List<LeaveApplication> leaveApplications = leaveApplicationDao.getAll();
-        if(leaveApplications == null)
-        {
-            throw new NoContentException("No content found");
-        }
-        else
-        {
-            return leaveApplications;
-        }
+    public List<LeaveApplication> getAll()
+    {
+        return leaveApplicationDao.getAll();
     }
 
 
     @Override
     public List<LeaveApplication> checkRequest()
     {
-        List<LeaveApplication> leaveApplications;
+        List<LeaveApplication> leaveApplications= leaveApplicationDao.getAll();
 
         List<LeaveApplication> leaveApplications1 = new ArrayList<>();
-
-        /*if (indexName.isEmpty())
-            throw new RuntimeException("Index is empty!!!");
-        else
-        */    leaveApplications = leaveApplicationDao.getAll();
 
         for (LeaveApplication leaveApplication:leaveApplications)
         {
