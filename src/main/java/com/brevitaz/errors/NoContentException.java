@@ -5,8 +5,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.NO_CONTENT) //TODO : need to ask.
 public class NoContentException extends RuntimeException{
-    public NoContentException() {
-    }
+
 
     public NoContentException(String msg)
     {

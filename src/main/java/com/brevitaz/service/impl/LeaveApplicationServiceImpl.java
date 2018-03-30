@@ -12,9 +12,12 @@ import com.brevitaz.service.LeaveApplicationService;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
+import org.joda.time.format.DateTimeFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -245,52 +248,20 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
         for(LeaveApplication leaveApplication: leaveApplications1)
         {
             DateTime fromDateLeaveJoda = new DateTime(leaveApplication.getFromDate());
-            System.out.println(toDateJoda);
-            System.out.println(fromDateLeaveJoda);
-            System.out.println(toDateJoda.plusDays(1));
-            System.out.println(fromDateJoda.isEqual(fromDateLeaveJoda));
 
-            if(fromDateJoda.isAfter(fromDateLeaveJoda.minusDays(1)))
-            {
-                System.out.println(fromDateJoda.isEqual(fromDateLeaveJoda));
-                leaveApplications.add(leaveApplication);
-            }
-            else if(toDateJoda.isEqual(fromDateLeaveJoda.plusDays(1)))
-            {
-                leaveApplications.add(leaveApplication);
-            }
-            else if(fromDateLeaveJoda.isAfter(fromDateJoda) && fromDateLeaveJoda.isBefore(toDateJoda))
+            if(fromDateLeaveJoda.isAfter(fromDateJoda.minusDays(1)) && fromDateLeaveJoda.isBefore(toDateJoda.plusDays(1)))
             {
                 leaveApplications.add(leaveApplication);
             }
         }
-        return leaveApplications;
-
-
-
-    /*    List<LeaveApplication> leaveApplications1;
-        List<LeaveApplication> leaveApplications2 = new ArrayList<>();
-
-        LeaveApplicationService leaveApplicationService = null;
-
-        if (fromDate == null || toDate == null )
-            throw new InvalidDateException("Date is null!!!");
-        else
-            leaveApplications1= leaveApplicationService.getAll();
-
-        leaveApplications1=leaveApplicationDao.getAll();
-        for (LeaveApplication leaveapplication2:leaveApplications1)
+        if(leaveApplications.isEmpty())
         {
-            if (fromDate.compareTo(leaveapplication2.getFromDate()) == 0)
-                leaveApplications2.add(leaveapplication2);
-            if (toDate.compareTo(leaveapplication2.getFromDate()) == 0)
-                leaveApplications2.add(leaveapplication2);
-            if (leaveapplication2.getFromDate().compareTo(fromDate) == 1 && leaveapplication2.getFromDate().compareTo(toDate) == -1 )
-                leaveApplications2.add(leaveapplication2);
+            throw new NoContentException("No content found");
         }
-        return leaveApplications2;  */
-
-
+        else
+        {
+            return leaveApplications;
+        }
     }
 
     @Override
