@@ -12,6 +12,7 @@ import com.brevitaz.service.LeaveApplicationService;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
+import org.joda.time.Months;
 import org.joda.time.format.DateTimeFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -41,6 +42,12 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
     @Value("${LeaveApplication-Index-Name}")
     private String indexName;
 
+    @Value("${Planned-Leave-To-Be-Applied-Before-Days}")
+    private long leaveToBeAppliedBefore;
+
+    @Value("${Probation-Period-Months}")
+    private long probationPeriod;
+
 
     @Override
     public boolean request(LeaveApplication leaveApplication)// TODO: JodaTime for time condition.
@@ -51,11 +58,13 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
          if (employee.getName().equals(leaveApplication.getEmployeeName()) && employee.getId().equals(leaveApplication.getEmployeeId())) {
 
              boolean isProbation =leaveApplicationService.checkProbation(leaveApplication.getEmployeeId());
+             double remainingBalance = leaveApplicationService.checkBalance(leaveApplication.getEmployeeId());
 
-          /*   if (isProbation == true)
-                 throw new NotAllowedException("Employee with id "+leaveApplication.getEmployeeId()+" is Not Allowed  to make Request!!!");
+             if (isProbation == true)
+                 throw new NotAllowedException("Employee with id "+leaveApplication.getEmployeeId()+" is Not Allowed to make Request as Probation Period is Going On!!!");
+             else if (remainingBalance <0)
+                 throw new NotAllowedException("Employee with id "+leaveApplication.getEmployeeId()+" is Not Allowed  to make Request as Leaves of this Quarter are already taken !!!");
              else {
-*/
                  DateTime fromDate = new DateTime(leaveApplication.getFromDate());
                  DateTime toDate = new DateTime(leaveApplication.getToDate());
                  DateTime currentDate = new DateTime();
@@ -75,14 +84,14 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
 
                  long days = Days.daysBetween(currentDate, fromDate).getDays();
                  System.out.println(days);
-                 if (days >= 15) {
-                     leaveApplication.setType(Type.PLANNED_LEAVE);
+                 if (days >= leaveToBeAppliedBefore) {
+                     leaveApplication.setType(Type. PLANNED_LEAVE);
                      return leaveApplicationDao.request(leaveApplication);
                  } else {
                      leaveApplication.setType(Type.UNPLANNED_LEAVE);
                      return leaveApplicationDao.request(leaveApplication);
                  }
-            /* }*/
+             }
 
          }
          else
@@ -130,17 +139,136 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
         DateTime dateOfJoining = new DateTime(employee.getDateOfJoining());
         DateTime currentDate = new DateTime();
 
-        long days = Days.daysBetween(dateOfJoining, currentDate).getDays();
+        int months =Months.monthsBetween(currentDate, dateOfJoining).getMonths();
+       /* long days = Days.daysBetween(dateOfJoining, currentDate).getDays();
         System.out.println(days);
         if (days <= 10)
             return true;
         else
-            return false;
+       */
+       if (months > probationPeriod)
+           return true;
+       else
+           return false;
     }
 
-
-
     @Override
+    public double checkBalance(String employeeId)
+    {
+        List<LeaveApplication> leaveApplications = leaveApplicationDao.getByEmployeeId(employeeId);
+        List<LeaveApplication> leaveApplications1 = new ArrayList<>();
+
+        DateTime currentDate = new DateTime();
+
+        double balance=4, deductionBalance =0;
+        double time = 0,days =0;
+
+        for (LeaveApplication leaveApplication : leaveApplications) {
+            if (leaveApplication.getStatus() == Status.APPLIED
+                    || leaveApplication.getStatus() == Status.APPROVED) {
+                leaveApplications1.add(leaveApplication);
+            }
+        }
+
+        for (LeaveApplication leaveApplication1 : leaveApplications1)
+        {
+            DateTime eachFromDate = new DateTime(leaveApplication1.getFromDate());
+            DateTime eachToDate = new DateTime(leaveApplication1.getToDate());
+
+            int x= currentDate.getMonthOfYear();
+            if (x<4) {
+                if (eachFromDate.getMonthOfYear() < 4) {
+                    if (eachFromDate == eachToDate) {
+                        if (eachFromDate.getHourOfDay() == 19 || eachToDate.getHourOfDay() == 19) {
+                            time = 0.5;
+                        }
+                    }
+                    if (eachToDate.isAfter(eachFromDate)) {
+                        if (eachFromDate.getHourOfDay() == 19 && eachToDate.getHourOfDay() == 19) {
+                            days = days + 1;
+                        } else if (eachFromDate.getHourOfDay() == 19 || eachToDate.getHourOfDay() == 19) {
+                            time = 0.5;
+                            days = days + (eachToDate.getDayOfYear() - eachFromDate.getDayOfYear());
+                        } else {
+                            days = days + (eachToDate.getDayOfYear() - eachFromDate.getDayOfYear());
+                        }
+                    }
+                    deductionBalance = deductionBalance + days + time;
+
+                }
+            }
+            else if (x>3 && x<7 )
+            {
+                if (eachFromDate.getMonthOfYear()>3 && eachFromDate.getMonthOfYear() < 7) {
+                    if (eachFromDate == eachToDate) {
+                        if (eachFromDate.getHourOfDay() == 19 || eachToDate.getHourOfDay() == 19) {
+                            time = 0.5;
+                        }
+                    }
+                    if (eachToDate.isAfter(eachFromDate)) {
+                        if (eachFromDate.getHourOfDay() == 19 && eachToDate.getHourOfDay() == 19) {
+                            days = days + 1;
+                        } else if (eachFromDate.getHourOfDay() == 19 || eachToDate.getHourOfDay() == 19) {
+                            time = 0.5;
+                            days = days + (eachToDate.getDayOfYear() - eachFromDate.getDayOfYear());
+                        } else {
+                            days = days + (eachToDate.getDayOfYear() - eachFromDate.getDayOfYear());
+                        }
+                    }
+                    deductionBalance = deductionBalance + days + time;
+
+                }
+            }
+            else if (x>6 && x<10)
+            {
+                if (eachFromDate.getMonthOfYear()>6 && eachFromDate.getMonthOfYear() < 10) {
+                    if (eachFromDate == eachToDate) {
+                        if (eachFromDate.getHourOfDay() == 19 || eachToDate.getHourOfDay() == 19) {
+                            time = 0.5;
+                        }
+                    }
+                    if (eachToDate.isAfter(eachFromDate)) {
+                        if (eachFromDate.getHourOfDay() == 19 && eachToDate.getHourOfDay() == 19) {
+                            days = days + 1;
+                        } else if (eachFromDate.getHourOfDay() == 19 || eachToDate.getHourOfDay() == 19) {
+                            time = 0.5;
+                            days = days + (eachToDate.getDayOfYear() - eachFromDate.getDayOfYear());
+                        } else {
+                            days = days + (eachToDate.getDayOfYear() - eachFromDate.getDayOfYear());
+                        }
+                    }
+                    deductionBalance = deductionBalance + days + time;
+
+                }
+            }
+            else {
+                if (eachFromDate.getMonthOfYear()>9 && eachFromDate.getMonthOfYear() < 13) {
+                    if (eachFromDate == eachToDate) {
+                        if (eachFromDate.getHourOfDay() == 19 || eachToDate.getHourOfDay() == 19) {
+                            time = 0.5;
+                        }
+                    }
+                    if (eachToDate.isAfter(eachFromDate)) {
+                        if (eachFromDate.getHourOfDay() == 19 && eachToDate.getHourOfDay() == 19) {
+                            days = days + 1;
+                        } else if (eachFromDate.getHourOfDay() == 19 || eachToDate.getHourOfDay() == 19) {
+                            time = 0.5;
+                            days = days + (eachToDate.getDayOfYear() - eachFromDate.getDayOfYear());
+                        } else {
+                            days = days + (eachToDate.getDayOfYear() - eachFromDate.getDayOfYear());
+                        }
+                    }
+                    deductionBalance = deductionBalance + days + time;
+
+                }
+            }
+
+            balance = balance - deductionBalance;
+        }
+            return balance;
+    }
+
+        @Override
     public boolean cancelRequest(String id) {
         LeaveApplication leaveApplication = leaveApplicationDao.getById(id);
         leaveApplication.setStatus(Status.CANCELLED);

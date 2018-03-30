@@ -1,6 +1,7 @@
 package com.brevitaz.service;
 
 import com.brevitaz.model.LeaveApplication;
+import org.joda.time.DateTime;
 
 import java.util.Date;
 import java.util.List;
@@ -34,4 +35,6 @@ public interface LeaveApplicationService
 
 
     public boolean checkProbation(String employeeId);
+
+    public double checkBalance(String employeeId);
 }

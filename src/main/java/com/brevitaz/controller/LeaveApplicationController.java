@@ -2,6 +2,7 @@ package com.brevitaz.controller;
 
 import com.brevitaz.model.LeaveApplication;
 import com.brevitaz.service.LeaveApplicationService;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.validation.BindingResult;
@@ -66,6 +67,11 @@ public class LeaveApplicationController {
         return leaveApplicationService.checkProbation(employeeId);
     }
 
+    @RequestMapping(value = "employee/{employeeId}/checkBalanceQuarterly", method = RequestMethod.GET)
+    public double checkBalance(@PathVariable String employeeId)
+    {
+        return leaveApplicationService.checkBalance(employeeId);
+    }
     //**************** what should i pass in below two methods ?
    /*
    @RequestMapping(value = "/get-report" , method = RequestMethod.GET)//2 things in service 1 is emp wise i.e. getById & 2 is date wise i.e.From Date To Date

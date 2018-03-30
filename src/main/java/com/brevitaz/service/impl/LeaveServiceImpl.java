@@ -38,7 +38,7 @@ public class LeaveServiceImpl implements LeaveService
 
         DateTime lastMonth = new DateTime("12-12");
 
-        DateTime currentDate = new DateTime("2017-12-30");
+        DateTime currentDate = new DateTime();
 
         double balance = 0, deductionBalance = 0;
 
@@ -62,11 +62,34 @@ public class LeaveServiceImpl implements LeaveService
             DateTime fromDate = new DateTime(leaveApplication1.getFromDate());
             DateTime toDate = new DateTime(leaveApplication1.getToDate());
 
-            float duration = toDate.getDayOfYear() - fromDate.getDayOfYear();
-            deductionBalance = deductionBalance + duration;
-        }
+            System.out.println("fromDate : "+fromDate.hourOfDay().getAsText());
+            System.out.println("toDate : "+toDate.hourOfDay().getAsText());
 
-        System.out.println(deductionBalance);
+            double time = 0,days =0;
+            if (fromDate == toDate) {
+                if (fromDate.getHourOfDay() == 19 || toDate.getHourOfDay() == 19) {
+                    time = 0.5;
+                }
+            }
+            if (toDate.isAfter(fromDate)) {
+                if (fromDate.getHourOfDay() == 19 && toDate.getHourOfDay() == 19) {
+                    days = days + 1;
+                } else if (fromDate.getHourOfDay() == 19 || toDate.getHourOfDay() == 19)
+                {
+                    time = 0.5;
+                    days = days + (toDate.getDayOfYear() - fromDate.getDayOfYear());
+                }
+                else
+                {
+                    days = days + (toDate.getDayOfYear() - fromDate.getDayOfYear());
+                }
+            }
+            deductionBalance = deductionBalance + days + time;
+
+            System.out.println("Time"+time);
+            System.out.println("Days"+days);
+        }
+        System.out.println("Deduction Balance"+deductionBalance);
 
         if (joiningYear.equals(currentYear)){
         if (doj.getMonthOfYear() != (1) || doj.getMonthOfYear() != (4)
