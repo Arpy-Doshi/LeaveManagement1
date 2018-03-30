@@ -24,7 +24,8 @@ public class LeaveApplicationController {
         return leaveApplicationService.request(leaveApplication);
     }
 
-    @RequestMapping(value = "/{id}" , method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{id}/cancel" +
+            "" , method = RequestMethod.PUT)
     public boolean cancelRequest(@PathVariable String id)  {
         return leaveApplicationService.cancelRequest(id);
     }

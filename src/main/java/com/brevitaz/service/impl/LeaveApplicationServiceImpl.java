@@ -41,16 +41,19 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
     @Value("${LeaveApplication-Index-Name}")
     private String indexName;
 
+    @Value("${Limit-For-Cancelling-Leave}")
+    private long cancellationLimit;
+
 
     @Override
     public boolean request(LeaveApplication leaveApplication)// TODO: JodaTime for time condition.
      {// Todo: Add method for checking probation condition, check balance. Create structure as per acceptance criteria.
 
-         Employee employee = employeeDao.getById(leaveApplication.getEmployeeId());
+         //Employee employee = employeeDao.getById(leaveApplication.getEmployeeId());
 
-         if (employee.getName().equals(leaveApplication.getEmployeeName()) && employee.getId().equals(leaveApplication.getEmployeeId())) {
+        // if (employee.getName().equals(leaveApplication.getEmployeeName()) && employee.getId().equals(leaveApplication.getEmployeeId())) {
 
-             boolean isProbation =leaveApplicationService.checkProbation(leaveApplication.getEmployeeId());
+           //  boolean isProbation =leaveApplicationService.checkProbation(leaveApplication.getEmployeeId());
 
           /*   if (isProbation == true)
                  throw new NotAllowedException("Employee with id "+leaveApplication.getEmployeeId()+" is Not Allowed  to make Request!!!");
@@ -74,7 +77,6 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
 
 
                  long days = Days.daysBetween(currentDate, fromDate).getDays();
-                 System.out.println(days);
                  if (days >= 15) {
                      leaveApplication.setType(Type.PLANNED_LEAVE);
                      return leaveApplicationDao.request(leaveApplication);
@@ -84,11 +86,11 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
                  }
             /* }*/
 
-         }
-         else
+       //  }
+       /*  else
          {
              throw new InvalidIdException("Employee doesn't match!!!");
-         }
+         }*/
       /*  Date date = new Date();
         if (leaveApplication.getFromDate().compareTo(date) == -1)
         {
@@ -142,9 +144,28 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
 
     @Override
     public boolean cancelRequest(String id) {
+
         LeaveApplication leaveApplication = leaveApplicationDao.getById(id);
-        leaveApplication.setStatus(Status.CANCELLED);
-       return leaveApplicationDao.updateRequest(leaveApplication,id);
+        if(leaveApplication == null)
+        {
+            throw new InvalidIdException("id is invalid");
+        }
+        else
+        {
+            DateTime currentDate = new DateTime();
+            DateTime fromDate = new DateTime(leaveApplication.getFromDate());
+
+            long days = Days.daysBetween(fromDate,currentDate).getDays();
+            if(days <= cancellationLimit)
+            {
+                leaveApplication.setStatus(Status.CANCELLED);
+                return leaveApplicationDao.updateRequest(leaveApplication, id);
+            }
+            else
+            {
+                throw new InvalidIdException("can't do that");//TODO: what should be appropriate  Exception and status code.
+            }
+        }
     }
 
     @Override
@@ -240,6 +261,18 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
 
         DateTime fromDateJoda = new DateTime(fromDate);
         DateTime toDateJoda = new DateTime(toDate);
+        DateTime currentDate = new DateTime();
+
+        if (fromDateJoda.isAfter(currentDate)) {
+            throw new InvalidDateException("fromDate is invalid");
+        }
+        if (toDateJoda.isAfter(currentDate)) {
+            throw new InvalidDateException("toDate is invalid");
+        }
+        if(fromDateJoda.isAfter(toDateJoda))
+        {
+            throw new InvalidDateException("fromDate is invalid as fromDate can not be bigger than toDate");
+        }
 
         List<LeaveApplication> leaveApplications = new ArrayList<>();
 
