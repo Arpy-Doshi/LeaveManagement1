@@ -1,6 +1,5 @@
 package com.brevitaz.config;
 
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.HttpHost;
 import org.elasticsearch.client.RestClient;
@@ -28,19 +27,10 @@ public class Config
 
     @Bean
     public RestHighLevelClient getClient() {
-
-        if (client == null)
-        {
-            client = new RestHighLevelClient
+        client = new RestHighLevelClient
                     (RestClient.builder(
                             new HttpHost(hostName, portName, scheme)));
             return client;
-        }
-        else
-        {
-            return client;
-        }
-
     }
 
 
@@ -50,15 +40,8 @@ public class Config
 
     @Bean
     public ObjectMapper getObjectMapper() {
-        if(objectMapper == null)
-        {
             objectMapper = new ObjectMapper();
             return objectMapper;
-        }
-        else
-        {
-            return objectMapper;
-        }
     }
 
     @Autowired

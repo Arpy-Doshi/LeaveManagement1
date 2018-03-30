@@ -48,6 +48,9 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
     @Value("${Probation-Period-Months}")
     private long probationPeriod;
 
+    @Value("${Limit-For-Cancelling-Leave}")
+    private long cancellationLimit;
+
 
     @Override
     public boolean request(LeaveApplication leaveApplication)// TODO: JodaTime for time condition.
@@ -268,11 +271,30 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
             return balance;
     }
 
-        @Override
+    @Override
     public boolean cancelRequest(String id) {
+
         LeaveApplication leaveApplication = leaveApplicationDao.getById(id);
-        leaveApplication.setStatus(Status.CANCELLED);
-       return leaveApplicationDao.updateRequest(leaveApplication,id);
+        if(leaveApplication == null)
+        {
+            throw new InvalidIdException("id is invalid");
+        }
+        else
+        {
+            DateTime currentDate = new DateTime();
+            DateTime fromDate = new DateTime(leaveApplication.getFromDate());
+
+            long days = Days.daysBetween(fromDate,currentDate).getDays();
+            if(days <= cancellationLimit)
+            {
+                leaveApplication.setStatus(Status.CANCELLED);
+                return leaveApplicationDao.updateRequest(leaveApplication, id);
+            }
+            else
+            {
+                throw new InvalidIdException("can't do that");//TODO: what should be appropriate  Exception and status code.
+            }
+        }
     }
 
     @Override
@@ -368,6 +390,18 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
 
         DateTime fromDateJoda = new DateTime(fromDate);
         DateTime toDateJoda = new DateTime(toDate);
+        DateTime currentDate = new DateTime();
+
+        if (fromDateJoda.isAfter(currentDate)) {
+            throw new InvalidDateException("fromDate is invalid");
+        }
+        if (toDateJoda.isAfter(currentDate)) {
+            throw new InvalidDateException("toDate is invalid");
+        }
+        if(fromDateJoda.isAfter(toDateJoda))
+        {
+            throw new InvalidDateException("fromDate is invalid as fromDate can not be bigger than toDate");
+        }
 
         List<LeaveApplication> leaveApplications = new ArrayList<>();
 
