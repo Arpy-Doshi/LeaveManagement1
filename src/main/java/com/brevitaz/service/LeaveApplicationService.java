@@ -18,7 +18,6 @@ public interface LeaveApplicationService
 
     public List<LeaveApplication> checkRequest() ;
 
-
     public boolean approveRequest(String id);
 
     public boolean declineRequest( String id);

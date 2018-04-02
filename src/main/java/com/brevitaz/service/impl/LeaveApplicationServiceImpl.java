@@ -339,9 +339,9 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
 
         for (LeaveApplication leaveApplication:leaveApplications)
         {
-            if (leaveApplication.getStatus() == Status.APPLIED)
+            if (leaveApplication.getStatus() == Status.APPLIED) {
                 leaveApplications1.add(leaveApplication);
-
+            }
         }
         return leaveApplications1;
     }

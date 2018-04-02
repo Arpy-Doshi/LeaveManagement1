@@ -37,7 +37,6 @@ public class LeavePolicyServiceImpl implements LeavePolicyService
     @Override
     public boolean update(LeavePolicy leavePolicy, String id)
     {
-
         if (leavePolicy.getId().equals(id))
             return leavePolicyDao.update(leavePolicy, id);
 
