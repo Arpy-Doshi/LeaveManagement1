@@ -10,8 +10,8 @@ public interface LeavePolicyService
 {
     public boolean create(LeavePolicy leavePolicy);
     public boolean update(LeavePolicy leavePolicy,String id);
-    public boolean delete( String id);
-    public LeavePolicy getById(String id);
+    public boolean cancel( String id);
+    public LeavePolicy getByCreatedDate();
     public List<LeavePolicy> getAll();
 
 

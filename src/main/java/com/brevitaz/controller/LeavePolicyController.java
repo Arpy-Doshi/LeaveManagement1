@@ -24,13 +24,13 @@ public class LeavePolicyController {
         return leavePolicyService.update(leavePolicy,id);
     }
     @RequestMapping(value = "/{id}" , method = RequestMethod.DELETE)
-    public boolean delete(@PathVariable String id) {
-        return leavePolicyService.delete(id);
+    public boolean cancel(@PathVariable String id) {
+        return leavePolicyService.cancel(id);
     }
 
-    @RequestMapping(value = "/{id}" , method = RequestMethod.GET)
-    public LeavePolicy getById(@PathVariable String id) {
-        return leavePolicyService.getById(id);
+    @RequestMapping(value = "/latest-created" , method = RequestMethod.GET)
+    public LeavePolicy getByCreatedDate() {
+        return leavePolicyService.getByCreatedDate();
     }
 
     @RequestMapping(value = "" , method = RequestMethod.GET)

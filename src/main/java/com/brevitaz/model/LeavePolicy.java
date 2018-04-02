@@ -18,6 +18,7 @@ public class LeavePolicy
     @NotNull
     private List<LeavePolicyRule> leavePolicyRules;
 
+    private LPStatus status;
     private Date createdDate;
     private String createdBy;
     private Date updatedDate;
@@ -45,6 +46,14 @@ public class LeavePolicy
 
     public void setLeavePolicyRules(List<LeavePolicyRule> leavePolicyRules) {
         this.leavePolicyRules = leavePolicyRules;
+    }
+
+    public LPStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(LPStatus status) {
+        this.status = status;
     }
 
     public Date getCreatedDate() {
@@ -85,6 +94,7 @@ public class LeavePolicy
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", leavePolicyRules=" + leavePolicyRules +
+                ", status=" + status +
                 ", createdDate=" + createdDate +
                 ", createdBy='" + createdBy + '\'' +
                 ", updatedDate=" + updatedDate +

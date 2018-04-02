@@ -111,7 +111,7 @@ public class LeavePolicyDaoImpl implements LeavePolicyDao
         return false;
     }
 
-    @Override
+   /* @Override
     public boolean delete(String id)  {
         try
         {
@@ -139,7 +139,7 @@ public class LeavePolicyDaoImpl implements LeavePolicyDao
         }
         return false;
     }
-
+*/
     @Override
     public LeavePolicy getById(String id) {
         try
