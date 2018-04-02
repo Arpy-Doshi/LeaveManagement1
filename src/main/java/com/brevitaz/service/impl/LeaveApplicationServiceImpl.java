@@ -292,7 +292,7 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
             }
             else
             {
-                throw new InvalidIdException("can't do that");//TODO: what should be appropriate  Exception and status code.
+                throw new NotAllowedException("can't do that");//TODO: what should be appropriate  Exception and status code.
             }
         }
     }
@@ -346,7 +346,7 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
         return leaveApplications1;
     }
 
-    @Override
+    @Override   //TODO : what should be the time limit for approval and rejection?
     public boolean statusUpdate(LeaveApplication leaveApplication, String id) {
         boolean b = leaveApplicationDao.updateRequest(leaveApplication,id);
 
@@ -360,6 +360,30 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
         LeaveApplication leaveApplication = leaveApplicationDao.getById(id);
 
         try{
+            if(leaveApplication.getStatus() != Status.CANCELLED) {
+
+                if(leaveApplication.getHr().getStatus() == Status.APPROVED && leaveApplication.getAdmin().getStatus() == Status.APPROVED)
+                {
+                    leaveApplication.setStatus(Status.APPROVED);
+                    return leaveApplicationDao.updateRequest(leaveApplication, id);
+                }
+                else
+                {
+                    leaveApplication.setStatus(Status.REJECTED);
+                    return leaveApplicationDao.updateRequest(leaveApplication, id);
+                }
+            }
+            else
+            {
+                throw new NotAllowedException("LeaveAppliaction with id "+id+" is already cancelled");
+            }
+        }
+        catch(NullPointerException e)
+        {
+            return false;
+        }
+
+       /* try{
             if(leaveApplication.getHr().getStatus() == leaveApplication.getAdmin().getStatus())
             {
                 if(leaveApplication.getHr().getStatus()==Status.REJECTED && leaveApplication.getAdmin().getStatus()==Status.REJECTED)
@@ -377,12 +401,7 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
             {
                 leaveApplication.setStatus(Status.REJECTED);
                 return leaveApplicationDao.updateRequest(leaveApplication,id);
-            }
-        }
-        catch(NullPointerException e)
-        {
-            return false;
-        }
+            }*/
     }
 
     @Override
@@ -398,7 +417,7 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
         if (toDateJoda.isAfter(currentDate)) {
             throw new InvalidDateException("toDate is invalid");
         }
-        if(fromDateJoda.isAfter(toDateJoda))
+         if(fromDateJoda.isAfter(toDateJoda))
         {
             throw new InvalidDateException("fromDate is invalid as fromDate can not be bigger than toDate");
         }
@@ -424,6 +443,7 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
         {
             return leaveApplications;
         }
+
     }
 
     @Override
