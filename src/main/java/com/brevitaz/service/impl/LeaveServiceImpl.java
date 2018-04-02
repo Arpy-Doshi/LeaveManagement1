@@ -142,8 +142,6 @@ public class LeaveServiceImpl implements LeaveService
     @Override
     public List<LeaveApplication> getByEmployeeId(String employeeId)
     {
-        leaveApplicationDao.getByEmployeeId(employeeId);
-
         return leaveApplicationDao.getByEmployeeId(employeeId);
     }
 

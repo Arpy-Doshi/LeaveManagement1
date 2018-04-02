@@ -5,9 +5,12 @@ import com.brevitaz.errors.InvalidIdException;
 import com.brevitaz.model.LPStatus;
 import com.brevitaz.model.LeavePolicy;
 import com.brevitaz.service.LeavePolicyService;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -57,12 +60,38 @@ public class LeavePolicyServiceImpl implements LeavePolicyService
     @Override
     public LeavePolicy getByCreatedDate()
     {
+        List<LeavePolicy> leavePolicies = leavePolicyDao.getAll();
+        List<Date> dates = new ArrayList<>();
+        Date currentDate = new Date();
+
+        for (LeavePolicy leavePolicy1:leavePolicies) {
+            dates.add(leavePolicy1.getCreatedDate());
+
+            return (LeavePolicy) dates;
+        }
+
+//        LeavePolicy leavePolicy = leavePolicyService.getNearestDate(dates,currentDate);
+
         String id = null;
       /*  LeavePolicy leavePolicy =*/ leavePolicyDao.getById(id);
         /*if (leavePolicy!=null)*/
             return leavePolicyDao.getById(id);
         /*else
             throw new InvalidIdException("LeavePolicy at id \" + id + \" doesn't exists!!!!");*/
+    }
+
+    @Override
+    public  Date getNearestDate(List<Date> dates, Date currentDate) {
+        long minDiff = -1, currentTime = currentDate.getTime();
+        Date minDate = null;
+        for (Date date : dates) {
+            long diff = Math.abs(currentTime - date.getTime());
+            if ((minDiff == -1) || (diff < minDiff)) {
+                minDiff = diff;
+                minDate = date;
+            }
+        }
+        return minDate;
     }
 
     @Override
