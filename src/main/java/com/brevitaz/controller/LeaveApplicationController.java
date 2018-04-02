@@ -25,8 +25,7 @@ public class LeaveApplicationController {
         return leaveApplicationService.request(leaveApplication);
     }
 
-    @RequestMapping(value = "/{id}/cancel" +
-            "" , method = RequestMethod.PUT)
+    @RequestMapping(value = "/{id}/cancel" , method = RequestMethod.PUT)
     public boolean cancelRequest(@PathVariable String id)  {
         return leaveApplicationService.cancelRequest(id);
     }
@@ -41,7 +40,7 @@ public class LeaveApplicationController {
         return leaveApplicationService.getById(id);
     }
 
-    @RequestMapping(value ="/{id}/statusUpdate" , method = RequestMethod.PUT)
+    @RequestMapping(value ="/{id}/status-update" , method = RequestMethod.PUT)
     public boolean statusUpdate(@RequestBody  LeaveApplication leaveApplication, @PathVariable String id) {
         return leaveApplicationService.statusUpdate(leaveApplication,id);
     }
