@@ -3,6 +3,7 @@ package com.brevitaz.model;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 import javax.validation.constraints.NotNull;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 

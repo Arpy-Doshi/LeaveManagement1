@@ -18,6 +18,7 @@ import org.elasticsearch.action.update.UpdateRequest;
 import org.elasticsearch.action.update.UpdateResponse;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.common.xcontent.XContentType;
+import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.rest.RestStatus;
 import org.elasticsearch.search.SearchHit;
@@ -29,6 +30,7 @@ import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static org.elasticsearch.common.xcontent.XContentFactory.jsonBuilder;
@@ -109,6 +111,42 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
             e.printStackTrace();// Todo: Use Logger to log all exception with proper messages.
         }
         return null;
+    }
+
+    @Override
+    public List<LeaveApplication> getByDate(Date fromDate, Date toDate) {
+
+        List<LeaveApplication> leaveApplications = new ArrayList<>();
+
+        try {
+            SearchRequest request = new SearchRequest(indexName);
+            request.types(TYPE_NAME);
+
+            SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
+            QueryBuilder qb = QueryBuilders.rangeQuery("fromDate").to(toDate).from(fromDate);
+            sourceBuilder.query(qb);
+
+            request.source(sourceBuilder);
+
+            SearchResponse response = client.search(request);
+            response.status();
+            if(response.status() == RestStatus.OK) {
+                SearchHit[] hits = response.getHits().getHits();
+
+                LeaveApplication leaveApplication;
+
+                for (SearchHit hit : hits) {
+                    leaveApplication = objectMapper.readValue(hit.getSourceAsString(), LeaveApplication.class);
+                    leaveApplications.add(leaveApplication);
+                }
+
+                return leaveApplications;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+
     }
 
 

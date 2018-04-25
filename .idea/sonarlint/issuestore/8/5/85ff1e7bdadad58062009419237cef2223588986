@@ -1,22 +1,18 @@
 
-R
-squid:S106"9Replace this use of System.out or System.err by a logger.(‰Àõºûÿÿÿÿ
-M
-squid:S106"9Replace this use of System.out or System.err by a logger.(‘Ù÷ï
 M
 squid:S106"9Replace this use of System.out or System.err by a logger.(Õ»ìº
 [squid:S1126"AReplace this if-then-else statement by a single return statement.(Ì±­¯üÿÿÿÿ
-usquid:S1488"`Immediately return this expression instead of assigning it to the temporary variable "employee".(ıÔ»Ş
-6squid:S1170"!Make this final field static too.(È’â
+R
+squid:S106"9Replace this use of System.out or System.err by a logger.(‰Àõºûÿÿÿÿ
 @squid:S1168"+Return an empty collection instead of null.(¥¹ï
-asquid:S00112"FDefine and throw a dedicated exception instead of using a generic one.(úÏÚ¬şÿÿÿÿ
-\squid:S00112"FDefine and throw a dedicated exception instead of using a generic one.(ÄÆíè
-\squid:S00112"FDefine and throw a dedicated exception instead of using a generic one.(ÄÆíè
+=squid:S1148"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
+=squid:S1148"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
+bsquid:S1126"AReplace this if-then-else statement by a single return statement.(Òò¢½ûÿÿÿÿ8ÉÃ¥,
 jsquid:S00116"TRename this field "TYPE_NAME" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(È’â
-Wsquid:UselessImportCheck"0Remove this unused import 'java.io.IOException'.(ªº»Úıÿÿÿÿ
-Ysquid:UselessImportCheck"7Remove this unused import 'com.brevitaz.config.Config'.(êÎçß
 =squid:S1148"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
+M
+squid:S106"9Replace this use of System.out or System.err by a logger.(‘Ù÷ï
+bsquid:S1126"AReplace this if-then-else statement by a single return statement.(ÜÃÂæúÿÿÿÿ8ÉÃ¥,
 =squid:S1148"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
-=squid:S1148"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
-=squid:S1148"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
-=squid:S1148"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
+6squid:S1170"!Make this final field static too.(È’â
+gsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(¿µ×Œ8ÉÃ¥,

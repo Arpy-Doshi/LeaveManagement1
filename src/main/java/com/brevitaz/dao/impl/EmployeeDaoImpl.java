@@ -159,7 +159,6 @@ public class EmployeeDaoImpl implements EmployeeDao
                 TYPE_NAME,
                 id);
 
-
         try {
             GetResponse response = client.get(getRequest);
             if (response.isExists())

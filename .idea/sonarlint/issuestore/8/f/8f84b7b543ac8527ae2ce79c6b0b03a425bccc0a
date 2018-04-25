@@ -1,2 +1,6 @@
 
-Lsquid:S1135"2Complete the task associated to this TODO comment.(¿Äïçøÿÿÿÿ
+osquid:UselessImportCheck"ARemove this unused import 'javax.validation.constraints.NotNull'.(áç¥ãüÿÿÿÿ8û™”‘¦,
+asquid:UselessImportCheck"3Remove this unused import 'org.joda.time.DateTime'.(×¥…©úÿÿÿÿ8ÜºÃâ¦,
+lsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(£‚ÜÔþÿÿÿÿ8¨¾É¯¦,
+{squid:UselessImportCheck"RRemove this unused import 'com.fasterxml.jackson.annotation.JsonIgnoreProperties'.(ô’ˆî8÷àß†¦,
+Lsquid:S1135"2Complete the task associated to this TODO comment.(þà‡øÿÿÿÿ

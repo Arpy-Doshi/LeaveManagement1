@@ -18,6 +18,46 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/../ExceptionLearning/src/Sum.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../ExceptionLearning/src/anotherbasic/Addition.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../ExceptionLearning/src/anotherbasic/Sum.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../ExceptionLearning/src/basic/Greet.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../ExceptionLearning/src/basic/Greeting.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../ExceptionLearning/src/core/A.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../ExceptionLearning/src/core/Main.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../ExceptionLearning/src/core/a.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/pom.xml">
           <value>
             <set />
@@ -38,7 +78,17 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/brevitaz/controller/LeavePolicyController.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/src/main/java/com/brevitaz/dao/LeaveApplicationDao.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/brevitaz/dao/LeavePolicyDao.java">
           <value>
             <set />
           </value>
@@ -128,7 +178,27 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/brevitaz/model/LeavePolicy.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/brevitaz/model/LeavePolicyByCreationDate.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/brevitaz/service/Condition.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/src/main/java/com/brevitaz/service/LeaveApplicationService.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/brevitaz/service/LeavePolicyService.java">
           <value>
             <set />
           </value>
@@ -159,6 +229,16 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/src/main/resources/application.properties">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/resources/logback-spring.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/test/java/com/brevitaz/dao/LeavePolicyDaoTest.java">
           <value>
             <set />
           </value>
@@ -203,12 +283,107 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/../Threading/src/basic/A.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Threading/src/basic/B.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Threading/src/basic/C.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Threading/src/basic/Main.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Threading/src/interrupt/Demo.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Threading/src/interrupt/MyThread.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Threading/src/yield/Demo.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Threading/src/yield/MyThread.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/../demo/src/EnumDemo.java">
           <value>
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/../erpsystem/assetmanagement/src/main/java/com/brevitaz/AssetManagement/service/impl/AssetServiceImpl.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../erpsystem/leavemanagement/build.gradle">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../erpsystem/leavemanagement/gradle.properties">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/../erpsystem/leavemanagement/src/main/java/com/brevitaz/dao/impl/LeavePolicyDaoImpl.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../erpsystem/leavemanagement/src/main/resources/application.properties">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../erpsystem/payroll/src/main/java/com/brevitaz/controller/SalaryStructureController.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../erpsystem/payroll/src/main/java/com/brevitaz/dao/SalaryStructureDao.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../erpsystem/payroll/src/main/java/com/brevitaz/dao/impl/SalaryStructureDaoImpl.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../erpsystem/payroll/src/main/java/com/brevitaz/model/SalaryStructure.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../erpsystem/payroll/src/main/java/com/brevitaz/service/SalaryStructureService.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../erpsystem/payroll/src/main/java/com/brevitaz/service/impl/SalaryStructureServiceImpl.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../erpsystem/payroll/src/main/resources/application.properties">
           <value>
             <set />
           </value>

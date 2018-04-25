@@ -28,12 +28,12 @@ public class LeavePolicyController {
         return leavePolicyService.cancel(id);
     }
 
-    @RequestMapping(value = "/latest-created" , method = RequestMethod.GET)
-    public LeavePolicy getByCreatedDate() {
-        return leavePolicyService.getByCreatedDate();
+    @RequestMapping(value = "latest-policy",method = RequestMethod.GET)
+    public LeavePolicy getLatestPolicy() {
+        return leavePolicyService.getLatestPolicy();
     }
 
-    @RequestMapping(value = "" , method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     public List<LeavePolicy> getAll()  {
         return leavePolicyService.getAll();
     }

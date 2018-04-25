@@ -1,7 +1,33 @@
 
-esquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ã©þøÿÿÿÿ
-Isquid:S2200"/Only the sign of the result should be examined.(¹œ«Áÿÿÿÿÿ
-Isquid:S2200"/Only the sign of the result should be examined.(¹œ«Áÿÿÿÿÿ
-Isquid:S2200"/Only the sign of the result should be examined.(¹œ«Áÿÿÿÿÿ
-Dsquid:S2200"/Only the sign of the result should be examined.(æ–È¡
-Dsquid:S2200"/Only the sign of the result should be examined.(æ–È¡
+lsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ñç—úùÿÿÿÿ8‹åÀ¸§,
+tsquid:S3776"SRefactor this method to reduce its Cognitive Complexity from 119 to the 15 allowed.(¾âÎøøÿÿÿÿ8‹åÀ¸§,
+^squid:UselessImportCheck"5Remove this unused import 'java.util.logging.Logger'.(ƒ¥óš8‹åÀ¸§,
+Csquid:S1659""Declare "days" on a separate line.(ÙÙ±áÿÿÿÿÿ8‹åÀ¸§,
+hsquid:UselessImportCheck"?Remove this unused import 'java.time.format.DateTimeFormatter'.(‰÷÷ª8‹åÀ¸§,
+bsquid:S1126"AReplace this if-then-else statement by a single return statement.(“ËÛûÿÿÿÿ8‹åÀ¸§,
+Nsquid:S1135"2Complete the task associated to this TODO comment.(ï¤Ì¸8¥”¥¨¨,
+Jsquid:S1659".Declare "deductionBalance" on a separate line.(ë€·’8‹åÀ¸§,
+ssquid:S1192"RDefine a constant instead of duplicating this literal "toDate is invalid" 3 times.(§¼¸„þÿÿÿÿ8‹åÀ¸§,
+Ksquid:S1066"/Merge this if statement with the enclosing one.(¨Œˆ8‹åÀ¸§,
+dsquid:UselessImportCheck";Remove this unused import 'com.brevitaz.model.LeavePolicy'.(˜·Þ8üÄþ‚§,
+Ksquid:S1066"/Merge this if statement with the enclosing one.(¨Œˆ8‹åÀ¸§,
+lsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(Ùâáëýÿÿÿÿ8‹åÀ¸§,
+gsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(²¸æ8¢Å¿¥¨,
+gsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(²¸æ8¢Å¿¥¨,
+gsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ã ìÿ8¢Å¿¥¨,
+Dsquid:S1125"(Remove the literal "true" boolean value.(Üóÿ8‹åÀ¸§,
+Ksquid:S1066"/Merge this if statement with the enclosing one.(¨Œˆ8‹åÀ¸§,
+Ssquid:S1135"2Complete the task associated to this TODO comment.(âÓ—ßøÿÿÿÿ8˜ÃÖ³§,
+Vsquid:S1481"5Remove this unused "remainingBalance" local variable.(Ÿœå‚ûÿÿÿÿ8ãñŸ„©,
+ssquid:S3776"RRefactor this method to reduce its Cognitive Complexity from 19 to the 15 allowed.(«ÅÉûÿÿÿÿ8‹åÀ¸§,
+nsquid:UselessImportCheck"@Remove this unused import 'org.joda.time.format.DateTimeFormat'.(Õ…è†üÿÿÿÿ8æñû‰§,
+Ksquid:S1066"/Merge this if statement with the enclosing one.(¨Œˆ8‹åÀ¸§,
+usquid:S1192"TDefine a constant instead of duplicating this literal "fromDate is invalid" 3 times.(õÐÊœøÿÿÿÿ8‹åÀ¸§,
+lsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(õ°Â‡úÿÿÿÿ8ãñŸ„©,
+lsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(–¸ß¨üÿÿÿÿ8‹åÀ¸§,
+Nsquid:S1135"2Complete the task associated to this TODO comment.(ªÅƒ¿8‹åÀ¸§,
+Ssquid:S1135"2Complete the task associated to this TODO comment.(«ÅÉûÿÿÿÿ8‹åÀ¸§,
+esquid:S1854"DRemove this useless assignment to local variable "remainingBalance".(Ÿœå‚ûÿÿÿÿ8ãñŸ„©,
+T
+squid:S106"9Replace this use of System.out or System.err by a logger.(Ž¡õ¦8‹åÀ¸§,
+gsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(½‘Ñ³8íÚÑ§¨,

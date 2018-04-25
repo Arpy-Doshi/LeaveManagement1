@@ -13,8 +13,8 @@ public interface LeavePolicyService
     public boolean create(LeavePolicy leavePolicy);
     public boolean update(LeavePolicy leavePolicy,String id);
     public boolean cancel( String id);
-    public LeavePolicy getByCreatedDate();
-    public Date getNearestDate(List<Date> dates, Date currentDate);
+    public LeavePolicy getLatestPolicy();
+    //public Date getNearestDate(List<Date> dates, Date currentDate);
     public List<LeavePolicy> getAll();
 
 

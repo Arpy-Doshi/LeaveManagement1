@@ -52,7 +52,7 @@ public class LeavePolicyDaoTest {
 
         Assert.assertEquals(leavePolicy1.getLeavePolicyRules(),leavePolicy.getLeavePolicyRules());
 
-        leavePolicyDao.delete("1");
+        //leavePolicyDao.delete("1");
     }
 
 
@@ -140,7 +140,7 @@ public class LeavePolicyDaoTest {
 
         leavePolicyDao.create(leavePolicy);
 
-        leavePolicyDao.delete("11");
+      //  leavePolicyDao.delete("11");
 
         LeavePolicy leavePolicy1 = leavePolicyDao.getById("11");
 

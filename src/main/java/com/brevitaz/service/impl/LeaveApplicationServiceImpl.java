@@ -10,10 +10,12 @@ import com.brevitaz.model.Status;
 import com.brevitaz.model.Type;
 import com.brevitaz.service.LeaveApplicationService;
 import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.discovery.zen.MembershipAction;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.joda.time.Months;
 import org.joda.time.format.DateTimeFormat;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -22,11 +24,16 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 @Service
 public class LeaveApplicationServiceImpl implements LeaveApplicationService
 {
+    private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(LeaveApplicationServiceImpl.class);
+
+
     @Autowired
     private LeaveApplicationDao leaveApplicationDao;
 
@@ -65,9 +72,9 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
 
              if (isProbation == true)
                  throw new NotAllowedException("Employee with id "+leaveApplication.getEmployeeId()+" is Not Allowed to make Request as Probation Period is Going On!!!");
-             else if (remainingBalance <0)
+             /*else if (remainingBalance <0)
                  throw new NotAllowedException("Employee with id "+leaveApplication.getEmployeeId()+" is Not Allowed  to make Request as Leaves of this Quarter are already taken !!!");
-             else {
+             */else {
                  DateTime fromDate = new DateTime(leaveApplication.getFromDate());
                  DateTime toDate = new DateTime(leaveApplication.getToDate());
                  DateTime currentDate = new DateTime();
@@ -333,7 +340,12 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
     @Override
     public List<LeaveApplication> checkRequest()
     {
-        List<LeaveApplication> leaveApplications= leaveApplicationDao.getAll();
+        return leaveApplicationDao.getAll()
+                .parallelStream()
+                .filter(leaveApplication -> leaveApplication.getStatus() == Status.APPLIED)
+                .collect(Collectors.toList());
+
+       /* List<LeaveApplication> leaveApplications= leaveApplicationDao.getAll();
 
         List<LeaveApplication> leaveApplications1 = new ArrayList<>();
 
@@ -343,13 +355,14 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
                 leaveApplications1.add(leaveApplication);
             }
         }
-        return leaveApplications1;
+
+        return leaveApplications1;*/
+
     }
 
     @Override   //TODO : what should be the time limit for approval and rejection?
     public boolean statusUpdate(LeaveApplication leaveApplication, String id) {
         boolean b = leaveApplicationDao.updateRequest(leaveApplication,id);
-
         leaveApplicationService.finalStatusUpdate(id);
 
         return b;
@@ -375,6 +388,7 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
             }
             else
             {
+                LOGGER.error("Error while updating status, LeaveApplication with id "+id+" is already cancelled");
                 throw new NotAllowedException("LeaveAppliaction with id "+id+" is already cancelled");
             }
         }
@@ -411,7 +425,7 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
         DateTime toDateJoda = new DateTime(toDate);
         DateTime currentDate = new DateTime();
 
-        if (fromDateJoda.isAfter(currentDate)) {
+        /*if (fromDateJoda.isAfter(currentDate)) {
             throw new InvalidDateException("fromDate is invalid");
         }
         if (toDateJoda.isAfter(currentDate)) {
@@ -421,8 +435,8 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
         {
             throw new InvalidDateException("fromDate is invalid as fromDate can not be bigger than toDate");
         }
-
-        List<LeaveApplication> leaveApplications = new ArrayList<>();
+*/
+        /*List<LeaveApplication> leaveApplications = new ArrayList<>();
 
         List<LeaveApplication> leaveApplications1 = leaveApplicationDao.getAll();
 
@@ -442,7 +456,9 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
         else
         {
             return leaveApplications;
-        }
+        }*/
+       List<LeaveApplication> leaveApplications = leaveApplicationDao.getByDate(fromDate,toDate);
+       return leaveApplications;
 
     }
 

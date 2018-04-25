@@ -1,6 +1,8 @@
 package com.brevitaz.dao;
 
 import com.brevitaz.model.LeaveApplication;
+
+import java.util.Date;
 import java.util.List;
 
 public interface LeaveApplicationDao {
@@ -11,6 +13,8 @@ public interface LeaveApplicationDao {
     public boolean updateRequest(LeaveApplication leaveApplication, String id) ;
 
     public LeaveApplication getById(String id);
+
+    public List<LeaveApplication> getByDate(Date fromDate, Date toDate);
 
     public List<LeaveApplication> getByEmployeeId(String employeeId);
 

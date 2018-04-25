@@ -5,6 +5,7 @@ import com.brevitaz.errors.InvalidIdException;
 import com.brevitaz.model.LeavePolicy;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.http.nio.reactor.ssl.SSLBuffer;
 import org.elasticsearch.action.delete.DeleteRequest;
 import org.elasticsearch.action.delete.DeleteResponse;
 import org.elasticsearch.action.get.GetRequest;
@@ -17,8 +18,15 @@ import org.elasticsearch.action.update.UpdateRequest;
 import org.elasticsearch.action.update.UpdateResponse;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.common.xcontent.XContentType;
+import org.elasticsearch.index.query.MatchAllQueryBuilder;
+import org.elasticsearch.index.query.QueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.rest.RestStatus;
 import org.elasticsearch.search.SearchHit;
+import org.elasticsearch.search.builder.SearchSourceBuilder;
+import org.elasticsearch.search.sort.FieldSortBuilder;
+import org.elasticsearch.search.sort.SortBuilders;
+import org.elasticsearch.search.sort.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
@@ -111,35 +119,77 @@ public class LeavePolicyDaoImpl implements LeavePolicyDao
         return false;
     }
 
-   /* @Override
-    public boolean delete(String id)  {
-        try
-        {
-            DeleteRequest request = new DeleteRequest(
-                    indexName,
-                    TYPE_NAME,id);
+    @Override
+    public LeavePolicy getLatestPolicy() {
 
-            DeleteResponse response = client.delete(request);
+        try {
+            List<LeavePolicy> leavePolicies = new ArrayList<>();
 
-            System.out.println(response);
+            SearchRequest request = new SearchRequest(indexName);
+            request.types(TYPE_NAME);
 
+            SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
+            sourceBuilder.sort("createdDate",SortOrder.DESC);
+
+            request.source(sourceBuilder);
+
+            SearchResponse response = client.search(request);
             if(response.status() == RestStatus.OK)
             {
-                return true;
+
+                SearchHit[] hits = response.getHits().getHits();
+                LeavePolicy leavePolicy;
+
+                for (SearchHit hit : hits)
+                {
+                    leavePolicy = objectMapper.readValue(hit.getSourceAsString(), LeavePolicy.class);
+                    leavePolicies.add(leavePolicy);
+                }
+                return leavePolicies.get(0);
             }
             else
             {
-                return false;
+                return null;
             }
         }
         catch (IOException e)
         {
             e.printStackTrace();
-            //throw new InvalidIdException("LeavePolicy doesn't exists!!!");
+            //  throw new IndexNotFoundException("Index doesn't exists!!!");
         }
-        return false;
+        return null;
+
     }
-*/
+
+    /* @Override
+     public boolean delete(String id)  {
+         try
+         {
+             DeleteRequest request = new DeleteRequest(
+                     indexName,
+                     TYPE_NAME,id);
+
+             DeleteResponse response = client.delete(request);
+
+             System.out.println(response);
+
+             if(response.status() == RestStatus.OK)
+             {
+                 return true;
+             }
+             else
+             {
+                 return false;
+             }
+         }
+         catch (IOException e)
+         {
+             e.printStackTrace();
+             //throw new InvalidIdException("LeavePolicy doesn't exists!!!");
+         }
+         return false;
+     }
+ */
     @Override
     public LeavePolicy getById(String id) {
         try
@@ -169,7 +219,7 @@ public class LeavePolicyDaoImpl implements LeavePolicyDao
     }
 
     @Override
-    public List<LeavePolicy> getAll()  {
+    public List<LeavePolicy> getAll() {
         try {
         List<LeavePolicy> leavePolicies = new ArrayList<>();
 
@@ -181,7 +231,6 @@ public class LeavePolicyDaoImpl implements LeavePolicyDao
         {
 
             SearchHit[] hits = response.getHits().getHits();
-
             LeavePolicy leavePolicy;
 
             for (SearchHit hit : hits)
@@ -203,6 +252,5 @@ public class LeavePolicyDaoImpl implements LeavePolicyDao
         }
         return null;
     }
-
 
 }
