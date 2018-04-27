@@ -1,0 +1,13 @@
+
+Y
+squid:S106"9Replace this use of System.out or System.err by a logger.(σ―Ά²ωÿÿÿÿ8ζΪΘα―,
+Hsquid:S1068"-Remove this unused "indexName" private field.(φ β
+8ζΪΘα―,
+dsquid:HiddenFieldCheck"=Rename "indexName" which hides the field declared at line 31.(ΔΫό°8ζΪΘα―,
+T
+squid:S106"9Replace this use of System.out or System.err by a logger.(έλΓ®8ζΪΘα―,
+S
+squid:S106"9Replace this use of System.out or System.err by a logger.(²¤T8ζΪΘα―,
+Dsquid:S1148"#Use a logger to log this exception.(€ΙΤ…ύÿÿÿÿ8ζΪΘα―,
+hsquid:S00112"FDefine and throw a dedicated exception instead of using a generic one.(Κ“Εύÿÿÿÿ8ζΪΘα―,
+Dsquid:S1148"#Use a logger to log this exception.(€ΙΤ…ύÿÿÿÿ8ζΪΘα―,

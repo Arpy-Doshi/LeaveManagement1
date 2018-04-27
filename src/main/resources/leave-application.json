@@ -1,0 +1,85 @@
+{
+  "template": "leave-application1",
+  "settings": {
+    "index": {
+      "analysis": {
+        "analyzer": {
+          "htmlStrippingAnalyzer": {
+            "tokenizer": "standard",
+            "filter": ["standard", "lowercase"],
+            "char_filter": "html_strip"
+          }
+        }
+      }
+    }
+  },
+
+  "mappings": {
+    "rendition": {
+      "_timestamp": {
+        "enabled": true,
+        "store" : true
+      },
+      "properties": {
+        "id": {
+          "type": "text",
+          "store": "yes",
+          "analyzer": "keyword"
+        },
+        "employeeName": {
+          "type": "text",
+          "store": "yes",
+          "analyzer": "keyword"
+        },
+        "employeeId": {
+          "type": "text",
+          "store": "yes",
+          "analyzer": "keyword"
+        },
+        "reason": {
+          "type": "text",
+          "store": "yes",
+          "analyzer": "keyword"
+        },
+        "fromDate": {
+          "type": "date",
+          "store": "yes",
+          "analyzer": "keyword"
+        },
+        "toDate": {
+          "type": "date",
+          "store": "yes",
+          "analyzer": "keyword"
+        },
+        "createdDate": {
+          "type": "date",
+          "store": "yes",
+          "analyzer": "keyword"
+        },
+        "updatedDate": {
+          "type": "date",
+          "store": "yes",
+          "analyzer": "keyword"
+        },
+        "createdBy": {
+          "type": "text",
+          "store": "yes",
+          "analyzer": "keyword"
+        },
+        "updatedBy": {
+          "type": "text",
+          "store": "yes",
+          "analyzer": "keyword"
+        },
+        "meta": {
+          "properties": {
+            "content": {
+              "type": "text",
+              "store": "yes"
+            }
+          }
+        }
+      }
+    }
+  }
+}

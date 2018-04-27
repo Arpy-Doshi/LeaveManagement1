@@ -60,37 +60,39 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
 
 
     @Override
-    public boolean request(LeaveApplication leaveApplication)// TODO: JodaTime for time condition.
-     {// Todo: Add method for checking probation condition, check balance. Create structure as per acceptance criteria.
+    public boolean request(LeaveApplication leaveApplication)
+    {
 
          Employee employee = employeeDao.getById(leaveApplication.getEmployeeId());
 
          if (employee.getName().equals(leaveApplication.getEmployeeName()) && employee.getId().equals(leaveApplication.getEmployeeId())) {
 
              boolean isProbation =leaveApplicationService.checkProbation(leaveApplication.getEmployeeId());
-             double remainingBalance = leaveApplicationService.checkBalance(leaveApplication.getEmployeeId());
+            // double remainingBalance = leaveApplicationService.checkBalance(leaveApplication.getEmployeeId());
 
-             if (isProbation == true)
-                 throw new NotAllowedException("Employee with id "+leaveApplication.getEmployeeId()+" is Not Allowed to make Request as Probation Period is Going On!!!");
-             /*else if (remainingBalance <0)
-                 throw new NotAllowedException("Employee with id "+leaveApplication.getEmployeeId()+" is Not Allowed  to make Request as Leaves of this Quarter are already taken !!!");
-             */else {
+             if (isProbation == true) {
+                 LOGGER.error("Error while requesting leave, Employee with id " + leaveApplication.getEmployeeId() + " is not allowed to make request as probabtion period is going on");
+                 throw new NotAllowedException("Employee with id " + leaveApplication.getEmployeeId() + " is Not Allowed to make Request as probation period is going on");
+             }
+             else {
                  DateTime fromDate = new DateTime(leaveApplication.getFromDate());
                  DateTime toDate = new DateTime(leaveApplication.getToDate());
                  DateTime currentDate = new DateTime();
 
                  if (fromDate.isBefore(currentDate)) {
+                     LOGGER.error("Error while requesting leave, fromDate is invalid");
                      throw new InvalidDateException("fromDate is invalid");
                  }
                  if (toDate.isBefore(currentDate)) {
+                     LOGGER.error("Error while requesting leave, toDate is invalid");
                      throw new InvalidDateException("toDate is invalid");
                  }
                  if (fromDate.isAfter(toDate)) {
+                     LOGGER.error("Error while requesting leave, fromDate is bigger than toDate which is invalid");
                      throw new InvalidDateException("fromDate is bigger than toDate which is invalid");
                  }
 
                  leaveApplication.setStatus(Status.APPLIED);
-
 
                  long days = Days.daysBetween(currentDate, fromDate).getDays();
                  System.out.println(days);
@@ -106,39 +108,9 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
          }
          else
          {
+             LOGGER.error("Error while requesting leave, employee with id "+leaveApplication.getEmployeeId()+" does not exist");
              throw new InvalidIdException("Employee doesn't match!!!");
          }
-      /*  Date date = new Date();
-        if (leaveApplication.getFromDate().compareTo(date) == -1)
-        {
-            throw new InvalidDateException("From date is invalid");
-        }
-        if(leaveApplication.getToDate().compareTo(date) == -1)
-        {
-            throw new InvalidDateException("To date is invalid");
-        }
-        if(leaveApplication.getFromDate().compareTo(leaveApplication.getToDate()) == 1)
-        {
-            throw new InvalidDateException("Form date is bigger than To date");
-        }
-*/
-
-
-
-
-
-       /*  leaveApplication.setStatus(Status.APPLIED);
-            if (leaveApplication.getFromDate().getTime() - date.getTime() >= 1296000000)
-            {
-                leaveApplication.setType(Type.PLANNED_LEAVE);
-                return leaveApplicationDao.request(leaveApplication);
-            }
-            else
-            {
-                leaveApplication.setType(Type.UNPLANNED_LEAVE);
-                return leaveApplicationDao.request(leaveApplication);
-            }*/
-
     }
 
     @Override
@@ -150,12 +122,7 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
         DateTime currentDate = new DateTime();
 
         int months =Months.monthsBetween(currentDate, dateOfJoining).getMonths();
-       /* long days = Days.daysBetween(dateOfJoining, currentDate).getDays();
-        System.out.println(days);
-        if (days <= 10)
-            return true;
-        else
-       */
+
        if (months > probationPeriod)
            return true;
        else
@@ -284,6 +251,7 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
         LeaveApplication leaveApplication = leaveApplicationDao.getById(id);
         if(leaveApplication == null)
         {
+            LOGGER.error("Error while cancelling request : Leave Application with id {} does not exist",id);
             throw new InvalidIdException("id is invalid");
         }
         else
@@ -299,35 +267,53 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
             }
             else
             {
-                throw new NotAllowedException("can't do that");//TODO: what should be appropriate  Exception and status code.
+                LOGGER.error("Error while cancelling Leave Application having id {} after 7 days",id);
+                throw new NotAllowedException("can not allow to cancel after 7 days");
             }
         }
     }
 
     @Override
     public boolean updateRequest(LeaveApplication leaveApplication, String id) {
-        leaveApplicationDao.getById(id);
+       LeaveApplication leaveApplication1 = leaveApplicationDao.getById(id);
+       if(leaveApplication1 == null)
+       {
+           LOGGER.error("Error while updating Leave Application : Leave Application having id {} does not exist",id);
+           throw new InvalidIdException("id is invalid");
+       }
+       else {
 
-        DateTime fromDate = new DateTime(leaveApplication.getFromDate());
-        DateTime toDate = new DateTime(leaveApplication.getToDate());
-        DateTime currentDate = new DateTime();
+           DateTime fromDate = new DateTime(leaveApplication.getFromDate());
+           DateTime toDate = new DateTime(leaveApplication.getToDate());
+           DateTime currentDate = new DateTime();
 
-        if (fromDate.isBefore(currentDate)) {
-            throw new InvalidDateException("fromDate is invalid");
-        }
-        if (toDate.isBefore(currentDate)) {
-            throw new InvalidDateException("toDate is invalid");
-        }
-        if (fromDate.isAfter(toDate)) {
-            throw new InvalidDateException("fromDate is bigger than toDate which is invalid");
-        }
-        leaveApplication.setStatus(Status.APPLIED);
-        return leaveApplicationDao.updateRequest(leaveApplication,id);
+           if (fromDate.isBefore(currentDate)) {
+               LOGGER.error("Error while updating LeaveRequeest, fromDate is invalid");
+               throw new InvalidDateException("fromDate is invalid");
+           }
+           if (toDate.isBefore(currentDate)) {
+               LOGGER.error("Error while updating LeaveRequeest, toDate is invalid");
+               throw new InvalidDateException("toDate is invalid");
+           }
+           if (fromDate.isAfter(toDate)) {
+               LOGGER.error("Error while updating LeaveRequeest, fromDate is bigger than toDate which is invalid");
+               throw new InvalidDateException("fromDate is bigger than toDate which is invalid");
+           }
+           leaveApplication.setStatus(Status.APPLIED);
+           return leaveApplicationDao.updateRequest(leaveApplication, id);
+       }
     }
 
     @Override
     public LeaveApplication getById(String id) {
-        return leaveApplicationDao.getById(id);
+
+        LeaveApplication leaveApplication = leaveApplicationDao.getById(id);
+        if(leaveApplication == null)
+        {
+            LOGGER.error("Error while executing getById method : Leave Application having id {} does not exist",id);
+            throw new InvalidIdException("id is invalid");
+        }
+        else return leaveApplication;
     }
 
     @Override
@@ -340,32 +326,33 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
     @Override
     public List<LeaveApplication> checkRequest()
     {
-        return leaveApplicationDao.getAll()
+        List<LeaveApplication> leaveApplications = leaveApplicationDao.getAll()
                 .parallelStream()
                 .filter(leaveApplication -> leaveApplication.getStatus() == Status.APPLIED)
                 .collect(Collectors.toList());
 
-       /* List<LeaveApplication> leaveApplications= leaveApplicationDao.getAll();
-
-        List<LeaveApplication> leaveApplications1 = new ArrayList<>();
-
-        for (LeaveApplication leaveApplication:leaveApplications)
+        if(leaveApplications == null)
         {
-            if (leaveApplication.getStatus() == Status.APPLIED) {
-                leaveApplications1.add(leaveApplication);
-            }
+            LOGGER.info("No Leave Application to be checked");
         }
-
-        return leaveApplications1;*/
-
+            return leaveApplications;
     }
 
     @Override   //TODO : what should be the time limit for approval and rejection?
     public boolean statusUpdate(LeaveApplication leaveApplication, String id) {
-        boolean b = leaveApplicationDao.updateRequest(leaveApplication,id);
-        leaveApplicationService.finalStatusUpdate(id);
 
-        return b;
+        LeaveApplication leaveApplication1 = leaveApplicationDao.getById(id);
+        if(leaveApplication1 == null)
+        {
+            LOGGER.error("Error while updating status : Leave Application having id {} deos not exist",id);
+            throw new InvalidIdException("id is invalid");
+        }
+        else {
+            boolean b = leaveApplicationDao.updateRequest(leaveApplication, id);
+            leaveApplicationService.finalStatusUpdate(id);
+
+            return b;
+        }
     }
 
     @Override
@@ -396,26 +383,6 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService
         {
             return false;
         }
-
-       /* try{
-            if(leaveApplication.getHr().getStatus() == leaveApplication.getAdmin().getStatus())
-            {
-                if(leaveApplication.getHr().getStatus()==Status.REJECTED && leaveApplication.getAdmin().getStatus()==Status.REJECTED)
-                {
-                    leaveApplication.setStatus(Status.REJECTED);
-                    return leaveApplicationDao.updateRequest(leaveApplication,id);
-                }
-                else
-                {
-                    leaveApplication.setStatus(Status.APPROVED);
-                    return leaveApplicationDao.updateRequest(leaveApplication, id);
-                }
-            }
-            else
-            {
-                leaveApplication.setStatus(Status.REJECTED);
-                return leaveApplicationDao.updateRequest(leaveApplication,id);
-            }*/
     }
 
     @Override

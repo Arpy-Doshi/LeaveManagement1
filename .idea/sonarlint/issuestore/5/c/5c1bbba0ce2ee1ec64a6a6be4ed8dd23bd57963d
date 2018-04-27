@@ -1,22 +1,24 @@
 
+Dsquid:S1148"#Use a logger to log this exception.(´§Ä»úÿÿÿÿ8‰Äş‚§,
+Dsquid:S1148"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8óåò¯,
+Gsquid:S1168"+Return an empty collection instead of null.(¥¹ï8óåò¯,
+Gsquid:S1168"+Return an empty collection instead of null.(¥¹ï8‰Äş‚§,
+fsquid:UselessImportCheck"8Remove this unused import 'com.brevitaz.model.Employee'.(³ÕÙúÿÿÿÿ8¿Ã¥,
+jsquid:S00116"TRename this field "TYPE_NAME" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(È’â
+gsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(Öü² 8¿á‹Ü¦,
+Gsquid:S1168"+Return an empty collection instead of null.(¥¹ï8‰Äş‚§,
+Dsquid:S1148"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8‰Äş‚§,
+Nsquid:S1135"2Complete the task associated to this TODO comment.(•û·¼8¿á‹Ü¦,
+gsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(½‘Ñ³8æ˜Ü¦,
+gsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(éİö¤8‰Äş‚§,
+6squid:S1170"!Make this final field static too.(È’â
+S
+squid:S106"9Replace this use of System.out or System.err by a logger.(èÙæ8¿Ã¥,
+gsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ÚºÓŞ8‰Äş‚§,
+Ssquid:S1135"2Complete the task associated to this TODO comment.(´§Ä»úÿÿÿÿ8‰Äş‚§,
+gsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(½‘Ñ³8‰Äş‚§,
+Gsquid:S1168"+Return an empty collection instead of null.(¥¹ï8æ˜Ü¦,
 gsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(½‘Ñ³8‰Äş‚§,
 R
 squid:S106"9Replace this use of System.out or System.err by a logger.(‰Àõºûÿÿÿÿ
-6squid:S1170"!Make this final field static too.(È’â
-gsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(½‘Ñ³8æ˜Ü¦,
-S
-squid:S106"9Replace this use of System.out or System.err by a logger.(èÙæ8¿Ã¥,
-Nsquid:S1135"2Complete the task associated to this TODO comment.(•û·¼8¿á‹Ü¦,
-fsquid:UselessImportCheck"8Remove this unused import 'com.brevitaz.model.Employee'.(³ÕÙúÿÿÿÿ8¿Ã¥,
-jsquid:S00116"TRename this field "TYPE_NAME" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(È’â
-gsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(½‘Ñ³8‰Äş‚§,
-gsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(éİö¤8‰Äş‚§,
-Dsquid:S1148"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8‰Äş‚§,
 Nsquid:S1135"2Complete the task associated to this TODO comment.(”Ìƒã8¿á‹Ü¦,
-Gsquid:S1168"+Return an empty collection instead of null.(¥¹ï8‰Äş‚§,
-Gsquid:S1168"+Return an empty collection instead of null.(¥¹ï8æ˜Ü¦,
-gsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(Öü² 8¿á‹Ü¦,
-Ssquid:S1135"2Complete the task associated to this TODO comment.(´§Ä»úÿÿÿÿ8‰Äş‚§,
-Dsquid:S1148"#Use a logger to log this exception.(´§Ä»úÿÿÿÿ8‰Äş‚§,
-Gsquid:S1168"+Return an empty collection instead of null.(¥¹ï8‰Äş‚§,
-gsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ÚºÓŞ8‰Äş‚§,

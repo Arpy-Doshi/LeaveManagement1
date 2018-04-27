@@ -1,0 +1,42 @@
+
+nsquid:S3776"RRefactor this method to reduce its Cognitive Complexity from 55 to the 15 allowed.(à±Šô8šÈş‚§,
+Y
+squid:S106"9Replace this use of System.out or System.err by a logger.(ı‡Âìüÿÿÿÿ8¹‰ø¥¨,
+Qsquid:S1854"5Remove this useless assignment to local variable "x".(‹©´Â8Ğ§¸¬§,
+Vsquid:S2123":Remove this increment or correct the code not to waste it.(í÷³¬8Ğ§¸¬§,
+^squid:UselessImportCheck"5Remove this unused import 'java.text.ParseException'.(ñ®ï•8šÈş‚§,
+h$squid:AssignmentInSubExpressionCheck".Extract the assignment out of this expression.(åÀ•õúÿÿÿÿ8Ğ§¸¬§,
+ squid:ForLoopCounterChangedCheck"XRefactor the code in order to not assign to this loop counter from within the loop body.(åÀ•õúÿÿÿÿ8Ğ§¸¬§,
+Y
+squid:S106"9Replace this use of System.out or System.err by a logger.(´ÜÇŞüÿÿÿÿ8Ğ§¸¬§,
+Ksquid:S1066"/Merge this if statement with the enclosing one.(¦Ùåñ8¹‰ø¥¨,
+T
+squid:S106"9Replace this use of System.out or System.err by a logger.(ñà›8¹‰ø¥¨,
+`squid:UselessImportCheck"7Remove this unused import 'java.text.SimpleDateFormat'.(ú¡ÙÛ8šÈş‚§,
+c$squid:AssignmentInSubExpressionCheck".Extract the assignment out of this expression.(Ù´8Ğ§¸¬§,
+Y
+squid:S106"9Replace this use of System.out or System.err by a logger.(í«‚­øÿÿÿÿ8¹‰ø¥¨,
+Osquid:S1659".Declare "deductionBalance" on a separate line.(„§ƒ§üÿÿÿÿ8¹‰ø¥¨,
+Csquid:S1659""Declare "days" on a separate line.(ÙÙ±áÿÿÿÿÿ8¹‰ø¥¨,
+Y
+squid:S106"9Replace this use of System.out or System.err by a logger.( óéäúÿÿÿÿ8¹‰ø¥¨,
+Y
+squid:S106"9Replace this use of System.out or System.err by a logger.(¦ÑÕ‚ÿÿÿÿÿ8¹‰ø¥¨,
+Vsquid:S2123":Remove this increment or correct the code not to waste it.(í÷³¬8Ğ§¸¬§,
+T
+squid:S106"9Replace this use of System.out or System.err by a logger.(óüÏ»8Ğ§¸¬§,
+Y
+squid:S106"9Replace this use of System.out or System.err by a logger.(óŞ…úÿÿÿÿ8Ğ§¸¬§,
+lsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(Ë¼ µûÿÿÿÿ8Ğ§¸¬§,
+T
+squid:S106"9Replace this use of System.out or System.err by a logger.(×Ç ¶8¹‰ø¥¨,
+Qsquid:S1854"5Remove this useless assignment to local variable "x".(í÷³¬8Ğ§¸¬§,
+h$squid:AssignmentInSubExpressionCheck".Extract the assignment out of this expression.(È¾ø•ûÿÿÿÿ8Ğ§¸¬§,
+S
+squid:S106"9Replace this use of System.out or System.err by a logger.(‘¾K8Ğ§¸¬§,
+Qsquid:S1854"5Remove this useless assignment to local variable "x".(í÷³¬8Ğ§¸¬§,
+[squid:UselessImportCheck"-Remove this unused import 'java.util.Locale'.(åğ×±ûÿÿÿÿ8šÈş‚§,
+T
+squid:S106"9Replace this use of System.out or System.err by a logger.(ŠµŒ8¹‰ø¥¨,
+gsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(£Áã”8šÈş‚§,
+ squid:ForLoopCounterChangedCheck"XRefactor the code in order to not assign to this loop counter from within the loop body.(äº×Ïÿÿÿÿÿ8Ğ§¸¬§,

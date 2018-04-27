@@ -1,0 +1,5 @@
+
+ssquid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(ÙÖ¢üÿÿÿÿ
+wsquid:UselessImportCheck"IRemove this unused import 'org.springframework.validation.BindingResult'.(‹¶¸ùÿÿÿÿ8¥û…Š¦,
+`squid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ÖÃİÁ
+Osquid:S1118":Add a private constructor to hide the implicit public one.(¨¶â¦

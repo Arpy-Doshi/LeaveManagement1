@@ -1,0 +1,29 @@
+
+[squid:S1126"AReplace this if-then-else statement by a single return statement.(Òò¢½ûÿÿÿÿ
+`squid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(´ ÿˆ
+fsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(³ä®i8®ÝŸ‰¯,
+xsquid:UselessImportCheck"ORemove this unused import 'org.elasticsearch.index.query.MatchAllQueryBuilder'.(ëûÈ…8Êã®Ž¯,
+=squid:S1148"#Use a logger to log this exception.(€ÉÔ…ýÿÿÿÿ
+=squid:S1148"#Use a logger to log this exception.(€ÉÔ…ýÿÿÿÿ
+Dsquid:S1148"#Use a logger to log this exception.(€ÉÔ…ýÿÿÿÿ8®ÝŸ‰¯,
+gsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(±×‚Ü8ëÿË©¨,
+Dsquid:S1148"#Use a logger to log this exception.(€ÉÔ…ýÿÿÿÿ8ŒÉŽ¯,
+Gsquid:S1168"+Return an empty collection instead of null.(¥¹ï8ÈÈ†©,
+jsquid:S00116"TRename this field "TYPE_NAME" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(È’â
+usquid:UselessImportCheck"GRemove this unused import 'org.elasticsearch.search.sort.SortBuilders'.(Ô†åíûÿÿÿÿ8Êã®Ž¯,
+fsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(³ä®i8ŒÉŽ¯,
+esquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(åÅÕÈúÿÿÿÿ
+Gsquid:S1168"+Return an empty collection instead of null.(¥¹ï8®ÝŸ‰¯,
+R
+squid:S106"9Replace this use of System.out or System.err by a logger.(‰Àõºûÿÿÿÿ
+M
+squid:S106"9Replace this use of System.out or System.err by a logger.(‹¾žå
+usquid:UselessImportCheck"GRemove this unused import 'org.elasticsearch.index.query.QueryBuilder'.(¡±´þûÿÿÿÿ8Êã®Ž¯,
+`squid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(½ßÒ¶
+osquid:UselessImportCheck"FRemove this unused import 'org.apache.http.nio.reactor.ssl.SSLBuffer'.(Ù£Ö«8Èü²©,
+qsquid:UselessImportCheck"HRemove this unused import 'org.elasticsearch.index.query.QueryBuilders'.(†ˆä‚8Èü²©,
+[squid:S1126"AReplace this if-then-else statement by a single return statement.(Ì±­¯üÿÿÿÿ
+=squid:S1148"#Use a logger to log this exception.(€ÉÔ…ýÿÿÿÿ
+ysquid:UselessImportCheck"KRemove this unused import 'org.elasticsearch.search.sort.FieldSortBuilder'.(â¼¬‘üÿÿÿÿ8Êã®Ž¯,
+6squid:S1170"!Make this final field static too.(È’â
+`squid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(½ßÒ¶

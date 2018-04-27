@@ -18,6 +18,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/../ExceptionLearning/src/ExMessage.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/../ExceptionLearning/src/Sum.java">
           <value>
             <set />
@@ -64,6 +69,16 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/src/main/java/com/brevitaz/config/Config.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/brevitaz/config/IndexInitializer.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/brevitaz/config/indexmapping/LeaveApplication/mappingfile.json">
           <value>
             <set />
           </value>
@@ -158,6 +173,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/brevitaz/errors/NotAllowedException.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/src/main/java/com/brevitaz/model/Employee.java">
           <value>
             <set />
@@ -233,6 +253,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/src/main/resources/leave-application.json">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/src/main/resources/logback-spring.xml">
           <value>
             <set />
@@ -279,6 +304,61 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/../LeaveManagement2/src/main/java/com/brevitaz/service/impl/LeavePolicyServiceImpl.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../PayRoll1/src/main/java/com/brevitaz/config/SwaggerConfig.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../PayRoll1/src/main/java/com/brevitaz/controller/SalaryController.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../PayRoll1/src/main/java/com/brevitaz/controller/SalarySlipController.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../PayRoll1/src/main/java/com/brevitaz/controller/SalaryStructureController.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../PayRoll1/src/main/java/com/brevitaz/dao/impl/SalarySlipDaoImpl.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../PayRoll1/src/main/java/com/brevitaz/model/Salary.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../PayRoll1/src/main/java/com/brevitaz/model/SalaryDeductionComponent.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../PayRoll1/src/main/java/com/brevitaz/model/SalaryIncomeComponent.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../PayRoll1/src/main/java/com/brevitaz/model/SalarySlip.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../PayRoll1/src/main/java/com/brevitaz/model/SalaryStructure.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../PayRoll1/src/main/java/com/brevitaz/service/impl/SalaryStructureServiceImpl.java">
           <value>
             <set />
           </value>

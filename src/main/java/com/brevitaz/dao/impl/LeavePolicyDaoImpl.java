@@ -27,6 +27,7 @@ import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.sort.FieldSortBuilder;
 import org.elasticsearch.search.sort.SortBuilders;
 import org.elasticsearch.search.sort.SortOrder;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
@@ -38,6 +39,8 @@ import java.util.List;
 @Repository
 public class LeavePolicyDaoImpl implements LeavePolicyDao
 {
+    private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(LeavePolicyDaoImpl.class);
+
     @Value("${LeavePolicy-Index-Name}")
     private String indexName;
 
@@ -71,6 +74,7 @@ public class LeavePolicyDaoImpl implements LeavePolicyDao
             System.out.println(indexResponse);
             if (indexResponse.status() == RestStatus.CREATED)
             {
+                LOGGER.info("Leave Policy is created with id "+leavePolicy.getId());
                 return true;
             }
             else
@@ -80,8 +84,7 @@ public class LeavePolicyDaoImpl implements LeavePolicyDao
         }
         catch (IOException e)
         {
-            e.printStackTrace();
-           // throw new InvalidIdException("not created!!!");
+          LOGGER.error("Error while creating Leave Policy : "+e.getMessage());
         }
         return false;
     }
@@ -99,10 +102,10 @@ public class LeavePolicyDaoImpl implements LeavePolicyDao
 
 
             UpdateResponse updateResponse = client.update(updateRequest);
-            System.out.println(updateResponse);
 
             if(updateResponse.status() == RestStatus.OK)
             {
+                LOGGER.info("Leave Policy is updaetd having id "+id);
                 return true;
             }
             else
@@ -113,8 +116,7 @@ public class LeavePolicyDaoImpl implements LeavePolicyDao
 
         catch (IOException e)
         {
-            e.printStackTrace();
-            //throw new InvalidIdException("LeavePolicy doesn't exists!!!");
+            LOGGER.error("Error while updating Leave Policy : "+e.getMessage());
         }
         return false;
     }
@@ -145,6 +147,7 @@ public class LeavePolicyDaoImpl implements LeavePolicyDao
                     leavePolicy = objectMapper.readValue(hit.getSourceAsString(), LeavePolicy.class);
                     leavePolicies.add(leavePolicy);
                 }
+                LOGGER.info("Retrieving Latest Policy");
                 return leavePolicies.get(0);
             }
             else
@@ -154,7 +157,7 @@ public class LeavePolicyDaoImpl implements LeavePolicyDao
         }
         catch (IOException e)
         {
-            e.printStackTrace();
+            LOGGER.error("Error while getting latest policy :"+e.getMessage());
             //  throw new IndexNotFoundException("Index doesn't exists!!!");
         }
         return null;
@@ -201,17 +204,14 @@ public class LeavePolicyDaoImpl implements LeavePolicyDao
             GetResponse getResponse= client.get(getRequest);
             if(getResponse.isExists())
             {
-                return objectMapper.readValue(getResponse.getSourceAsString(),LeavePolicy.class);
-
-            }
-            else
-            {
-                throw new InvalidIdException("LeavePolicy doesn't exists!!!");
+                LeavePolicy leavePolicy = objectMapper.readValue(getResponse.getSourceAsString(),LeavePolicy.class);
+                LOGGER.info("Retrieving Leave Policy having id "+id);
+                return leavePolicy;
             }
         }
         catch (IOException e)
         {
-            e.printStackTrace();
+            LOGGER.error("Error while executing getById method of Leave Policy : "+e.getMessage());
             //throw new InvalidIdException("LeavePolicy doesn't exists!!!");
 
         }
@@ -238,6 +238,7 @@ public class LeavePolicyDaoImpl implements LeavePolicyDao
                 leavePolicy = objectMapper.readValue(hit.getSourceAsString(), LeavePolicy.class);
                 leavePolicies.add(leavePolicy);
             }
+            LOGGER.info("Retrieving all Leave Policies");
             return leavePolicies;
         }
         else
@@ -247,7 +248,7 @@ public class LeavePolicyDaoImpl implements LeavePolicyDao
         }
         catch (IOException e)
         {
-            e.printStackTrace();
+          LOGGER.error("Error while retrieving all Leave Applications : "+e.getMessage());
           //  throw new IndexNotFoundException("Index doesn't exists!!!");
         }
         return null;

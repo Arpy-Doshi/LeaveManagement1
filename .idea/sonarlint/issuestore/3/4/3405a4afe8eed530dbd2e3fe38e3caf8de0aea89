@@ -1,8 +1,9 @@
 
-gsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ÍÁœù8Þ×””¥,
-lsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(Õ˜‘™üÿÿÿÿ8Þ×””¥,
-Ssquid:S1135"2Complete the task associated to this TODO comment.(Õ˜‘™üÿÿÿÿ8Þ×””¥,
 gsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(Ùã¾‰8§¾‹­¨,
-`squid:UselessImportCheck"2Remove this unused import 'java.util.Collections'.(¢³ïÓþÿÿÿÿ8Çåìù¨,
+Ssquid:S1135"2Complete the task associated to this TODO comment.(Õ˜‘™üÿÿÿÿ8Þ×””¥,
+lsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(Õ˜‘™üÿÿÿÿ8Þ×””¥,
+„squid:S1488"cImmediately return this expression instead of assigning it to the temporary variable "leavePolicy".(Û…Ø¦ÿÿÿÿÿ8¼†ëŽ¯,
 gsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(²Ï¢Ù8§¾‹­¨,
+`squid:UselessImportCheck"2Remove this unused import 'java.util.Collections'.(¢³ïÓþÿÿÿÿ8Çåìù¨,
 lsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ý€Æýüÿÿÿÿ8Ï¦ðØ¨,
+gsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ÍÁœù8Þ×””¥,

@@ -1,5 +1,6 @@
 package com.brevitaz.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.joda.time.DateTime;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -57,7 +58,6 @@ public class LeaveApplication
     public void setReason(String reason) {
         this.reason = reason;
     }
-
     public Date getFromDate() {
         return fromDate;
     }

@@ -19,6 +19,7 @@ import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.common.xcontent.XContentType;
 import org.elasticsearch.rest.RestStatus;
 import org.elasticsearch.search.SearchHit;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
@@ -30,6 +31,9 @@ import java.util.List;
 @Repository
 public class EmployeeDaoImpl implements EmployeeDao
 {
+
+    private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(LeaveApplicationDaoImpl.class);
+
 
     @Value("${Employee-Index-Name}")
     private String indexName;
@@ -163,16 +167,20 @@ public class EmployeeDaoImpl implements EmployeeDao
             GetResponse response = client.get(getRequest);
             if (response.isExists())
             {
-                return objectMapper.readValue(response.getSourceAsString(), Employee.class);
+                Employee employee = objectMapper.readValue(response.getSourceAsString(), Employee.class);
+                LOGGER.info("Retrieving employee having id "+id);
+                return employee;
             }
             else
             {
-                throw new InvalidIdException("Employee with Id "+id+" doesn't exists!!!");
+                LOGGER.error("Employee with id {} does not exist",id);
+                throw new InvalidIdException("Employee with Id "+id+" doesn't exists");
             }
         }
         catch (IOException| NullPointerException e)
         {
-            throw new InvalidIdException("Employee with Id "+id+" doesn't exists!!!");
+            LOGGER.error("Error while executing getByID method of Empployee : "+e.getMessage());
         }
+        return null;
         }
 }

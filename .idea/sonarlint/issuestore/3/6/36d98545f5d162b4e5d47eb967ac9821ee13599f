@@ -1,33 +1,43 @@
 
-lsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ñç—úùÿÿÿÿ8‹åÀ¸§,
+ssquid:S3776"RRefactor this method to reduce its Cognitive Complexity from 19 to the 15 allowed.(«ÅÉûÿÿÿÿ8‹åÀ¸§,
 tsquid:S3776"SRefactor this method to reduce its Cognitive Complexity from 119 to the 15 allowed.(¾âÎøøÿÿÿÿ8‹åÀ¸§,
-^squid:UselessImportCheck"5Remove this unused import 'java.util.logging.Logger'.(ƒ¥óš8‹åÀ¸§,
+_squid:S1854">Remove this useless assignment to local variable "toDateJoda".(ï¾ºıÿÿÿÿ8Ï¢Ô‘¯,
+\squid:S1854"@Remove this useless assignment to local variable "fromDateJoda".(Öæ¿¦8Ï¢Ô‘¯,
 Csquid:S1659""Declare "days" on a separate line.(ÙÙ±áÿÿÿÿÿ8‹åÀ¸§,
 hsquid:UselessImportCheck"?Remove this unused import 'java.time.format.DateTimeFormatter'.(‰÷÷ª8‹åÀ¸§,
-bsquid:S1126"AReplace this if-then-else statement by a single return statement.(“ËÛûÿÿÿÿ8‹åÀ¸§,
-Nsquid:S1135"2Complete the task associated to this TODO comment.(ï¤Ì¸8¥”¥¨¨,
-Jsquid:S1659".Declare "deductionBalance" on a separate line.(ë€·’8‹åÀ¸§,
-ssquid:S1192"RDefine a constant instead of duplicating this literal "toDate is invalid" 3 times.(§¼¸„şÿÿÿÿ8‹åÀ¸§,
-Ksquid:S1066"/Merge this if statement with the enclosing one.(¨Œˆ8‹åÀ¸§,
-dsquid:UselessImportCheck";Remove this unused import 'com.brevitaz.model.LeavePolicy'.(˜·Ş8üÄş‚§,
-Ksquid:S1066"/Merge this if statement with the enclosing one.(¨Œˆ8‹åÀ¸§,
-lsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(Ùâáëıÿÿÿÿ8‹åÀ¸§,
-gsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(²¸æ8¢Å¿¥¨,
-gsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(²¸æ8¢Å¿¥¨,
-gsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ã ìÿ8¢Å¿¥¨,
-Dsquid:S1125"(Remove the literal "true" boolean value.(Üóÿ8‹åÀ¸§,
-Ksquid:S1066"/Merge this if statement with the enclosing one.(¨Œˆ8‹åÀ¸§,
-Ssquid:S1135"2Complete the task associated to this TODO comment.(âÓ—ßøÿÿÿÿ8˜ÃÖ³§,
-Vsquid:S1481"5Remove this unused "remainingBalance" local variable.(Ÿœå‚ûÿÿÿÿ8ãñŸ„©,
-ssquid:S3776"RRefactor this method to reduce its Cognitive Complexity from 19 to the 15 allowed.(«ÅÉûÿÿÿÿ8‹åÀ¸§,
-nsquid:UselessImportCheck"@Remove this unused import 'org.joda.time.format.DateTimeFormat'.(Õ…è†üÿÿÿÿ8æñû‰§,
-Ksquid:S1066"/Merge this if statement with the enclosing one.(¨Œˆ8‹åÀ¸§,
-usquid:S1192"TDefine a constant instead of duplicating this literal "fromDate is invalid" 3 times.(õĞÊœøÿÿÿÿ8‹åÀ¸§,
-lsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(õ°Â‡úÿÿÿÿ8ãñŸ„©,
 lsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(–¸ß¨üÿÿÿÿ8‹åÀ¸§,
+gsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(²¸æ8¢Å¿¥¨,
+lsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(Ùâáëıÿÿÿÿ8‹åÀ¸§,
+{squid:UselessImportCheck"MRemove this unused import 'org.elasticsearch.discovery.zen.MembershipAction'.(•ÓãÛÿÿÿÿÿ8¾…«°¯,
+nsquid:UselessImportCheck"@Remove this unused import 'org.joda.time.format.DateTimeFormat'.(Õ…è†üÿÿÿÿ8æñû‰§,
+Msquid:S1481"1Remove this unused "fromDateJoda" local variable.(Öæ¿¦8Ï¢Ô‘¯,
+`squid:S1854"?Remove this useless assignment to local variable "currentDate".(©Âñïıÿÿÿÿ8äÁÍ‘¯,
+bsquid:UselessImportCheck"9Remove this unused import 'java.util.function.Predicate'.(ïÍ–¶8…¬ß²¯,
 Nsquid:S1135"2Complete the task associated to this TODO comment.(ªÅƒ¿8‹åÀ¸§,
+gsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(½‘Ñ³8íÚÑ§¨,
+lsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ñç—úùÿÿÿÿ8‹åÀ¸§,
 Ssquid:S1135"2Complete the task associated to this TODO comment.(«ÅÉûÿÿÿÿ8‹åÀ¸§,
+Psquid:S1481"/Remove this unused "toDateJoda" local variable.(ï¾ºıÿÿÿÿ8Ï¢Ô‘¯,
+Ksquid:S1066"/Merge this if statement with the enclosing one.(¨Œˆ8‹åÀ¸§,
+Qsquid:S1481"0Remove this unused "currentDate" local variable.(©Âñïıÿÿÿÿ8äÁÍ‘¯,
+^squid:UselessImportCheck"5Remove this unused import 'java.util.logging.Logger'.(ƒ¥óš8‹åÀ¸§,
+Ksquid:S1066"/Merge this if statement with the enclosing one.(¨Œˆ8‹åÀ¸§,
+lsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(õ°Â‡úÿÿÿÿ8ãñŸ„©,
+gsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ã ìÿ8¢Å¿¥¨,
+Šsquid:S1488"iImmediately return this expression instead of assigning it to the temporary variable "leaveApplications".(Œàİøÿÿÿÿ8‘¹Ö‘¯,
+dsquid:UselessImportCheck";Remove this unused import 'com.brevitaz.model.LeavePolicy'.(˜·Ş8üÄş‚§,
+Dsquid:S1125"(Remove the literal "true" boolean value.(Üóÿ8‹åÀ¸§,
+Ssquid:S1135"2Complete the task associated to this TODO comment.(âÓ—ßøÿÿÿÿ8˜ÃÖ³§,
+Ksquid:S1066"/Merge this if statement with the enclosing one.(¨Œˆ8‹åÀ¸§,
+Jsquid:S1659".Declare "deductionBalance" on a separate line.(ë€·’8‹åÀ¸§,
+Ksquid:S1066"/Merge this if statement with the enclosing one.(¨Œˆ8‹åÀ¸§,
 esquid:S1854"DRemove this useless assignment to local variable "remainingBalance".(Ÿœå‚ûÿÿÿÿ8ãñŸ„©,
+lsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(‰øßÌøÿÿÿÿ8„õŸ°¯,
+Nsquid:S1135"2Complete the task associated to this TODO comment.(ï¤Ì¸8¥”¥¨¨,
+Vsquid:S1481"5Remove this unused "remainingBalance" local variable.(Ÿœå‚ûÿÿÿÿ8ãñŸ„©,
+Ssquid:S2629"7Use the built-in formatting to construct this argument.(¬Û8‚àØº¯,
+bsquid:S1126"AReplace this if-then-else statement by a single return statement.(“ËÛûÿÿÿÿ8‹åÀ¸§,
+gsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(“‘éÎ8äÁÍ‘¯,
 T
 squid:S106"9Replace this use of System.out or System.err by a logger.(¡õ¦8‹åÀ¸§,
-gsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(½‘Ñ³8íÚÑ§¨,
+gsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(²¸æ8ï­Í‘¯,

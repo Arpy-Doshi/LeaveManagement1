@@ -4,6 +4,7 @@ import com.brevitaz.dao.LeaveApplicationDao;
 import com.brevitaz.errors.*;
 import com.brevitaz.model.Employee;
 import com.brevitaz.model.LeaveApplication;
+import com.brevitaz.service.impl.LeaveApplicationServiceImpl;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.elasticsearch.action.delete.DeleteRequest;
@@ -24,6 +25,7 @@ import org.elasticsearch.rest.RestStatus;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.omg.CORBA.DynAnyPackage.Invalid;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
@@ -40,6 +42,9 @@ import static org.elasticsearch.index.query.QueryBuilders.matchQuery;
 @Repository
 public class LeaveApplicationDaoImpl implements LeaveApplicationDao
 {
+    private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(LeaveApplicationDaoImpl.class);
+
+
     @Value("${LeaveApplication-Index-Name}")
     private String indexName;
 
@@ -68,10 +73,11 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
             System.out.println(indexResponse.status());
             if(indexResponse.status() == RestStatus.CREATED)
             {
+                LOGGER.info("Leave Application has requested with leaveId = {} by employee having id = {}",leaveApplication.getId(),leaveApplication.getEmployeeId());
                 return true;
             }
         } catch (IOException e) {
-            e.getMessage();
+            LOGGER.error("Error while requesting Leave Application : "+e.getMessage());
         }
        return false;
     }
@@ -86,10 +92,11 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
         UpdateResponse updateResponse = client.update(request);
        if(updateResponse.status() == RestStatus.OK )
        {
+           LOGGER.info("Leave Application has updated with leaveId = {} by employee having id = {}",leaveApplication.getId(),leaveApplication.getEmployeeId());
            return true;
        }
        } catch (IOException | NullPointerException e) {
-            e.getMessage();
+            LOGGER.error("Error wile updating Leave Application : "+e.getMessage());
         }
         return false;
     }
@@ -103,12 +110,14 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
         try {
             GetResponse getResponse = client.get(getRequest);
             if(getResponse.isExists()) {
-                return objectMapper.readValue(getResponse.getSourceAsString(), LeaveApplication.class);
+                 LeaveApplication leaveApplication =objectMapper.readValue(getResponse.getSourceAsString(), LeaveApplication.class);
+                 LOGGER.info("retrieving Leave Application having id "+id);
+                 return leaveApplication;
             }
         }
         catch (IOException e)
         {
-            e.printStackTrace();// Todo: Use Logger to log all exception with proper messages.
+           LOGGER.error("Error while executing getById method of LeaveApplication : "+e.getMessage());
         }
         return null;
     }
@@ -140,10 +149,11 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
                     leaveApplications.add(leaveApplication);
                 }
 
+                LOGGER.info("Retrieving Leave Applications between {} to {} ",fromDate,toDate);
                 return leaveApplications;
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.error("Error while executing getByDate method of LeaveApplicationDao : "+e.getMessage());
         }
         return null;
 
@@ -167,15 +177,16 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
                     leaveApplication = objectMapper.readValue(hit.getSourceAsString(), LeaveApplication.class);
                     leaveApplications.add(leaveApplication);
                 }
+                LOGGER.info("Retrieving all Leave Applications");
                 return leaveApplications;
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.error("Error while retrieving all Leave Applications : "+e.getMessage());
         }
         return null;
     }
 
-    @Override
+    @Override //using term
     public List<LeaveApplication> getByEmployeeId(String employeeId)
     {
   /*      SearchRequest request = new SearchRequest(INDEX_NAME);
@@ -202,7 +213,7 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
 
         return leaveApplications;
 
-
+        //***using match
 */ try {
 
         SearchRequest request = new SearchRequest(indexName);
@@ -225,11 +236,12 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
                     leaveApplication = objectMapper.readValue(hit.getSourceAsString(), LeaveApplication.class);
                     leaveApplications.add(leaveApplication);
                 }
-
+                LOGGER.info("Retrieving all Leave Application of employee having id "+employeeId);
                 return leaveApplications;
             }
-        } catch (IOException | NullPointerException e) {
-        throw new InvalidIdException("doesn't exists!!!");
+        } catch (IOException | NullPointerException e)
+         {
+             LOGGER.error("Error while executing getByEmployeeId method : "+e.getMessage());
         }
         return null;
     }

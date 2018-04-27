@@ -5,6 +5,7 @@ import com.brevitaz.errors.InvalidIdException;
 import com.brevitaz.model.LPStatus;
 import com.brevitaz.model.LeavePolicy;
 import com.brevitaz.service.LeavePolicyService;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,7 @@ import java.util.List;
 @Service
 public class LeavePolicyServiceImpl implements LeavePolicyService
 {
+    private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(LeaveApplicationServiceImpl.class);
 
     @Autowired
     private LeavePolicyDao leavePolicyDao;
@@ -24,15 +26,8 @@ public class LeavePolicyServiceImpl implements LeavePolicyService
     @Override
     public boolean create(LeavePolicy leavePolicy)
     {
-       /* if (leavePolicy.getId().trim().length()<=0 || leavePolicy.getName().trim().length()<=0)
-            throw new RuntimeException("Field is Null");
-         else if (leavePolicy.getLeavePolicyRules().isEmpty())
-             throw new RuntimeException("Rules are empty!!");
-         else*//*
-       if (leavePolicy != null)*/
-            return leavePolicyDao.create(leavePolicy);
-        /*else
-            throw new InvalidIdException("");*/
+        leavePolicy.setStatus(LPStatus.CREATED);
+        return leavePolicyDao.create(leavePolicy);
     }
 
     @Override
@@ -42,8 +37,10 @@ public class LeavePolicyServiceImpl implements LeavePolicyService
             return leavePolicyDao.update(leavePolicy, id);
 
         else
-            throw new InvalidIdException("Id doesn't match!!!");
-
+        {
+            LOGGER.error("Error while updating Leave Policy, Leave Policy with id "+id +" does not exist");
+            throw new InvalidIdException("id is invalid");
+        }
     }
 
     @Override
@@ -61,26 +58,9 @@ public class LeavePolicyServiceImpl implements LeavePolicyService
         return leavePolicy;
     }
 
-    /*@Override
-    public  Date getNearestDate(List<Date> dates, Date currentDate) {
-        long minDiff = -1, currentTime = currentDate.getTime();
-        Date minDate = null;
-        for (Date date : dates) {
-            long diff = Math.abs(currentTime - date.getTime());
-            if ((minDiff == -1) || (diff < minDiff)) {
-                minDiff = diff;
-                minDate = date;
-            }
-        }
-        return minDate;
-    }*/
-
     @Override
     public List<LeavePolicy> getAll()
     {
-        /*if ()*/// TODO: compare with Db if not empty then only
         return leavePolicyDao.getAll();
-        /*else
-            throw new RuntimeException("Bad Request!!!");*/
     }
 }
